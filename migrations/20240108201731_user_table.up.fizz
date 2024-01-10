@@ -1,3 +1,9 @@
-create_table("users"){
-     t.Column("name","string",{})
+create_table("users") {
+  t.Column("id", "integer", {primary : true})
+  t.Column("username", "string", {})
+  t.Column("email", "string", {})
+  t.Column("password", "string", {"size": 60})
+  t.Column("phone", "string", {})
+  t.Column("address", "string", {})
+  t.Column("access_level", "integer", {"default": 1})
 }

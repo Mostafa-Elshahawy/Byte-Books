@@ -1,0 +1,6 @@
+create_table("cart"){
+  t.Column("id", "integer", {primary : true})
+  t.Column("user_id", "integer", {})
+  t.Column("product_id", "integer", {})
+  t.Column("quantity", "integer", {})
+}
