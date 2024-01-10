@@ -1,0 +1,3 @@
+create_table("users"){
+     t.Column("name","string",{})
+}
