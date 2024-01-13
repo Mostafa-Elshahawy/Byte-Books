@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/ME/Byte-Books/internal/database"
+	"github.com/ME/Byte-Books/internal/driver"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 )
@@ -17,7 +17,7 @@ func init() {
 }
 
 func main() {
-	DB, err := database.ConnectSQL(os.Getenv("DATABASE_URL"))
+	DB, err := driver.ConnectSQL(os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatal(err)
 	}
