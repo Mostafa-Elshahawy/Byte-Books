@@ -2,6 +2,8 @@ package dbrepo
 
 import (
 	"context"
+	"database/sql"
+	"fmt"
 	"time"
 
 	"github.com/ME/Byte-Books/internal/models"
@@ -32,4 +34,24 @@ func (d *postgresDBRepo) AddUser(user *models.User) error {
 	}
 
 	return nil
+}
+
+// Getuser: get the user from the database by the email
+func (d *postgresDBRepo) Getuser(email string) (models.User, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	user := models.User{}
+	stmt := `SELECT * FROM users WHERE email = $1`
+	row := d.DB.QueryRowContext(ctx, stmt, email)
+	err := row.Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.Phone, &user.Address, &user.AccessLevel, &user.Created_at, &user.Updated_at)
+
+	switch {
+	case err == sql.ErrNoRows:
+		return models.User{}, fmt.Errorf("user not found")
+	case err != nil:
+		return models.User{}, err
+	default:
+		return user, nil
+	}
 }
