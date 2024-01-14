@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/ME/Byte-Books/internal/driver"
+	"github.com/ME/Byte-Books/internal/handlers"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 )
@@ -22,6 +23,9 @@ func main() {
 		log.Fatal(err)
 	}
 	defer DB.SQL.Close()
+
+	repo := handlers.NewRepo(DB)
+	handlers.NewHandlers(repo)
 
 	mux := echo.New()
 	Routers(mux)

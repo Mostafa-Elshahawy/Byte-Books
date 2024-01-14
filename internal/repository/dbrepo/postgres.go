@@ -7,9 +7,10 @@ import (
 	"github.com/ME/Byte-Books/internal/models"
 )
 
-func (d *postgresDBRepo) CreateUser(user models.User) error {
+// AddUser: adds the user entity to the database
+func (d *postgresDBRepo) AddUser(user *models.User) error {
 
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	stmt := `INSERT INTO users (username, email, password, phone, address, access_level, created_at, updated_at)
