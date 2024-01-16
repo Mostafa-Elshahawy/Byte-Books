@@ -3,6 +3,8 @@ package repository
 import "github.com/ME/Byte-Books/internal/models"
 
 type DatabaseRepo interface {
-	AddUser(user *models.User) error
+	AddUser(user *models.User) (uint, error)
 	Getuser(email string) (models.User, error)
+	Authenticate(email, password string) (uint, string, error)
+	InsertProduct(product *models.Product) error
 }

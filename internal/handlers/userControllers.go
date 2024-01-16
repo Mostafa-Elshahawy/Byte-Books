@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/gob"
 	"net/http"
 
 	"github.com/ME/Byte-Books/internal/models"
@@ -32,67 +31,56 @@ func (r *Repository) Signup(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, "enter valid email")
 	}
 
-	if !govalidator.IsNotNull(user.Username) || !govalidator.IsNotNull(user.Email) || !govalidator.IsNotNull(user.Password) {
-		return c.JSON(echo.ErrBadRequest.Code, "this filed can't be blank")
-	}
-
-	userErr := r.DB.AddUser(user)
-	if userErr != nil {
-		return c.JSON(http.StatusBadRequest, echo.Map{
-			"error": "user already exists",
+	found := govalidator.IsNotNull(user.Username) && govalidator.IsNotNull(user.Email) && govalidator.IsNotNull(user.Password)
+	if !found {
+		return c.JSON(echo.ErrBadRequest.Code, echo.Map{
+			"error": "this filed can't be blank",
 		})
 	}
-	return c.JSON(http.StatusOK, user)
+
+	_, dberr := r.DB.AddUser(user)
+	if dberr != nil {
+		return c.JSON(http.StatusBadRequest, echo.Map{
+			"error": dberr,
+		})
+	}
+
+	return c.JSON(http.StatusCreated, user)
 }
 
 func (r *Repository) Login(c echo.Context) error {
-	gob.Register(models.User{})
-	var userReq models.User
-	usererr := c.Bind(&userReq)
-	if usererr != nil {
+
+	userData := new(models.User)
+	err := c.Bind(&userData)
+	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, "something went wrong")
 	}
 
-	user, err := r.DB.Getuser(userReq.Email)
+	id, _, err := r.DB.Authenticate(userData.Email, userData.Password)
 	if err != nil {
-		c.JSON(echo.ErrInternalServerError.Code, echo.Map{
-			"message": "could not get user",
-		})
-	}
-
-	if user.ID == 0 {
-		c.JSON(echo.ErrBadRequest.Code, echo.Map{
+		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
 			"message": "user doesn't exist",
 		})
 	}
 
-	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(userReq.Password))
+	session, _ := Store.Get(c.Request(), "session_id")
+
+	session.Options = &sessions.Options{
+		MaxAge:   86400 * 7,
+		HttpOnly: true,
+		Secure:   false,
+	}
+
+	session.Values["user_id"] = id
+	err = sessions.Save(c.Request(), c.Response())
 	if err != nil {
-		c.JSON(echo.ErrBadRequest.Code, echo.Map{
-			"error": "incorrect password",
+		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
+			"message": "something went wrong with session",
 		})
 	}
 
-	if err == nil {
-		session, _ := Store.Get(c.Request(), "session_id")
-
-		session.Options = &sessions.Options{
-			MaxAge:   86400 * 7,
-			HttpOnly: true,
-			Secure:   false,
-		}
-
-		session.Values["user"] = user
-		err = sessions.Save(c.Request(), c.Response())
-		if err != nil {
-			c.JSON(echo.ErrInternalServerError.Code, echo.Map{
-				"message": "something went wrong with session",
-			})
-		}
-	}
-
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "logged in successfully as " + user.Username,
+		"message": "logged in successfully",
 	})
 }
 

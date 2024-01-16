@@ -8,6 +8,7 @@ import (
 func Routers(mux *echo.Echo) {
 	mux.POST("/signup", handlers.Repo.Signup)
 	mux.POST("/login", handlers.Repo.Login)
-	mux.POST("/logout", handlers.Repo.Logout)
+	mux.POST("/logout", handlers.Repo.Logout, Auth)
+	mux.POST("/products/create", handlers.Repo.CreateProduct, Auth)
 
 }

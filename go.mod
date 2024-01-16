@@ -3,6 +3,7 @@ module github.com/ME/Byte-Books
 go 1.21.5
 
 require (
+	github.com/gorilla/sessions v1.2.2
 	github.com/jackc/pgconn v1.14.1
 	github.com/jackc/pgx/v5 v5.5.1
 	github.com/joho/godotenv v1.5.1
@@ -10,10 +11,7 @@ require (
 	golang.org/x/crypto v0.17.0
 )
 
-require (
-	github.com/gorilla/securecookie v1.1.2 // indirect
-	github.com/gorilla/sessions v1.2.2 // indirect
-)
+require github.com/gorilla/securecookie v1.1.2 // indirect
 
 require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2
