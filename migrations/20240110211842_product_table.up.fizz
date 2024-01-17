@@ -2,6 +2,7 @@ create_table("products") {
   t.Column("id", "integer", {primary : true})
   t.Column("name", "string", {})
   t.Column("description", "string", {})
+  t.Column("image", "string", {})
   t.Column("auther", "string", {})
   t.Column("price", "float", {})
   t.Column("quantity", "integer", {})

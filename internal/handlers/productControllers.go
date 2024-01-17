@@ -8,14 +8,14 @@ import (
 )
 
 func (r *Repository) CreateProduct(c echo.Context) error {
-	product := new(models.Product)
-	if err := c.Bind(product); err != nil {
+	var product models.Product
+	if err := c.Bind(&product); err != nil {
 		return c.JSON(echo.ErrBadRequest.Code, echo.Map{
 			"error": "could not read product info",
 		})
 	}
 
-	err := r.DB.InsertProduct(product)
+	err := r.DB.InsertProduct(&product)
 	if err != nil {
 		return c.JSON(echo.ErrBadRequest.Code, echo.Map{
 			"error": err,

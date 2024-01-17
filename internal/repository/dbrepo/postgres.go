@@ -97,12 +97,13 @@ func (d *postgresDBRepo) InsertProduct(product *models.Product) error {
 	defer cancel()
 
 	var id uint
-	stmt := `INSERT INTO products (name, description, auther, price, quantity, created_at, updated_at)
-	VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`
+	stmt := `INSERT INTO products (name, description, image, auther, price, quantity, created_at, updated_at)
+	VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`
 
 	err := d.DB.QueryRowContext(ctx, stmt,
 		product.Name,
 		product.Description,
+		product.Image,
 		product.Auther,
 		product.Price,
 		product.Quantity,
@@ -116,7 +117,7 @@ func (d *postgresDBRepo) InsertProduct(product *models.Product) error {
 
 	query := `SELECT * FROM products WHERE id = $1`
 	row := d.DB.QueryRow(query, id)
-	err = row.Scan(&product.ID, &product.Name, &product.Description, &product.Auther, &product.Price, &product.Quantity, &product.Created_at, &product.Updated_at)
+	err = row.Scan(&product.ID, &product.Name, &product.Description, &product.Image, &product.Auther, &product.Price, &product.Quantity, &product.Created_at, &product.Updated_at)
 
 	if err != nil {
 		return err

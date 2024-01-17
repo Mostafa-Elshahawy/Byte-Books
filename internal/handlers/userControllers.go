@@ -13,29 +13,35 @@ import (
 var Store = sessions.NewCookieStore([]byte("super secret key"))
 
 func (r *Repository) Signup(c echo.Context) error {
-	user := new(models.User)
-	if err := c.Bind(user); err != nil {
+	var data map[string]string
+	if err := c.Bind(&data); err != nil {
 		return c.JSON(http.StatusBadRequest, echo.Map{
 			"message": "could not read user data",
 		})
 	}
 
-	hashedPass, err := bcrypt.GenerateFromPassword([]byte(user.Password), 12)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, "could not hash password")
-	}
-
-	user = &models.User{Username: user.Username, Email: user.Email, Password: string(hashedPass), Phone: user.Phone, Address: user.Address}
-
-	if !govalidator.IsExistingEmail(user.Email) {
-		return c.JSON(http.StatusBadRequest, "enter valid email")
-	}
-
-	found := govalidator.IsNotNull(user.Username) && govalidator.IsNotNull(user.Email) && govalidator.IsNotNull(user.Password)
+	found := govalidator.IsNotNull(data["username"]) && govalidator.IsNotNull(data["email"]) && govalidator.IsNotNull(data["password"])
 	if !found {
 		return c.JSON(echo.ErrBadRequest.Code, echo.Map{
 			"error": "this filed can't be blank",
 		})
+	}
+
+	if !govalidator.IsExistingEmail(data["email"]) {
+		return c.JSON(http.StatusBadRequest, "enter valid email")
+	}
+
+	hashedPass, err := bcrypt.GenerateFromPassword([]byte(data["password"]), 12)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, "could not hash password")
+	}
+
+	user := &models.User{
+		Username: data["username"],
+		Email:    data["email"],
+		Password: string(hashedPass),
+		Phone:    data["phone"],
+		Address:  data["address"],
 	}
 
 	_, dberr := r.DB.AddUser(user)
@@ -50,20 +56,28 @@ func (r *Repository) Signup(c echo.Context) error {
 
 func (r *Repository) Login(c echo.Context) error {
 
-	userData := new(models.User)
-	err := c.Bind(&userData)
+	var data map[string]string
+	err := c.Bind(&data)
 	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, "something went wrong")
 	}
 
-	id, _, err := r.DB.Authenticate(userData.Email, userData.Password)
+	found := govalidator.IsNotNull(data["password"]) && govalidator.IsNotNull(data["email"])
+	if !found {
+		return c.JSON(echo.ErrBadRequest.Code, "enter your full credentials")
+	}
+
+	id, _, err := r.DB.Authenticate(data["email"], data["password"])
 	if err != nil {
-		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
-			"message": "user doesn't exist",
+		return c.JSON(echo.ErrBadRequest.Code, echo.Map{
+			"message": "wrong credentials or user not found",
 		})
 	}
 
-	session, _ := Store.Get(c.Request(), "session_id")
+	session, err := Store.Get(c.Request(), "session_id")
+	if err != nil {
+		return c.JSON(echo.ErrInternalServerError.Code, "could not get session")
+	}
 
 	session.Options = &sessions.Options{
 		MaxAge:   86400 * 7,
