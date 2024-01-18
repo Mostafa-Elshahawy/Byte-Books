@@ -11,4 +11,5 @@ type DatabaseRepo interface {
 	GetAllProducts() ([]models.Product, error)
 	DeleteProduct(id int) error
 	GetProdByID(id int) (models.Product, error)
+	GetUserCart(userID interface{}) (models.Cart, error)
 }

@@ -20,7 +20,7 @@ func (d *postgresDBRepo) AddUser(user *models.User) (uint, error) {
 
 	var id uint
 
-	stmt := `INSERT INTO users (username, email, password, phone, address, access_level, created_at, updated_at)
+	stmt := `INSERT INTO users (username, email, password, phone, address, is_admin, created_at, updated_at)
 	VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`
 
 	err := d.DB.QueryRowContext(ctx, stmt,
@@ -204,4 +204,18 @@ func (d *postgresDBRepo) GetProdByID(id int) (models.Product, error) {
 	}
 	return product, nil
 
+}
+
+func (d *postgresDBRepo) GetUserCart(userID interface{}) (models.Cart, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	var cart models.Cart
+	stmt := `SELECT c.id , c.user_id, c.product_id, c.quantity FROM cart c WHERE c.user_id = $1`
+	err := d.DB.QueryRowContext(ctx, stmt, userID).Scan(&cart.ID, &cart.UserID, &cart.ProductID, &cart.Quantity, &cart.User, &cart.Product)
+	if err != nil {
+		log.Println(err)
+		return cart, err
+	}
+	return cart, nil
 }

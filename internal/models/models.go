@@ -46,7 +46,7 @@ type Cart struct {
 	ProductID uint    `json:"product_id"`
 	Quantity  float64 `json:"quantity"`
 	User      User
-	Product   Product
+	Product   []Product
 }
 
 type Order struct {

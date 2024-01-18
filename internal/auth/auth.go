@@ -13,7 +13,7 @@ import (
 	"github.com/markbates/goth/providers/google"
 )
 
-var Store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
+var Store = sessions.NewCookieStore([]byte("super secret key"))
 
 func GoogleAuth() {
 	err := godotenv.Load()
@@ -21,7 +21,7 @@ func GoogleAuth() {
 		log.Fatal("could not get .env vars")
 	}
 
-	Store.MaxAge(154 * 5)
+	Store.MaxAge(86400 * 7)
 	Store.Options.HttpOnly = true
 	Store.Options.Secure = false
 	googleClientID := os.Getenv("GOOGLE_CLIENT_ID")
