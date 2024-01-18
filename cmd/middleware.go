@@ -3,14 +3,14 @@ package main
 import (
 	"net/http"
 
-	"github.com/ME/Byte-Books/internal/handlers"
+	"github.com/ME/Byte-Books/internal/auth"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo/v4"
 )
 
 func Auth(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		session, err := handlers.Store.Get(c.Request(), "session_id")
+		session, err := auth.Store.Get(c.Request(), "session_id")
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, "could not get sessoin")
 		}

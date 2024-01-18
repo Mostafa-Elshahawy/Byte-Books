@@ -3,14 +3,13 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/ME/Byte-Books/internal/auth"
 	"github.com/ME/Byte-Books/internal/models"
 	"github.com/asaskevich/govalidator"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo/v4"
 	"golang.org/x/crypto/bcrypt"
 )
-
-var Store = sessions.NewCookieStore([]byte("super secret key"))
 
 func (r *Repository) Signup(c echo.Context) error {
 	var data map[string]string
@@ -74,15 +73,9 @@ func (r *Repository) Login(c echo.Context) error {
 		})
 	}
 
-	session, err := Store.Get(c.Request(), "session_id")
+	session, err := auth.Store.Get(c.Request(), "session_id")
 	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, "could not get session")
-	}
-
-	session.Options = &sessions.Options{
-		MaxAge:   86400 * 7,
-		HttpOnly: true,
-		Secure:   false,
 	}
 
 	session.Values["user_id"] = id
@@ -99,7 +92,7 @@ func (r *Repository) Login(c echo.Context) error {
 }
 
 func (r *Repository) Logout(c echo.Context) error {
-	session, _ := Store.Get(c.Request(), "session_id")
+	session, _ := auth.Store.Get(c.Request(), "session_id")
 	session.Options.MaxAge = -10
 	session.Save(c.Request(), c.Response())
 

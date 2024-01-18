@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/ME/Byte-Books/internal/auth"
 	"github.com/ME/Byte-Books/internal/driver"
 	"github.com/ME/Byte-Books/internal/handlers"
 	"github.com/joho/godotenv"
@@ -15,6 +16,7 @@ func init() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+
 }
 
 func main() {
@@ -26,8 +28,9 @@ func main() {
 
 	repo := handlers.NewRepo(DB)
 	handlers.NewHandlers(repo)
-
+	auth.GoogleAuth()
 	mux := echo.New()
+
 	Routers(mux)
 	mux.Logger.Fatal(mux.Start(":8000"))
 }

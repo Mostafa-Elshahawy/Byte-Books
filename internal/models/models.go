@@ -3,15 +3,15 @@ package models
 import "time"
 
 type User struct {
-	ID          uint      `json:"id"`
-	Username    string    `json:"username"`
-	Email       string    `json:"email"`
-	Password    string    `json:"pasword"`
-	Phone       string    `json:"phone"`
-	Address     string    `json:"address"`
-	AccessLevel int       `json:"access_level"`
-	Created_at  time.Time `json:"created_at"`
-	Updated_at  time.Time `json:"updated_at"`
+	ID         uint      `json:"id"`
+	Username   string    `json:"username"`
+	Email      string    `json:"email"`
+	Password   string    `json:"pasword"`
+	Phone      string    `json:"phone"`
+	Address    string    `json:"address"`
+	IsAdmin    bool      `json:"is_admin"`
+	Created_at time.Time `json:"created_at"`
+	Updated_at time.Time `json:"updated_at"`
 }
 
 type Product struct {
