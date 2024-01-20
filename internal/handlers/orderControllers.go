@@ -21,6 +21,10 @@ func (r *Repository) Checkout(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to fetch user cart"})
 	}
 
+	if len(userCart) == 0 {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "User's cart is empty"})
+	}
+
 	// Calculate total price
 	var totalPrice float64
 	for _, item := range userCart {
