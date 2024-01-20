@@ -287,3 +287,92 @@ func (d *postgresDBRepo) DeleteFromCart(userID interface{}, productID int) error
 
 	return nil
 }
+
+func (d *postgresDBRepo) CreateOrder(userID interface{}, total_price float64) (uint, error) {
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	query := `
+		INSERT INTO orders (user_id, total_price, status, created_at, updated_at)
+		VALUES ($1, $2, 'Pending', $3, $4)
+		RETURNING id
+	`
+
+	var orderID uint
+	err := d.DB.QueryRowContext(ctx, query, userID, total_price, time.Now(), time.Now()).Scan(&orderID)
+	if err != nil {
+		return 0, fmt.Errorf("failed to create order: %v", err)
+	}
+
+	return orderID, nil
+
+}
+
+func (d *postgresDBRepo) GetOrderByID(userID interface{}) (models.Order, error) {
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	query := `
+		SELECT id, user_id, total_price, status, created_at, updated_at
+		FROM orders
+		WHERE id = $1
+	`
+
+	var order models.Order
+	err := d.DB.QueryRowContext(ctx, query, userID).Scan(
+		&order.ID, &order.UserID, &order.TotalPrice, &order.Status, &order.Created_at, &order.Updated_at,
+	)
+
+	if err != nil {
+		return order, fmt.Errorf("failed to get order details: %v", err)
+	}
+
+	return order, nil
+}
+
+func (d *postgresDBRepo) AddItemsToOrder(order_id interface{}, items []models.OrderItem) (models.Order, error) {
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	for _, item := range items {
+		query := `
+			INSERT INTO order_item (order_id, product_id, price, quantity, created_at, updated_at)
+			VALUES ($1, $2, $3, $4, $5, $6)
+		`
+
+		_, err := d.DB.ExecContext(ctx, query, order_id, item.ProductID, item.Price, item.Quantity, time.Now(), time.Now())
+		if err != nil {
+			return item.Order, fmt.Errorf("failed to add item to order: %v", err)
+		}
+	}
+
+	var order models.Order
+
+	stmt := `SELECT * FROM orders WHERE id =$1`
+	err := d.DB.QueryRowContext(ctx, stmt, order_id).Scan(&order.ID, &order.UserID, &order.TotalPrice, &order.Status, &order.Created_at, &order.Updated_at)
+	if err != nil {
+		return order, err
+	}
+
+	return order, nil
+}
+
+func (d *postgresDBRepo) ClearUserCart(userID interface{}) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	query := `
+		DELETE FROM cart
+		WHERE user_id = $1
+	`
+
+	_, err := d.DB.ExecContext(ctx, query, userID)
+	if err != nil {
+		return fmt.Errorf("failed to clear user's cart: %v", err)
+	}
+
+	return nil
+}

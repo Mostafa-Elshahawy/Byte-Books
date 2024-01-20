@@ -44,7 +44,7 @@ type Cart struct {
 	ID         uint      `json:"id"`
 	UserID     uint      `json:"user_id"`
 	ProductID  uint      `json:"product_id"`
-	Quantity   float64   `json:"quantity"`
+	Quantity   int       `json:"quantity"`
 	Created_at time.Time `json:"created_at"`
 	Updated_at time.Time `json:"updated_at"`
 	User       User
@@ -52,13 +52,14 @@ type Cart struct {
 }
 
 type Order struct {
-	ID         uint    `json:"id"`
-	UserID     uint    `json:"user_id"`
-	TotalPrice float64 `json:"total_price"`
-	Status     string  `json:"status"`
-	User       User
+	ID         uint      `json:"id"`
+	UserID     uint      `json:"user_id"`
+	TotalPrice float64   `json:"total_price"`
+	Status     string    `json:"status"`
 	Created_at time.Time `json:"created_at"`
 	Updated_at time.Time `json:"updated_at"`
+	User       User
+	Product    Product
 }
 
 type OrderItem struct {

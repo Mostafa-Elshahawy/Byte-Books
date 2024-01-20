@@ -14,4 +14,8 @@ type DatabaseRepo interface {
 	GetUserCart(userID interface{}) ([]models.Cart, error)
 	AddToCart(userID interface{}, productID int, quantity int) error
 	DeleteFromCart(userID interface{}, productID int) error
+	CreateOrder(userID interface{}, total_price float64) (uint, error)
+	AddItemsToOrder(order_id interface{}, items []models.OrderItem) (models.Order, error)
+	ClearUserCart(userID interface{}) error
+	GetOrderByID(userID interface{}) (models.Order, error)
 }
