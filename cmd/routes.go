@@ -16,5 +16,7 @@ func Routers(mux *echo.Echo) {
 	mux.DELETE("/products/delete/:id", handlers.Repo.DeleteItem, Auth)
 	mux.GET("/auth/google/callback", auth.GetAuthCallback)
 	mux.GET("/user/cart", handlers.Repo.ShowCart, Auth)
+	mux.POST("/cart/product/:id", handlers.Repo.AddItemToCart, Auth)
+	mux.DELETE("/user/cart/product/:id", handlers.Repo.RemoveFromCart, Auth)
 
 }

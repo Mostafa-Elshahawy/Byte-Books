@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"github.com/ME/Byte-Books/internal/models"
@@ -206,16 +207,83 @@ func (d *postgresDBRepo) GetProdByID(id int) (models.Product, error) {
 
 }
 
-func (d *postgresDBRepo) GetUserCart(userID interface{}) (models.Cart, error) {
+func (d *postgresDBRepo) GetUserCart(userID interface{}) ([]models.Cart, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	var cart models.Cart
-	stmt := `SELECT c.id , c.user_id, c.product_id, c.quantity FROM cart c WHERE c.user_id = $1`
-	err := d.DB.QueryRowContext(ctx, stmt, userID).Scan(&cart.ID, &cart.UserID, &cart.ProductID, &cart.Quantity, &cart.User, &cart.Product)
+	//var cart models.Cart
+	//stmt := `SELECT * FROM cart WHERE user_id = $1`
+	stmt := `SELECT c.id, c.user_id, c.product_id, c.quantity, c.created_at, c.updated_at,
+	u.id, u.username, u.email, u.password, u.phone, u.address, u.is_admin, u.created_at, u.updated_at,
+	p.id, p.name, p.description, p.image, p.auther, p.price, p.quantity, p.created_at, p.updated_at
+	FROM cart c
+	JOIN users u ON c.user_id = u.id
+	JOIN products p ON c.product_id = p.id
+	WHERE c.user_id = $1`
+	// err := d.DB.QueryRowContext(ctx, stmt, userID).Scan(&cart.ID, &cart.UserID, &cart.ProductID, &cart.Quantity, &cart.Created_at, &cart.Updated_at)
+	// if err != nil {
+	// 	log.Println(err)
+	// 	return cart, err
+	// }
+	// return cart, nil
+	rows, err := d.DB.QueryContext(ctx, stmt, userID)
 	if err != nil {
-		log.Println(err)
-		return cart, err
+		fmt.Fprintf(os.Stderr, "Query failed: %v\n", err)
+		//return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to fetch user cart"})
 	}
-	return cart, nil
+	defer rows.Close()
+
+	var userCart []models.Cart
+
+	for rows.Next() {
+		var cart models.Cart
+		var user models.User
+		var product models.Product
+
+		err := rows.Scan(
+			&cart.ID, &cart.UserID, &cart.ProductID, &cart.Quantity, &cart.Created_at, &cart.Updated_at,
+			&user.ID, &user.Username, &user.Email, &user.Password, &user.Phone, &user.Address, &user.IsAdmin, &user.Created_at, &user.Updated_at,
+			&product.ID, &product.Name, &product.Description, &product.Image, &product.Auther, &product.Price, &product.Quantity, &product.Created_at, &product.Updated_at,
+		)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error scanning row: %v\n", err)
+			//return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to fetch user cart"})
+		}
+
+		cart.User = user
+		cart.Product = append(cart.Product, product)
+		userCart = append(userCart, cart)
+	}
+	return userCart, nil
+}
+
+func (d *postgresDBRepo) AddToCart(userID interface{}, productID int, quantity int) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	query := `
+		INSERT INTO cart (user_id, product_id, quantity, created_at, updated_at)
+		VALUES ($1, $2, $3, $4, $5)
+	`
+
+	_, err := d.DB.ExecContext(ctx, query, userID, productID, quantity, time.Now(), time.Now())
+	fmt.Println(err)
+	if err != nil {
+		return fmt.Errorf("failed to add item to cart: %v", err)
+	}
+
+	return nil
+}
+
+func (d *postgresDBRepo) DeleteFromCart(userID interface{}, productID int) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	query := `DELETE FROM cart WHERE user_id =$1 AND product_id =$2`
+
+	_, err := d.DB.ExecContext(ctx, query, userID, productID)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

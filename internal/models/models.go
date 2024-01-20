@@ -41,12 +41,14 @@ type ProductCategory struct {
 }
 
 type Cart struct {
-	ID        uint    `json:"id"`
-	UserID    uint    `json:"user_id"`
-	ProductID uint    `json:"product_id"`
-	Quantity  float64 `json:"quantity"`
-	User      User
-	Product   []Product
+	ID         uint      `json:"id"`
+	UserID     uint      `json:"user_id"`
+	ProductID  uint      `json:"product_id"`
+	Quantity   float64   `json:"quantity"`
+	Created_at time.Time `json:"created_at"`
+	Updated_at time.Time `json:"updated_at"`
+	User       User
+	Product    []Product
 }
 
 type Order struct {
