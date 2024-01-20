@@ -67,3 +67,21 @@ func (r *Repository) Checkout(c echo.Context) error {
 		"order":   orderDetails,
 	})
 }
+
+func (r *Repository) GetUserOrders(c echo.Context) error {
+	session, err := auth.Store.Get(c.Request(), "session_id")
+	if err != nil {
+		return c.JSON(echo.ErrInternalServerError.Code, "could not get session")
+	}
+	userID := session.Values["user_id"]
+
+	orders, err := r.DB.GetOrders(userID)
+	if err != nil {
+		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
+			"error": "could not get user's orders",
+		})
+	}
+	return c.JSON(http.StatusOK, echo.Map{
+		"orders": orders,
+	})
+}

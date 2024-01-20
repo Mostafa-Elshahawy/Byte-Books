@@ -18,4 +18,5 @@ type DatabaseRepo interface {
 	AddItemsToOrder(order_id interface{}, items []models.OrderItem) (models.Order, error)
 	ClearUserCart(userID interface{}) error
 	GetOrderByID(userID interface{}) (models.Order, error)
+	GetOrders(user_id interface{}) ([]models.Order, error)
 }

@@ -211,8 +211,6 @@ func (d *postgresDBRepo) GetUserCart(userID interface{}) ([]models.Cart, error) 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	//var cart models.Cart
-	//stmt := `SELECT * FROM cart WHERE user_id = $1`
 	stmt := `SELECT c.id, c.user_id, c.product_id, c.quantity, c.created_at, c.updated_at,
 	u.id, u.username, u.email, u.password, u.phone, u.address, u.is_admin, u.created_at, u.updated_at,
 	p.id, p.name, p.description, p.image, p.auther, p.price, p.quantity, p.created_at, p.updated_at
@@ -220,16 +218,10 @@ func (d *postgresDBRepo) GetUserCart(userID interface{}) ([]models.Cart, error) 
 	JOIN users u ON c.user_id = u.id
 	JOIN products p ON c.product_id = p.id
 	WHERE c.user_id = $1`
-	// err := d.DB.QueryRowContext(ctx, stmt, userID).Scan(&cart.ID, &cart.UserID, &cart.ProductID, &cart.Quantity, &cart.Created_at, &cart.Updated_at)
-	// if err != nil {
-	// 	log.Println(err)
-	// 	return cart, err
-	// }
-	// return cart, nil
+
 	rows, err := d.DB.QueryContext(ctx, stmt, userID)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Query failed: %v\n", err)
-		//return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to fetch user cart"})
 	}
 	defer rows.Close()
 
@@ -247,7 +239,6 @@ func (d *postgresDBRepo) GetUserCart(userID interface{}) ([]models.Cart, error) 
 		)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error scanning row: %v\n", err)
-			//return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to fetch user cart"})
 		}
 
 		cart.User = user
@@ -347,6 +338,16 @@ func (d *postgresDBRepo) AddItemsToOrder(order_id interface{}, items []models.Or
 		if err != nil {
 			return item.Order, fmt.Errorf("failed to add item to order: %v", err)
 		}
+
+		updateQuery := `
+	UPDATE products
+	SET quantity = quantity - $1
+	WHERE id = $2
+`
+		_, err = d.DB.ExecContext(ctx, updateQuery, item.Quantity, item.ProductID)
+		if err != nil {
+			return item.Order, fmt.Errorf("failed to update product quantity: %v", err)
+		}
 	}
 
 	var order models.Order
@@ -375,4 +376,30 @@ func (d *postgresDBRepo) ClearUserCart(userID interface{}) error {
 	}
 
 	return nil
+}
+
+func (d *postgresDBRepo) GetOrders(user_id interface{}) ([]models.Order, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	query := `SELECT * FROM orders WHERE user_id =$1 ORDER BY created_at DESC`
+	rows, err := d.DB.QueryContext(ctx, query, user_id)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get user orders: %v", err)
+	}
+
+	defer rows.Close()
+
+	var orders []models.Order
+	for rows.Next() {
+		var order models.Order
+		err := rows.Scan(
+			&order.ID, &order.UserID, &order.TotalPrice, &order.Status, &order.Created_at, &order.Updated_at,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan user orders: %v", err)
+		}
+		orders = append(orders, order)
+	}
+	return orders, nil
 }
