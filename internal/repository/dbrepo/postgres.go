@@ -257,7 +257,6 @@ func (d *postgresDBRepo) AddToCart(userID interface{}, productID int, quantity i
 	`
 
 	_, err := d.DB.ExecContext(ctx, query, userID, productID, quantity, time.Now(), time.Now())
-	fmt.Println(err)
 	if err != nil {
 		return fmt.Errorf("failed to add item to cart: %v", err)
 	}

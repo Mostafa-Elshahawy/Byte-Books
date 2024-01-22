@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/gob"
 	"net/http"
 
 	"github.com/ME/Byte-Books/internal/auth"
@@ -54,7 +55,7 @@ func (r *Repository) Signup(c echo.Context) error {
 }
 
 func (r *Repository) Login(c echo.Context) error {
-
+	gob.Register(models.User{})
 	var data map[string]string
 	err := c.Bind(&data)
 	if err != nil {
@@ -79,6 +80,8 @@ func (r *Repository) Login(c echo.Context) error {
 	}
 
 	session.Values["user_id"] = id
+	session.Values["user_email"] = data["email"]
+	session.Values["username"] = data["username"]
 	err = sessions.Save(c.Request(), c.Response())
 	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
