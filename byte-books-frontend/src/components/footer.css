@@ -1,0 +1,46 @@
+body {
+        background-color: #e3e6f3;
+        display: flex;
+        flex-wrap: wrap;
+        /*align-items: center;*/
+        justify-content: space-between;
+
+}
+.col{
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom:20px;
+}
+
+.logo {
+    margin-bottom:10px;
+}
+
+h4 {
+    font-size:14px;
+    padding-bottom: 20px;
+}
+p {
+    font-size:13px;
+    margin: 0 0 8px 0;
+}
+a {
+    text-decoration: none;
+    font-size:13px;
+    color :#222;
+    margin-bottom: 10px;
+}
+.follow {
+    margin-top:20px;
+}
+
+.follow i {
+    color:#465b52;
+    padding-right:4px;
+    cursor:pointer;
+}
+
+a:hover{
+    color:#552d2d;
+}
