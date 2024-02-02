@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom';
 const theme = createTheme({
     palette: {
         primary:{
-            main:'#A94438',
+            main:'#944e63',
         },
     },
 });
@@ -16,7 +16,7 @@ const theme = createTheme({
 const styles = {
     button: {
         '&:hover': {
-            backgroundColor :'#bf4d40',
+            backgroundColor :'#b0697e',
             borderRadius: '10px',
             color:'#ffffff',    
         },

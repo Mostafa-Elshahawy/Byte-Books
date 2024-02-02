@@ -5,7 +5,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import {ThemeProvider} from "@mui/material/styles";
 import manReadinImage from '../images/man-reading.png';
 
-const Form = ({title,onSubmit}) => {
+const LoginForm = ({title,onSubmit}) => {
     const theme = useTheme();
   
       const signInLabel = {
@@ -20,10 +20,11 @@ const Form = ({title,onSubmit}) => {
     
       const googleButton = {
         marginTop: theme.spacing(2),
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: '#CAA6A6',
         color: '#fff',
+        fontWeight: 'bold',
         '&:hover': {
-          backgroundColor: theme.palette.secondary.dark,
+          backgroundColor: '#b38080',
         },
       };
 
@@ -36,10 +37,7 @@ const Form = ({title,onSubmit}) => {
     return (
         <ThemeProvider theme={theme}>
       <form style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }} onSubmit={handleSubmit}>
-        {/* Image */}
-        <img src={manReadinImage} alt="man reading" style={{ width: '50%' }} />
-
-        <Grid container direction="column" justify="center" alignItems="center" style={{ borderLeft: '1px solid #ccc', width: '50%' }}>
+        <Grid container direction="column" justify="center" alignItems="center" style={{ borderRight: '1px solid #ccc', width: '50%' }}>
           {/* Sign In label */}
           <Typography variant="h2" style={signInLabel}>
             Sign In
@@ -59,7 +57,9 @@ const Form = ({title,onSubmit}) => {
           </Typography>
 
           {/* Sign In button */}
-          <Button type="submit" variant="contained" style={{ marginTop: theme.spacing(2) }}>
+          <Button type="submit" variant="contained" style={{ marginTop: theme.spacing(2), fontWeight: 'bold',backgroundColor:'#944e63','&:hover':{
+            backgroundColor: '#b0697e',
+          }}}>
             Sign In
           </Button>
 
@@ -68,9 +68,11 @@ const Form = ({title,onSubmit}) => {
             Sign In with Google
           </Button>
         </Grid>
+        {/* Image */}
+        <img src={manReadinImage} alt="man reading" style={{ width: '50%' }} />
       </form>
     </ThemeProvider>
     );
 };
 
-export default Form;
+export default LoginForm;

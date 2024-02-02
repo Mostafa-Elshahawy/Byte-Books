@@ -1,8 +1,8 @@
 import React,{useState} from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
-import Form from '../components/Form';
-import Footer from '../components/Footer';
+import LoginForm from '../components/LoginForm';
+
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
@@ -22,7 +22,7 @@ const LoginPage = () => {
     return (
         <div>
         <Navbar />
-        <Form
+        <LoginForm
           title="Login"
           onSubmit={handleLogin}
         >
@@ -42,8 +42,7 @@ const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
-        </Form>
-        <Footer />
+        </LoginForm>
       </div>
     );
 };
