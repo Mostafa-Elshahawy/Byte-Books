@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import {Grid,Typography,Link} from '@mui/material';
+import {Grid,Typography} from '@mui/material';
 import phoneContact from '../images/PhoneContact.png';
 
 const ContactUsPage = () => {
