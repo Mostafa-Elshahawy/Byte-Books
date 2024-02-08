@@ -9,6 +9,7 @@ import (
 	"github.com/ME/Byte-Books/internal/handlers"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func init() {
@@ -30,7 +31,9 @@ func main() {
 	handlers.NewHandlers(repo)
 	auth.GoogleAuth()
 	mux := echo.New()
-
+	mux.Use(middleware.Logger())
+	mux.Use(middleware.Recover())
+	mux.Use(middleware.CORS())
 	Routers(mux)
 	mux.Logger.Fatal(mux.Start(":8000"))
 }
