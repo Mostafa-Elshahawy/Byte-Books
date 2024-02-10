@@ -4,6 +4,7 @@ import LoginPage from './pages/loginPage';
 import SignupPage from './pages/signupPage';
 import ContactUsPage from './pages/contactUsPage';
 import Main from './pages/Main';
+import Store from './pages/Store';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/signup" component={SignupPage} />
         <Route path="/contact-us" component={ContactUsPage} />
         <Route path="/Main" component={Main} />
+        <Route path='/Store' compoent={Store}/>
       </Switch>
     </Router>
   );
