@@ -43,8 +43,8 @@ const LoginForm = ({title,onSubmit}) => {
             Sign In
           </Typography>
 
-          {/* Username input */}
-          <TextField label="Username" variant="outlined" fullWidth style={{ marginBottom: theme.spacing(2) ,width:'80%' }} />
+          {/* Email input */}
+          <TextField label="Email" variant="outlined" fullWidth style={{ marginBottom: theme.spacing(2) ,width:'80%' }} />
 
           {/* Password input */}
           <TextField label="Password" type="password" variant="outlined" fullWidth style={{ marginBottom: theme.spacing(2) ,width:'80%' }} />

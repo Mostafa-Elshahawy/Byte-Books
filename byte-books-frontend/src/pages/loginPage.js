@@ -5,16 +5,18 @@ import LoginForm from '../components/LoginForm';
 
 
 const LoginPage = () => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleLogin = async ()=>{
         try {
             const response = await axios.post('http://localhost:5000/login', {
-                username,
+                email,
                 password,
             });
-            console.log('loginSuccessful', response.data);
+            if (response.data.messege === "logged in successfully"){
+              window.location.href = "/main";
+            }
         }catch (error) {
             console.error('error during login',error.response.data);
         }
@@ -27,11 +29,11 @@ const LoginPage = () => {
           onSubmit={handleLogin}
         >
           <label>
-            Username:
+            Email:
             <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </label>
           <label>
