@@ -38,14 +38,14 @@ const theme = createTheme   ({
       },
     });
 
-    const Product= ()=> {
+    const Product= ({bookName,Author,imageSrc})=> {
         return (
             <ThemeProvider theme={theme}>
                 <Card>
-                    <CardMedia content='img' src='../images/atomic-habits.jpg' alt='Atomic Habits'/>
+                    <CardMedia content='img' src={imageSrc} />
                     <CardContent>
-                        <Typography variant ='subtitle1'>James Clear</Typography>
-                        <Typography variant ='h5'>Atomic Habits</Typography>
+                        <Typography variant ='subtitle1'>{bookName}</Typography>
+                        <Typography variant ='h5'>{Author}</Typography>
                         <div className='starRating'>
                             <StarIcon />
                             <StarIcon />
