@@ -17,10 +17,10 @@ const Gallery = ({products}) => {
     const currentProducts = products.slice(startIndex, endIndex);
 
     return (
-        <div>
-            <Grid container spacing={3}>
+        <div style={{margin:'10px'}}>
+            <Grid container spacing={4}>
                 {currentProducts.map((product,index)=>(
-                    <Grid  item xs={12} sm={6} md={4} key={index}>
+                    <Grid  item xs={12} sm={6} md={3} key={index}>
                         <Product product={product} />
                     </Grid>
                 ))}

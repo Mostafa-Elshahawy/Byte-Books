@@ -32,11 +32,11 @@ const SignupPage = () => {
     <div>
       <Navbar />
       <SignUpForm title='signUp' onSubmit={handleSignUp}>
-        <label>phone:<input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} /></label>
-        <label>address:<input type="text" value={address} onChange={(e) => setAddress(e.target.value)} /></label>
         <label>username:<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} /></label>
         <label>email:<input type="text" value={email} onChange={(e) => setEmail(e.target.value)} /></label>
         <label>password:<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} /></label>
+        <label>phone:<input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} /></label>
+        <label>address:<input type="text" value={address} onChange={(e) => setAddress(e.target.value)} /></label>
       </SignUpForm>
     </div>
   )

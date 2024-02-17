@@ -38,11 +38,11 @@ const SignUpForm = ({title,onSubmit})=>{
                 <img src={manReadinImage} style={{width:'50%'}} alt="man reading"/>
                 <Grid container direction="column" justify="center" alignItems="center" style={{borderLeft:'1px solid #ccc',width:'50%'}}>
                     <Typography variant="h2" style={SignUpLabel}>Sign Up</Typography>
-                    <TextField label="first name" variant='outlined' style={{marginBottom:theme.spacing(2),width:'80%'}}/>
-                    <TextField label="last name" variant='outlined' style={{marginBottom:theme.spacing(2),width:'80%'}}/>
                     <TextField label="Email" variant='outlined' style={{marginBottom:theme.spacing(2),width:'80%'}}/>
                     <TextField label="Username" variant='outlined' style={{marginBottom:theme.spacing(2),width:'80%'}}/>
                     <TextField label="Password" type="password" variant='outlined' style={{marginBottom:theme.spacing(2),width:'80%'}}/>
+                    <TextField label="Phone" variant='outlined' style={{marginBottom:theme.spacing(2),width:'80%'}}/>
+                    <TextField label="Adress" variant='outlined' style={{marginBottom:theme.spacing(2),width:'80%'}}/>
                     <Typography variant='body2' align='center' style={SignInLink}>
                         <Link component={RouterLink} to="/login" >Already have an account? Sign In here</Link>
                     </Typography>
