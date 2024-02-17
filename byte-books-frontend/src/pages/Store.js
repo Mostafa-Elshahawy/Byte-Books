@@ -10,7 +10,7 @@ const Store = () => {
     useEffect(()=>{
         const fetchData = async () =>{
             try{
-                const data = await axios.get('http://localhost:5000/products/all');
+                const data = await axios.get('http://localhost:8000/products/all');
                 setProducts(data.data);
             }
             catch(error){

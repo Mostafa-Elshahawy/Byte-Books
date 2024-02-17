@@ -12,7 +12,7 @@ const SignupPage = () => {
 
   const handleSignUp = async ()=>{
     try{
-      const response = axios.get('http://localhost:5000/signup', {
+      const response = axios.post('http://localhost:8000/signup', {
         username,
         password,
         email,

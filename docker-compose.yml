@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  myapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8080" 
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: huw8wstzr
+      POSTGRES_DB: byte_books
+    ports:
+      - "5432:5432" 
