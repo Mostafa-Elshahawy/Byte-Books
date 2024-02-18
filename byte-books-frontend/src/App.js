@@ -5,6 +5,7 @@ import SignupPage from './pages/signupPage';
 import ContactUsPage from './pages/contactUsPage';
 import Main from './pages/Main';
 import Store from './pages/Store';
+import Cart from './pages/Cart';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
         <Route path="/signup" component={SignupPage} />
         <Route path="/contact-us" component={ContactUsPage} />
         <Route path="/Main" component={Main} />
-        <Route path='/Store' compoent={Store}/>
+        <Route path='/Store' component={Store}/>
+        <Route path='/Cart' component={Cart}/>
       </Switch>
     </Router>
   );
