@@ -12,14 +12,14 @@ const SignupPage = () => {
 
   const handleSignUp = async ()=>{
     try{
-      const response = axios.post('http://localhost:8000/signup', {
+      const response = await axios.post('http://localhost:8000/signup', {
         username,
         password,
         email,
         phone,
         address,
       });
-      if (response.data.messege === "signed up successfully"){
+      if (response.data.message === "signed up successfully"){
         window.location.href = "/main";
       }
     }
