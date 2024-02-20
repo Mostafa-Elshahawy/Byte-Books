@@ -1,6 +1,6 @@
 // ProductView.js
 import React, { useState, useEffect } from 'react';
-import { Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@material-ui/core';
+import { Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
 
 const ProductView = () => {
   // State for storing product data and analytical data

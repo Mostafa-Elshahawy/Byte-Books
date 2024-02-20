@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tabs, Tab, Container } from '@material-ui/core';
+import { Tabs, Tab, Container } from '@mui/material';
 import ProductView from './ProductView';
 import ProductEdit from './ProductEdit';
 

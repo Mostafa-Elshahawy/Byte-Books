@@ -1,6 +1,6 @@
 // ProductEdit.js
 import React, { useState, useEffect } from 'react';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
 const ProductEdit = () => {
   // State for managing product editing

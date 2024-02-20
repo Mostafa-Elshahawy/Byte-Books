@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Typography, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton } from '@material-ui/core';
-import { Delete } from '@material-ui/icons';
+import { Typography, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton } from '@mui/material';
+import { Delete } from '@mui/icons-material';
 
 const ShoppingCart = () => {
   const [cartItems, setCartItems] = useState([]);
