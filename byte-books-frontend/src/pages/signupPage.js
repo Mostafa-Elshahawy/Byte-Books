@@ -5,8 +5,8 @@ import SignUpForm from '../components/SignupForm';
 
 const SignupPage = () => {
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [phone,setPhone] = useState('');
   const [address,setAddress] = useState('');
 
@@ -14,8 +14,8 @@ const SignupPage = () => {
     try{
       const response = await axios.post('http://localhost:8000/signup', {
         username,
-        password,
         email,
+        password,
         phone,
         address,
       });

@@ -52,6 +52,7 @@ func (r *Repository) Signup(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, echo.Map{
+		"user":    user,
 		"messege": "signed up successfully",
 	})
 }
