@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import {Button, Typography, Link,TextField,Grid,useTheme} from '@mui/material';
 import {Link as RouterLink} from 'react-router-dom';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -7,7 +7,11 @@ import manReadinImage from '../images/man-reading.png';
 
 const LoginForm = ({title,onSubmit}) => {
     const theme = useTheme();
-  
+
+    const [formData,setFormData] = useState({
+        email:'',
+        password:''
+    });
       const signInLabel = {
         fontWeight: 'bold',
         fontSize: '24px',
@@ -27,29 +31,29 @@ const LoginForm = ({title,onSubmit}) => {
           backgroundColor: '#b38080',
         },
       };
-
+    
+    const handleChange = (event)=>{
+      const {name,value}=event.target;
+      setFormData(prevstate =>({
+        ...prevstate,[name]:value
+      }));
+    };
+    
     const handleSubmit = (event) => {
         event.preventDefault();
         if(onSubmit){
-            onSubmit();
+            onSubmit(formData);
         }
     };
     return (
         <ThemeProvider theme={theme}>
       <form style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }} onSubmit={handleSubmit}>
         <Grid container direction="column" justify="center" alignItems="center" style={{ borderRight: '1px solid #ccc', width: '50%' }}>
-          {/* Sign In label */}
           <Typography variant="h2" style={signInLabel}>
             Sign In
           </Typography>
-
-          {/* Email input */}
-          <TextField label="Email" variant="outlined" fullWidth style={{ marginBottom: theme.spacing(2) ,width:'80%' }} />
-
-          {/* Password input */}
-          <TextField label="Password" type="password" variant="outlined" fullWidth style={{ marginBottom: theme.spacing(2) ,width:'80%' }} />
-
-          {/* Sign up link */}
+          <TextField name='email' label="Email" variant="outlined" fullWidth style={{ marginBottom: theme.spacing(2) ,width:'80%' }} value={formData.email} onChange={handleChange}/>
+          <TextField name='password' label="Password" type="password" variant="outlined" fullWidth style={{ marginBottom: theme.spacing(2) ,width:'80%' }} value={formData.password} onChange={handleChange}/>
           <Typography variant="body2" align="center" style={signUpLink}>
             <Link component={RouterLink} to="/signup">
               Don't have an account? Create one.

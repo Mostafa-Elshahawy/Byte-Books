@@ -1,24 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import SignUpForm from '../components/SignupForm';
 
 const SignupPage = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone,setPhone] = useState('');
-  const [address,setAddress] = useState('');
 
-  const handleSignUp = async ()=>{
+  const handleSignUp = async (formData)=>{
     try{
-      const response = await axios.post('http://localhost:8000/signup', {
-        username,
-        email,
-        password,
-        phone,
-        address,
-      });
+      const response = await axios.post('http://localhost:8000/signup', formData);
       if (response.data.message === "signed up successfully"){
         window.location.href = "/main";
       }
@@ -31,13 +20,8 @@ const SignupPage = () => {
   return (
     <div>
       <Navbar />
-      <SignUpForm title='signUp' onSubmit={handleSignUp}>
-        <label>username:<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} /></label>
-        <label>email:<input type="text" value={email} onChange={(e) => setEmail(e.target.value)} /></label>
-        <label>password:<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} /></label>
-        <label>phone:<input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} /></label>
-        <label>address:<input type="text" value={address} onChange={(e) => setAddress(e.target.value)} /></label>
-      </SignUpForm>
+      <SignUpForm title='signUp' onSubmit={handleSignUp}/>
+        
     </div>
   )
 

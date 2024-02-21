@@ -1,19 +1,14 @@
-import React,{useState} from 'react';
+import React from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import LoginForm from '../components/LoginForm';
 
 
 const LoginPage = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
-    const handleLogin = async ()=>{
+    const handleLogin = async (formData)=>{
         try {
-            const response = await axios.post('http://localhost:8000/login', {
-                email,
-                password,
-            });
+            const response = await axios.post('http://localhost:8000/login',formData);
             if (response.data.messege === "logged in successfully"){
               window.location.href = "/main";
             }
@@ -24,27 +19,7 @@ const LoginPage = () => {
     return (
         <div>
         <Navbar />
-        <LoginForm
-          title="Login"
-          onSubmit={handleLogin}
-        >
-          <label>
-            Email:
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </label>
-          <label>
-            Password:
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
-        </LoginForm>
+        <LoginForm title="Login" onSubmit={handleLogin} />
       </div>
     );
 };
