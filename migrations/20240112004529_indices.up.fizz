@@ -1,8 +1,0 @@
-add_index("users","email",{"unique" : true})
-add_index("users",["id","username"], {})
-
-add_index("products",["id","name"], {})
-
-add_index("orders","id",{})
-
-add_index("cart","id", {})

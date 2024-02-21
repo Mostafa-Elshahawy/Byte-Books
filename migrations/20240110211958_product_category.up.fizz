@@ -1,4 +1,0 @@
-create_table("product_category") {
-  t.Column("product_id", "integer", {})
-  t.Column("category_id", "integer", {})
-}

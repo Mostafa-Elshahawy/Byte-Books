@@ -1,0 +1,6 @@
+ create_table("order_item"){
+  t.Column("product_id", "integer", {})
+  t.Column("order_id", "integer", {})
+  t.Column("price", "float", {})
+  t.Column("quantity", "integer", {})
+ }

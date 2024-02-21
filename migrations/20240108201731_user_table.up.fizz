@@ -1,9 +1,0 @@
-create_table("users") {
-  t.Column("id", "integer", {primary : true})
-  t.Column("username", "string", {})
-  t.Column("email", "string", {})
-  t.Column("password", "string", {"size": 60})
-  t.Column("phone", "string", {})
-  t.Column("address", "string", {})
-  t.Column("is_admin", "bool", {"default": false})
-}

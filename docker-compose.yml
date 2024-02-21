@@ -1,19 +1,33 @@
-version: '3'
+version: '3.8'
 
 services:
-  myapp:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  frontend:
+    build: ./byte-books-frontend
     ports:
-      - "8000:8080" 
+      - '3000:3000'
+    volumes:
+      - ./byte-books-frontend/src:/app/src
+    stdin_open: true
+    tty: true
+
+  backend:
+    build: ./backend
+    env_file:
+      - .env
+    ports:
+      - "8000:8000" 
+    volumes:
+      - ./backend:/app
+    command: go run backend/cmd/*.go
 
   postgres:
-    image: postgres:latest
-    restart: always
+    image: postgres:alpine
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: huw8wstzr
-      POSTGRES_DB: byte_books
+      - DATABASE_URL=${DATABASE_URL}
     ports:
       - "5432:5432" 
+    volumes:
+      - postgres-db:/app/database
+
+volumes:
+  postgres-db:
