@@ -9,7 +9,7 @@ const LoginPage = () => {
     const handleLogin = async (formData)=>{
         try {
             const response = await axios.post('http://localhost:8000/login',formData);
-            if (response.data.messege === "logged in successfully"){
+            if (response.data.message === "logged in successfully"){
               window.location.href = "/main";
             }
         }catch (error) {
