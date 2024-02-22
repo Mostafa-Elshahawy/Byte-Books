@@ -59,18 +59,18 @@ func (r *Repository) Signup(c echo.Context) error {
 
 func (r *Repository) Login(c echo.Context) error {
 	gob.Register(models.User{})
-	var data map[string]string
-	err := c.Bind(&data)
+	var user models.User
+	err := c.Bind(&user)
 	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, "something went wrong")
 	}
 
-	found := govalidator.IsNotNull(data["password"]) && govalidator.IsNotNull(data["email"])
+	found := govalidator.IsNotNull(user.Password) && govalidator.IsNotNull(user.Email)
 	if !found {
 		return c.JSON(echo.ErrBadRequest.Code, "enter your full credentials")
 	}
 
-	id, _, err := r.DB.Authenticate(data["email"], data["password"])
+	id, _, err := r.DB.Authenticate(user.Email, user.Password)
 	if err != nil {
 		return c.JSON(echo.ErrBadRequest.Code, echo.Map{
 			"message": "wrong credentials or user not found",
@@ -83,8 +83,8 @@ func (r *Repository) Login(c echo.Context) error {
 	}
 
 	session.Values["user_id"] = id
-	session.Values["user_email"] = data["email"]
-	session.Values["username"] = data["username"]
+	session.Values["user_email"] = user.Email
+	session.Values["username"] = user.Password
 	err = sessions.Save(c.Request(), c.Response())
 	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
@@ -92,9 +92,13 @@ func (r *Repository) Login(c echo.Context) error {
 		})
 	}
 
-	return c.JSON(http.StatusOK, echo.Map{
-		"message": "logged in successfully",
-	})
+	if user.IsAdmin == true {
+		return c.JSON(http.StatusOK, "logged in as admin")
+	} else {
+		return c.JSON(http.StatusOK, echo.Map{
+			"message": "logged in successfully",
+		})
+	}
 }
 
 func (r *Repository) Logout(c echo.Context) error {
