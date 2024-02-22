@@ -93,7 +93,9 @@ func (r *Repository) Login(c echo.Context) error {
 	}
 
 	if user.IsAdmin == true {
-		return c.JSON(http.StatusOK, "logged in as admin")
+		return c.JSON(http.StatusOK, echo.Map{
+			"message": "logged in as admin",
+		})
 	} else {
 		return c.JSON(http.StatusOK, echo.Map{
 			"message": "logged in successfully",

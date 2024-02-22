@@ -3,6 +3,7 @@ import { AppBar, Toolbar, IconButton, Typography, Button,createTheme,ThemeProvid
 import MenuIcon from '@mui/icons-material/Menu';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import {Link} from 'react-router-dom';
+import Axios from 'axios';
 
 
 const theme = createTheme({
@@ -26,7 +27,21 @@ const styles = {
     },
 };
 
-const Navbar = ({isAuthenticated, handleLogout}) => {
+const Navbar = () => {
+
+    const handleLogout = async ()=>{
+        try{
+            const response = await Axios.post('http://localhost:8000/logout');
+            if (response.data.message === 'logged out'){
+                localStorage.setItem('loginStatus',false);
+                window.location.href='/main';
+            }
+        }catch(error){
+            console.log('error during login',error.response.data);
+        }
+    }
+
+    const loginStatus = localStorage.getItem('loginStatus');
     return (
         <ThemeProvider theme={theme}>
             <AppBar position='static' style={{width :'100%',marginBottom: '20px'}}>
@@ -46,7 +61,7 @@ const Navbar = ({isAuthenticated, handleLogout}) => {
                 <Button component={Link} to="/contact" color="inherit" sx={styles.button}>
                 Contact Us
                 </Button>
-                {isAuthenticated ?(
+                {loginStatus ?(
                     <>
                     <Button component={Link} to="/account" color="inherit" sx={styles.button}>
                     Account
