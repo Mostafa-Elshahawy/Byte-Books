@@ -14,7 +14,10 @@ func Auth(next echo.HandlerFunc) echo.HandlerFunc {
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, "could not get sessoin")
 		}
-
+		c.Set("session", session)
+		c.Response().Before(func() {
+			session.Save(c.Request(), c.Response())
+		})
 		if !IsAuthenticated(session) {
 			return c.JSON(echo.ErrUnauthorized.Code, "unautherized")
 		}

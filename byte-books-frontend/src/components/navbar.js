@@ -37,7 +37,7 @@ const Navbar = () => {
                 window.location.href='/main';
             }
         }catch(error){
-            console.log('error during login',error.response.data);
+            console.log('error during logout',error.response.data);
         }
     }
 

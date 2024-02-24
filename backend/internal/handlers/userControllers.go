@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/gob"
 	"net/http"
 
 	"github.com/ME/Byte-Books/internal/auth"
@@ -58,19 +57,18 @@ func (r *Repository) Signup(c echo.Context) error {
 }
 
 func (r *Repository) Login(c echo.Context) error {
-	gob.Register(models.User{})
-	var user models.User
-	err := c.Bind(&user)
+	var data map[string]string
+	err := c.Bind(&data)
 	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, "something went wrong")
 	}
 
-	found := govalidator.IsNotNull(user.Password) && govalidator.IsNotNull(user.Email)
+	found := govalidator.IsNotNull(data["email"]) && govalidator.IsNotNull(data["password"])
 	if !found {
 		return c.JSON(echo.ErrBadRequest.Code, "enter your full credentials")
 	}
 
-	id, _, err := r.DB.Authenticate(user.Email, user.Password)
+	id, _, err := r.DB.Authenticate(data["email"], data["password"])
 	if err != nil {
 		return c.JSON(echo.ErrBadRequest.Code, echo.Map{
 			"message": "wrong credentials or user not found",
@@ -83,8 +81,6 @@ func (r *Repository) Login(c echo.Context) error {
 	}
 
 	session.Values["user_id"] = id
-	session.Values["user_email"] = user.Email
-	session.Values["username"] = user.Password
 	err = sessions.Save(c.Request(), c.Response())
 	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
@@ -92,7 +88,9 @@ func (r *Repository) Login(c echo.Context) error {
 		})
 	}
 
-	if user.IsAdmin == true {
+	user, _ := r.DB.Getuser(data["email"])
+
+	if user.IsAdmin {
 		return c.JSON(http.StatusOK, echo.Map{
 			"message": "logged in as admin",
 		})
@@ -106,6 +104,7 @@ func (r *Repository) Login(c echo.Context) error {
 func (r *Repository) Logout(c echo.Context) error {
 	session, _ := auth.Store.Get(c.Request(), "session_id")
 	session.Options.MaxAge = -10
+	delete(session.Values, "user_id")
 	session.Save(c.Request(), c.Response())
 
 	return c.JSON(http.StatusOK, echo.Map{
