@@ -1,41 +1,52 @@
 // ProductEdit.js
 import React, { useState, useEffect } from 'react';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Button} from '@mui/material';
+import DialogBox from './DialogBox';
+import axios from 'axios';
 
 const ProductEdit = () => {
   // State for managing product editing
   const [openDialog, setOpenDialog] = useState(false);
+  const [uploadedImage,setUploadedImage] = useState(null);
 
+  const handleCreate = ()=>{
+    setOpenDialog(true);
+  }
   // Handler to open the edit dialog
   const handleEdit = () => {
     setOpenDialog(true);
+   
   };
 
   // Handler to close the edit dialog
   const handleCloseDialog = () => {
     setOpenDialog(false);
+    setUploadedImage(null);
   };
+
+  const handleImageUpload = (file)=>{
+    setUploadedImage(file);
+  }
+
+  const handleSave = async (formData)=>{
+
+        try{
+          const response = await axios.post('http://localhost:8000/products/create',formData);
+          console.log(response.data);
+        }
+        catch(error){
+          console.log(error)
+        }
+    }
+
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleEdit}>
+      <Button variant="contained" color="primary" onClick={handleCreate}>
         Add Product
       </Button>
       {/* Render product editing form/dialog */}
-      <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>Edit Product</DialogTitle>
-        <DialogContent>
-          {/* Add product editing form */}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleCloseDialog} color="primary">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DialogBox open={openDialog} handleCloseDialog={handleCloseDialog} handleImageUpload={handleImageUpload} uploadedImage={uploadedImage} handleSave={handleSave}/>
     </div>
   );
 };

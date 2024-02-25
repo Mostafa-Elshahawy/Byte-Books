@@ -16,8 +16,8 @@ const AdminDashboard = () => {
         <Tab label="View Products" />
         <Tab label="Edit Products" />
       </Tabs>
-      {selectedTab === 0 && <ProductView />}
-      {selectedTab === 1 && <ProductEdit />}
+      {selectedTab === 1 && <ProductView />}
+      {selectedTab === 0 && <ProductEdit />}
     </Container>
   );
 };
