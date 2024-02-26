@@ -1,7 +1,7 @@
 # Byte Books
 
-Online Book store for reading enthusiasts.
+A fully functioning model for an online book store (E-commerce website).
 
--Written in Go 
--Packages used: echo framework, govalidator, pgx, gorilla sessoins
--Frontend using React,Material UI
+- Written in Go 1.21 for backend and React, Material UI for frontend
+- Back-end packages: [Echo framework](https://github.com/labstack/echo), [pgx](https://github.com/jackc/pgx), [gorilla sessions](https://github.com/gorilla/sessions)
+
