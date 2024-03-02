@@ -3,6 +3,7 @@
 A fully functioning model for an online book store (E-commerce website).
 
 - Written in Go 1.21 for backend and React, Material UI for frontend
+- Uses repository pattern for isolating web handlers and database functions
 - Back-end packages: [Echo framework](https://github.com/labstack/echo) for routing and APIs
 - [PGX](https://github.com/jackc/pgx)  postgres database driver
 - [Gorilla sessions](https://github.com/gorilla/sessions), [Goth](https://github.com/markbates/goth) for authenticating users and google login
