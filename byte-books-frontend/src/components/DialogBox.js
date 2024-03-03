@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import { Button,TextField,DialogContent, DialogActions } from '@mui/material';
-
+import ImageUpload from './ImageUpload';
 const DialogBox = ({open,handleCloseDialog,handleImageUploead,uploadedImage, handleSave})=> {
     const [formData,setFormData] = useState({
         name:'',
@@ -22,14 +22,14 @@ const DialogBox = ({open,handleCloseDialog,handleImageUploead,uploadedImage, han
     }
 
     return (
-        <DialogBox open={open} onClose={handleCloseDialog} >
+        <DialogContent open={open} onClose={handleCloseDialog} >
         <DialogContent>
             <TextField autoFocus margin="dense" id="name" label="Name" type="text" fullWidth onChange={handleChange}/>
             <TextField margin='dense' id='description' label='Description' type='text' fullwidth onChange={handleChange}/>
             <TextField margin='dense' id ='author' label='Author' type='text' fullwidth onChange={handleChange}/>
             <TextField margin='dense' id='price' label='Price' type='number' fullwidth onChange={handleChange}/>
             <TextField margin='dense' id='quntity' label='Quantity' type='number' fullwidth onChange={handleChange}/>
-            <input accept='image/*' id='image-uploead' type='file' onChange={(e)=>handleImageUploead(e.target.files[0])}/>
+            <ImageUpload handleImageUploead={handleImageUploead} />
             {uploadedImage && (<img src={URL.createObjectURL(uploadedImage)} alt='Uploaded' style={{width: '100%', marginTop: '10px'}}/>)}
         </DialogContent>
         <DialogActions>
@@ -40,7 +40,7 @@ const DialogBox = ({open,handleCloseDialog,handleImageUploead,uploadedImage, han
                 save
             </Button>
         </DialogActions>
-        </DialogBox>
+        </DialogContent>
     );
 };
 
