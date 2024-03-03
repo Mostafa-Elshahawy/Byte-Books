@@ -4,6 +4,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
 
 	"github.com/ME/Byte-Books/internal/models"
@@ -88,8 +89,9 @@ func (r *Repository) UploadImage(c echo.Context) error {
 		return err
 	}
 	defer src.Close()
+	dstPath := filepath.Join("./../byte-books-frontend/src/images", image.Filename)
 
-	dst, err := os.Create("byte-books-frontend/src/images")
+	dst, err := os.Create(dstPath)
 	if err != nil {
 		return err
 	}

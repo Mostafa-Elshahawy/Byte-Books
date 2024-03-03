@@ -11,7 +11,7 @@ func Routers(mux *echo.Echo) {
 	mux.POST("/login", handlers.Repo.Login)
 	mux.POST("/logout", handlers.Repo.Logout)
 	mux.GET("/products/all", handlers.Repo.ShowAllProducts)
-	mux.POST("/products/create", handlers.Repo.CreateProduct, Auth)
+	mux.POST("/products/create", handlers.Repo.CreateProduct)
 	mux.PATCH("/products/update/:id", handlers.Repo.UpdateItem, Auth)
 	mux.DELETE("/products/delete/:id", handlers.Repo.DeleteItem, Auth)
 	mux.GET("/user/cart", handlers.Repo.ShowCart, Auth)
@@ -20,6 +20,6 @@ func Routers(mux *echo.Echo) {
 	mux.POST("/user/orders/checkout", handlers.Repo.Checkout, Auth)
 	mux.POST("/user/orders", handlers.Repo.GetUserOrders, Auth)
 	mux.GET("/auth/google/callback", auth.GetAuthCallback)
-	mux.POST("/admin/upload-image", handlers.Repo.UploadImage, Auth)
+	mux.POST("/admin/upload-image", handlers.Repo.UploadImage)
 
 }
