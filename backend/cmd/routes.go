@@ -20,5 +20,6 @@ func Routers(mux *echo.Echo) {
 	mux.POST("/user/orders/checkout", handlers.Repo.Checkout, Auth)
 	mux.POST("/user/orders", handlers.Repo.GetUserOrders, Auth)
 	mux.GET("/auth/google/callback", auth.GetAuthCallback)
+	mux.POST("/admin/upload-image", handlers.Repo.UploadImage, Auth)
 
 }

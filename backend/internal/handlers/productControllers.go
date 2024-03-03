@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"io"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/ME/Byte-Books/internal/models"
@@ -71,4 +73,30 @@ func (r *Repository) DeleteItem(c echo.Context) error {
 		})
 	}
 	return c.JSON(http.StatusOK, "product deleted successfully")
+}
+
+func (r *Repository) UploadImage(c echo.Context) error {
+	image, err := c.FormFile("image")
+	if err != nil {
+		return c.JSON(echo.ErrBadRequest.Code, echo.Map{
+			"error": "failed to upload image",
+		})
+	}
+
+	src, err := image.Open()
+	if err != nil {
+		return err
+	}
+	defer src.Close()
+
+	dst, err := os.Create("byte-books-frontend/src/images")
+	if err != nil {
+		return err
+	}
+	defer dst.Close()
+
+	if _, err = io.Copy(dst, src); err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, "image uploaded successfully")
 }
