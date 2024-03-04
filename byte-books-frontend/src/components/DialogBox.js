@@ -39,7 +39,7 @@ const DialogBox = ({open,handleCloseDialog,handleSave})=> {
             <TextField margin='dense' id='description' label='Description' type='text' fullwidth onChange={handleChange}/>
             <TextField margin='dense' id ='author' label='Author' type='text' fullwidth onChange={handleChange}/>
             <TextField margin='dense' id='price' label='Price' type='number' fullwidth onChange={handleChange}/>
-            <TextField margin='dense' id='quntity' label='Quantity' type='number' fullwidth onChange={handleChange}/>
+            <TextField margin='dense' id='quantity' label='Quantity' type='number' fullwidth onChange={handleChange}/>
             <ImageUpload onUpload={handleImageUpload} onReset={handleImageReset}/>
         </DialogContent>
         <DialogActions>
