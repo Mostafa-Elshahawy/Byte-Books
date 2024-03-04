@@ -55,11 +55,11 @@ const SignUpForm = ({title,onSubmit})=>{
                 <img src={manReadinImage} style={{width:'50%'}} alt="man reading"/>
                 <Grid container direction="column" justify="center" alignItems="center" style={{borderLeft:'1px solid #ccc',width:'50%'}}>
                     <Typography variant="h2" style={SignUpLabel}>Sign Up</Typography>
-                    <TextField name="username" label="Username" variant='outlined' style={{ marginBottom: theme.spacing(2), width: '80%' }} value={formData.username} onChange={handleChange} />
-                    <TextField name="email" label="Email" variant='outlined' style={{ marginBottom: theme.spacing(2), width: '80%' }} value={formData.email} onChange={handleChange} />
-                    <TextField name="password" label="Password" type="password" variant='outlined' style={{ marginBottom: theme.spacing(2), width: '80%' }} value={formData.password} onChange={handleChange} />
-                    <TextField name="phone" label="Phone" variant='outlined' style={{ marginBottom: theme.spacing(2), width: '80%' }} value={formData.phone} onChange={handleChange} />
-                    <TextField name="address" label="Address" variant='outlined' style={{ marginBottom: theme.spacing(2), width: '80%' }} value={formData.address} onChange={handleChange} />
+                    <TextField required name="username" label="Username" variant='outlined' style={{ marginBottom: theme.spacing(2), width: '80%' }} value={formData.username} onChange={handleChange} />
+                    <TextField required name="email" label="Email" variant='outlined' style={{ marginBottom: theme.spacing(2), width: '80%' }} value={formData.email} onChange={handleChange} />
+                    <TextField required name="password" label="Password" type="password" variant='outlined' style={{ marginBottom: theme.spacing(2), width: '80%' }} value={formData.password} onChange={handleChange} />
+                    <TextField required name="phone" label="Phone" variant='outlined' style={{ marginBottom: theme.spacing(2), width: '80%' }} value={formData.phone} onChange={handleChange} />
+                    <TextField required name="address" label="Address" variant='outlined' style={{ marginBottom: theme.spacing(2), width: '80%' }} value={formData.address} onChange={handleChange} />
                     <Typography variant='body2' align='center' style={SignInLink}>
                         <Link component={RouterLink} to="/login" >Already have an account? Sign In here</Link>
                     </Typography>

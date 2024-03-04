@@ -52,8 +52,8 @@ const LoginForm = ({title,onSubmit}) => {
           <Typography variant="h2" style={signInLabel}>
             Sign In
           </Typography>
-          <TextField name='email' label="Email" variant="outlined" fullWidth style={{ marginBottom: theme.spacing(2) ,width:'80%' }} value={formData.email} onChange={handleChange}/>
-          <TextField name='password' label="Password" type="password" variant="outlined" fullWidth style={{ marginBottom: theme.spacing(2) ,width:'80%' }} value={formData.password} onChange={handleChange}/>
+          <TextField required name='email' label="Email" variant="outlined" fullWidth style={{ marginBottom: theme.spacing(2) ,width:'80%' }} value={formData.email} onChange={handleChange}/>
+          <TextField required name='password' label="Password" type="password" variant="outlined" fullWidth style={{ marginBottom: theme.spacing(2) ,width:'80%' }} value={formData.password} onChange={handleChange}/>
           <Typography variant="body2" align="center" style={signUpLink}>
             <Link component={RouterLink} to="/signup">
               Don't have an account? Create one.

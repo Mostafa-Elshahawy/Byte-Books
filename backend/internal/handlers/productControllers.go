@@ -100,5 +100,7 @@ func (r *Repository) UploadImage(c echo.Context) error {
 	if _, err = io.Copy(dst, src); err != nil {
 		return err
 	}
-	return c.JSON(http.StatusOK, "image uploaded successfully")
+	return c.JSON(http.StatusOK, echo.Map{
+		"image": dstPath,
+	})
 }
