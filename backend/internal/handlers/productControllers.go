@@ -12,10 +12,10 @@ import (
 )
 
 func (r *Repository) CreateProduct(c echo.Context) error {
-	var product models.Product
-	if err := c.Bind(&product); err != nil {
+	product := new(models.Product)
+	if err := c.Bind(product); err != nil {
 		return c.JSON(echo.ErrBadRequest.Code, echo.Map{
-			"error": "could not read product info",
+			"error": err,
 		})
 	}
 
@@ -23,7 +23,7 @@ func (r *Repository) CreateProduct(c echo.Context) error {
 		Name:        product.Name,
 		Description: product.Description,
 		Image:       product.Image,
-		Auther:      product.Auther,
+		Author:      product.Author,
 		Price:       product.Price,
 		Quantity:    product.Quantity,
 	}

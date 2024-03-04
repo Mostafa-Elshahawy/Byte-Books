@@ -19,7 +19,7 @@ type Product struct {
 	Name        string    `json:"name"`
 	Description string    `json:"description"`
 	Image       string    `json:"image"`
-	Auther      string    `json:"auther"`
+	Author      string    `json:"author"`
 	Price       float64   `json:"price"`
 	Quantity    int       `json:"quantity"`
 	Created_at  time.Time `json:"created_at"`

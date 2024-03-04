@@ -24,7 +24,19 @@ const DialogBox = ({open,handleCloseDialog,handleSave})=> {
         setFormData({...formData,image:''});
     }
     const handleChange = (e) =>{
-        setFormData({...formData,[e.target.id]:e.target.value});
+        const { id, value } = e.target;
+    let newValue;
+
+    // Check if the id is 'price' or 'quantity' and parse accordingly
+    if (id === 'price') {
+        newValue = parseFloat(value);
+    } else if (id === 'quantity') {
+        newValue = parseInt(value, 10); // The second argument, 10, specifies the radix (base) for the conversion
+    } else {
+        newValue = value;
+    }
+
+    setFormData({ ...formData, [id]: newValue });
     }
 
     const saveProduct = ()=>{
