@@ -1,7 +1,8 @@
 import React,{useState} from 'react';
 import { Button,TextField,DialogContent, DialogActions } from '@mui/material';
 import ImageUpload from './ImageUpload';
-const DialogBox = ({open,handleCloseDialog,handleImageUploead,uploadedImage, handleSave})=> {
+import axios from 'axios';
+const DialogBox = ({open,handleCloseDialog,handleSave})=> {
     const [formData,setFormData] = useState({
         name:'',
         description:'',
@@ -10,13 +11,23 @@ const DialogBox = ({open,handleCloseDialog,handleImageUploead,uploadedImage, han
         quantity:'',
         image:''
     });
+    const handleImageUpload = async (file) => {
+        try{
+            const response = await axios.post('http://localhost:8000/admin/upload-image',file);
+            setFormData({...formData,image:response.data.image});
+        }catch(error){
+            console.log(error);
+        }
+    }
 
+    const handleImageReset = ()=>{
+        setFormData({...formData,image:''});
+    }
     const handleChange = (e) =>{
         setFormData({...formData,[e.target.id]:e.target.value});
     }
 
     const saveProduct = ()=>{
-        setFormData({...formData,imageURL:URL.createObjectURL(uploadedImage)});
         handleSave(formData);
         handleCloseDialog();
     }
@@ -29,8 +40,7 @@ const DialogBox = ({open,handleCloseDialog,handleImageUploead,uploadedImage, han
             <TextField margin='dense' id ='author' label='Author' type='text' fullwidth onChange={handleChange}/>
             <TextField margin='dense' id='price' label='Price' type='number' fullwidth onChange={handleChange}/>
             <TextField margin='dense' id='quntity' label='Quantity' type='number' fullwidth onChange={handleChange}/>
-            <ImageUpload handleImageUploead={handleImageUploead} />
-            {uploadedImage && (<img src={URL.createObjectURL(uploadedImage)} alt='Uploaded' style={{width: '100%', marginTop: '10px'}}/>)}
+            <ImageUpload onUpload={handleImageUpload} onReset={handleImageReset}/>
         </DialogContent>
         <DialogActions>
             <Button onClick={handleCloseDialog} color='primary'>

@@ -7,7 +7,7 @@ import axios from 'axios';
 const ProductEdit = () => {
   // State for managing product editing
   const [openDialog, setOpenDialog] = useState(false);
-  const [uploadedImage,setUploadedImage] = useState(null);
+
 
   const handleCreate = ()=>{
     setOpenDialog(true);
@@ -21,12 +21,8 @@ const ProductEdit = () => {
   // Handler to close the edit dialog
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    setUploadedImage(null);
   };
 
-  const handleImageUpload = (file)=>{
-    setUploadedImage(file);
-  }
 
   const handleSave = async (formData)=>{
 
@@ -46,7 +42,7 @@ const ProductEdit = () => {
         Add Product
       </Button>
       {/* Render product editing form/dialog */}
-      <DialogBox open={openDialog} handleCloseDialog={handleCloseDialog} handleImageUpload={handleImageUpload} uploadedImage={uploadedImage} handleSave={handleSave}/>
+      <DialogBox open={openDialog} handleCloseDialog={handleCloseDialog} handleSave={handleSave}/>
     </div>
   );
 };
