@@ -19,14 +19,23 @@ func (r *Repository) CreateProduct(c echo.Context) error {
 		})
 	}
 
-	err := r.DB.InsertProduct(&product)
+	newProduct := &models.Product{
+		Name:        product.Name,
+		Description: product.Description,
+		Image:       product.Image,
+		Auther:      product.Auther,
+		Price:       product.Price,
+		Quantity:    product.Quantity,
+	}
+
+	err := r.DB.InsertProduct(newProduct)
 	if err != nil {
 		return c.JSON(echo.ErrBadRequest.Code, echo.Map{
 			"error": err,
 		})
 	}
 
-	return c.JSON(http.StatusCreated, product)
+	return c.JSON(http.StatusCreated, newProduct)
 
 }
 
@@ -101,6 +110,7 @@ func (r *Repository) UploadImage(c echo.Context) error {
 		return err
 	}
 	return c.JSON(http.StatusOK, echo.Map{
-		"image": dstPath,
+		"image":   dstPath,
+		"message": "image uploaded successfully",
 	})
 }
