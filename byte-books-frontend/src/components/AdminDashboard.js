@@ -14,7 +14,7 @@ const AdminDashboard = () => {
     <Container>
       <Tabs value={selectedTab} onChange={handleTabChange} centered>
         <Tab label="View Products" />
-        <Tab label="Edit Products" />
+        <Tab label="Create Products" />
       </Tabs>
       {selectedTab === 1 && <ProductView />}
       {selectedTab === 0 && <ProductEdit />}

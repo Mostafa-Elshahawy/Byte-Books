@@ -1,22 +1,11 @@
 // ProductEdit.js
 import React, { useState, useEffect } from 'react';
-import { Button} from '@mui/material';
 import DialogBox from './DialogBox';
 import axios from 'axios';
 
 const ProductEdit = () => {
   // State for managing product editing
   const [openDialog, setOpenDialog] = useState(false);
-
-
-  const handleCreate = ()=>{
-    setOpenDialog(true);
-  }
-  // Handler to open the edit dialog
-  const handleEdit = () => {
-    setOpenDialog(true);
-   
-  };
 
   // Handler to close the edit dialog
   const handleCloseDialog = () => {
@@ -38,9 +27,6 @@ const ProductEdit = () => {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleCreate}>
-        Add Product
-      </Button>
       {/* Render product editing form/dialog */}
       <DialogBox open={openDialog} handleCloseDialog={handleCloseDialog} handleSave={handleSave}/>
     </div>

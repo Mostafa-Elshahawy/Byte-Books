@@ -1,4 +1,5 @@
 import React,{useState} from 'react';
+import {Button} from '@mui/material'; 
 
 const ImageUpload = ({onUpload,onReset}) => {
 
@@ -21,8 +22,8 @@ const ImageUpload = ({onUpload,onReset}) => {
     return(
         <div>
             <input type='file' accept='image/*' onChange={handleImageChange} />
-            <button onClick={handleUpload}>Upload</button>
-            <button onClick={onReset}>Reset</button>
+            <Button color='secondary' onClick={handleUpload}>Upload</Button>
+            <Button color='secondary' onClick={onReset}>Reset</Button>
         </div>
     );
 };
