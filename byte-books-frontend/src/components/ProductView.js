@@ -10,9 +10,10 @@ const ProductView = () => {
 
   const fetchProducts = async ()=>{
     try{
-      const repsonse = axios.get('http://localhost:8000/products/all');
-      console.log(repsonse.data);
-      setProducts(repsonse.data);
+      let response = axios.get('http://localhost:8000/products/all');
+     
+      setProducts(response.data.prods);
+      console.log(products);
     }catch(error){
       console.log(error);
     }
@@ -30,10 +31,9 @@ const ProductView = () => {
   const handleEditProduct = async (id)=>{
     
   }
-  // Fetch product data and analytical data on component mount
-  // useEffect(() => {
-  //   fetchProducts();
-  // }, []);
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <Paper>
@@ -46,8 +46,8 @@ const ProductView = () => {
             <TableCell>Price</TableCell>
             <TableCell>Quantity</TableCell>
             <TableCell>Actions</TableCell>
-            <TableCell><button onClick={fetchProducts()}>fetch</button></TableCell>
-            {/* Add more headers as needed */}
+           
+           
           </TableRow>
         </TableHead>
         <TableBody>
@@ -62,7 +62,7 @@ const ProductView = () => {
                 <IconButton onClick={handleEditProduct(product.id)}><EditIcon /></IconButton>
                 <IconButton onClick={handleDeleteProduct(product.id)}><DeleteIcon /></IconButton>
               </TableCell>
-              {/* Add more cells for additional product details */}
+        
             </TableRow>
           ))}
         </TableBody>
