@@ -99,14 +99,14 @@ func (d *postgresDBRepo) InsertProduct(product *models.Product) error {
 	defer cancel()
 
 	var id uint
-	stmt := `INSERT INTO products (name, description, image, auther, price, quantity, created_at, updated_at)
+	stmt := `INSERT INTO products (name, description, image, author, price, quantity, created_at, updated_at)
 	VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`
 
 	err := d.DB.QueryRowContext(ctx, stmt,
 		product.Name,
 		product.Description,
 		product.Image,
-		product.Auther,
+		product.Author,
 		product.Price,
 		product.Quantity,
 		time.Now(),
@@ -119,7 +119,7 @@ func (d *postgresDBRepo) InsertProduct(product *models.Product) error {
 
 	query := `SELECT * FROM products WHERE id = $1`
 	row := d.DB.QueryRow(query, id)
-	err = row.Scan(&product.ID, &product.Name, &product.Description, &product.Image, &product.Auther, &product.Price, &product.Quantity, &product.Created_at, &product.Updated_at)
+	err = row.Scan(&product.ID, &product.Name, &product.Description, &product.Image, &product.Author, &product.Price, &product.Quantity, &product.Created_at, &product.Updated_at)
 
 	if err != nil {
 		return err
@@ -132,13 +132,13 @@ func (d *postgresDBRepo) UpdateProduct(product *models.Product) (*models.Product
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	stmt := `UPDATE products set name = $1, description =$2, image = $3, auther = $4, price = $5, quantity =$6, updated_at = $7`
+	stmt := `UPDATE products set name = $1, description =$2, image = $3, author = $4, price = $5, quantity =$6, updated_at = $7`
 
 	_, err := d.DB.ExecContext(ctx, stmt,
 		product.Name,
 		product.Description,
 		product.Image,
-		product.Auther,
+		product.Author,
 		product.Price,
 		product.Quantity,
 		time.Now(),
@@ -165,7 +165,7 @@ func (d *postgresDBRepo) GetAllProducts() ([]models.Product, error) {
 
 	for rows.Next() {
 		var product models.Product
-		if err := rows.Scan(&product.ID, &product.Name, &product.Description, &product.Image, &product.Auther, &product.Price, &product.Quantity, &product.Created_at, &product.Updated_at); err != nil {
+		if err := rows.Scan(&product.ID, &product.Name, &product.Description, &product.Image, &product.Author, &product.Price, &product.Quantity, &product.Created_at, &product.Updated_at); err != nil {
 			return products, err
 		}
 		products = append(products, product)
@@ -199,7 +199,7 @@ func (d *postgresDBRepo) DeleteProduct(id int) error {
 func (d *postgresDBRepo) GetProdByID(id int) (models.Product, error) {
 	var product models.Product
 	stmt := `SELECT * FROM products WHERE id =$1`
-	err := d.DB.QueryRow(stmt, id).Scan(&product.ID, &product.Name, &product.Description, &product.Image, &product.Auther, &product.Price, &product.Quantity, &product.Created_at, &product.Updated_at)
+	err := d.DB.QueryRow(stmt, id).Scan(&product.ID, &product.Name, &product.Description, &product.Image, &product.Author, &product.Price, &product.Quantity, &product.Created_at, &product.Updated_at)
 	if err != nil {
 		return product, err
 	}
@@ -213,7 +213,7 @@ func (d *postgresDBRepo) GetUserCart(userID interface{}) ([]models.Cart, error) 
 
 	stmt := `SELECT c.id, c.user_id, c.product_id, c.quantity, c.created_at, c.updated_at,
 	u.id, u.username, u.email, u.password, u.phone, u.address, u.is_admin, u.created_at, u.updated_at,
-	p.id, p.name, p.description, p.image, p.auther, p.price, p.quantity, p.created_at, p.updated_at
+	p.id, p.name, p.description, p.image, p.author, p.price, p.quantity, p.created_at, p.updated_at
 	FROM cart c
 	JOIN users u ON c.user_id = u.id
 	JOIN products p ON c.product_id = p.id
@@ -235,7 +235,7 @@ func (d *postgresDBRepo) GetUserCart(userID interface{}) ([]models.Cart, error) 
 		err := rows.Scan(
 			&cart.ID, &cart.UserID, &cart.ProductID, &cart.Quantity, &cart.Created_at, &cart.Updated_at,
 			&user.ID, &user.Username, &user.Email, &user.Password, &user.Phone, &user.Address, &user.IsAdmin, &user.Created_at, &user.Updated_at,
-			&product.ID, &product.Name, &product.Description, &product.Image, &product.Auther, &product.Price, &product.Quantity, &product.Created_at, &product.Updated_at,
+			&product.ID, &product.Name, &product.Description, &product.Image, &product.Author, &product.Price, &product.Quantity, &product.Created_at, &product.Updated_at,
 		)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error scanning row: %v\n", err)

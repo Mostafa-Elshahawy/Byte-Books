@@ -21,6 +21,7 @@ const ProductView = () => {
             <TableCell>Name</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Price</TableCell>
+            <TableCell>Quantity</TableCell>
             {/* Add more headers as needed */}
           </TableRow>
         </TableHead>
@@ -30,6 +31,7 @@ const ProductView = () => {
               <TableCell>{product.name}</TableCell>
               <TableCell>{product.description}</TableCell>
               <TableCell>{product.price}</TableCell>
+              <TableCell>{product.quantity}</TableCell>
               {/* Add more cells for additional product details */}
             </TableRow>
           ))}

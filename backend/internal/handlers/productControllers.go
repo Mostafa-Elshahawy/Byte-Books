@@ -12,21 +12,30 @@ import (
 )
 
 func (r *Repository) CreateProduct(c echo.Context) error {
-	var product models.Product
-	if err := c.Bind(&product); err != nil {
+	product := new(models.Product)
+	if err := c.Bind(product); err != nil {
 		return c.JSON(echo.ErrBadRequest.Code, echo.Map{
-			"error": "could not read product info",
+			"error": err,
 		})
 	}
 
-	err := r.DB.InsertProduct(&product)
+	newProduct := &models.Product{
+		Name:        product.Name,
+		Description: product.Description,
+		Image:       product.Image,
+		Author:      product.Author,
+		Price:       product.Price,
+		Quantity:    product.Quantity,
+	}
+
+	err := r.DB.InsertProduct(newProduct)
 	if err != nil {
 		return c.JSON(echo.ErrBadRequest.Code, echo.Map{
 			"error": err,
 		})
 	}
 
-	return c.JSON(http.StatusCreated, product)
+	return c.JSON(http.StatusCreated, newProduct)
 
 }
 
@@ -101,6 +110,7 @@ func (r *Repository) UploadImage(c echo.Context) error {
 		return err
 	}
 	return c.JSON(http.StatusOK, echo.Map{
-		"image": dstPath,
+		"image":   dstPath,
+		"message": "image uploaded successfully",
 	})
 }
