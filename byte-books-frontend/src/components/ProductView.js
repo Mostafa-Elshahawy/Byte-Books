@@ -11,6 +11,7 @@ const ProductView = () => {
   const fetchProducts = async ()=>{
     try{
       const repsonse = axios.get('http://localhost:8000/products/all');
+      console.log(repsonse.data);
       setProducts(repsonse.data);
     }catch(error){
       console.log(error);
@@ -45,6 +46,7 @@ const ProductView = () => {
             <TableCell>Price</TableCell>
             <TableCell>Quantity</TableCell>
             <TableCell>Actions</TableCell>
+            <TableCell><button onClick={fetchProducts()}>fetch</button></TableCell>
             {/* Add more headers as needed */}
           </TableRow>
         </TableHead>
