@@ -10,7 +10,7 @@ const ProductView = () => {
 
   const fetchProducts = async ()=>{
     try{
-      let response = axios.get('http://localhost:8000/products/all');
+      const response = await axios.get('http://localhost:8000/products/all');
      
       setProducts(response.data.prods);
       console.log(products);
