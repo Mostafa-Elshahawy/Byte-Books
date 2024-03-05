@@ -30,9 +30,9 @@ const ProductView = () => {
     
   }
   // Fetch product data and analytical data on component mount
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  // useEffect(() => {
+  //   fetchProducts();
+  // }, []);
 
   return (
     <Paper>
