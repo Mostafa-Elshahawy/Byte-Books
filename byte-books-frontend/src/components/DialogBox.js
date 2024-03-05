@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { Grid, Button,TextField,DialogContent, DialogActions } from '@mui/material';
+import { Button,TextField,DialogContent, DialogActions } from '@mui/material';
 import ImageUpload from './ImageUpload';
 import axios from 'axios';
 const DialogBox = ({open,handleCloseDialog,handleSave})=> {
@@ -47,16 +47,16 @@ const DialogBox = ({open,handleCloseDialog,handleSave})=> {
     return (
         <DialogContent open={open} onClose={handleCloseDialog} >
         <DialogContent>
-            <Grid container direction='column' justify="center" alignItems="center" style={{ borderRight: '1px solid #ccc', width: '50%' }}>
-            <TextField required autoFocus margin="dense" id="name" label="Name" type="text" fullWidth onChange={handleChange}/>
-            <TextField required margin='dense' id='description' label='Description' type='text' fullwidth onChange={handleChange}/>
-            <TextField required margin='dense' id ='author' label='Author' type='text' fullwidth onChange={handleChange}/>
-            <TextField required margin='dense' id='price' label='Price' type='number' fullwidth onChange={handleChange}/>
-            <TextField required margin='dense' id='quantity' label='Quantity' type='number' fullwidth onChange={handleChange}/>
-            <ImageUpload onUpload={handleImageUpload} onReset={handleImageReset}/>
-            </Grid>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',justifyContent: 'center' }}>
+            <div style={{width:'600px', margin:'10px'}}><TextField required  id="name"  label="Name" type="text" fullWidth onChange={handleChange}/></div>
+            <div style={{width:'600px', margin:'10px'}}><TextField required  id='description'  label='Description' type='text' fullwidth onChange={handleChange}/></div>
+            <div style={{width:'600px', margin:'10px'}}><TextField required  id ='author' label='Author' type='text' fullwidth onChange={handleChange}/></div>
+            <div style={{width:'200px', margin:'10px'}}><TextField required  id='price' label='Price' type='number' fullwidth onChange={handleChange}/></div>
+            <div style={{width:'200px', margin:'10px'}}><TextField required  id='quantity'  label='Quantity' type='number' fullwidth onChange={handleChange}/></div>
+            <div style={{width:'600px', margin:'10px'}}><ImageUpload onUpload={handleImageUpload} onReset={handleImageReset}/></div>
+            </div>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{justifyContent:'space-between'}}>
             <Button onClick={handleCloseDialog} color='primary'>
                 cancel
             </Button>

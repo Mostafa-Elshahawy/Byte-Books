@@ -50,7 +50,7 @@ const Navbar = () => {
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" component={Link} to='/' style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
-                    My App
+                    ByteBooks
                 </Typography>
                 <Button component={Link} to='/pages/home.js' color='inherit' sx={styles.button}>
                     Home
