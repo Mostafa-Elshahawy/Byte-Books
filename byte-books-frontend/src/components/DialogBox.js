@@ -47,14 +47,12 @@ const DialogBox = ({open,handleCloseDialog,handleSave})=> {
     return (
         <DialogContent open={open} onClose={handleCloseDialog} >
         <DialogContent>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',justifyContent: 'center' }}>
-            <div style={{width:'600px', margin:'10px'}}><TextField required  id="name"  label="Name" type="text" fullWidth onChange={handleChange}/></div>
-            <div style={{width:'600px', margin:'10px'}}><TextField required  id='description'  label='Description' type='text' fullwidth onChange={handleChange}/></div>
-            <div style={{width:'600px', margin:'10px'}}><TextField required  id ='author' label='Author' type='text' fullwidth onChange={handleChange}/></div>
-            <div style={{width:'200px', margin:'10px'}}><TextField required  id='price' label='Price' type='number' fullwidth onChange={handleChange}/></div>
-            <div style={{width:'200px', margin:'10px'}}><TextField required  id='quantity'  label='Quantity' type='number' fullwidth onChange={handleChange}/></div>
-            <div style={{width:'600px', margin:'10px'}}><ImageUpload onUpload={handleImageUpload} onReset={handleImageReset}/></div>
-            </div>
+            <TextField required  id="name"  label="Name" type="text" fullWidth onChange={handleChange}/>
+            <TextField required  id='description'  label='Description' type='text' fullwidth onChange={handleChange}/>
+            <TextField required  id ='author' label='Author' type='text' fullwidth onChange={handleChange}/>
+            <TextField required  id='price' label='Price' type='number' fullwidth onChange={handleChange}/>
+            <TextField required  id='quantity'  label='Quantity' type='number' fullwidth onChange={handleChange}/>
+            <ImageUpload onUpload={handleImageUpload} onReset={handleImageReset}/>
         </DialogContent>
         <DialogActions style={{justifyContent:'space-between'}}>
             <Button onClick={handleCloseDialog} color='primary'>
