@@ -12,7 +12,7 @@ const ProductView = () => {
  const fetchProducts = async () => {
     try {
       const response = await axios.get('http://localhost:8000/products/all');
-      setProducts(response.data.prods);
+      setProducts(response.data);
     } catch (error) {
       console.error(error);
     }

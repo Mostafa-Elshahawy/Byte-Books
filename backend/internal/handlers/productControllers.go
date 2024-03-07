@@ -69,9 +69,7 @@ func (r *Repository) ShowAllProducts(c echo.Context) error {
 		return c.JSON(echo.ErrInternalServerError.Code, "could not load products")
 	}
 
-	return c.JSON(http.StatusOK, echo.Map{
-		"prods": products,
-	})
+	return c.JSON(http.StatusOK, products)
 
 }
 
