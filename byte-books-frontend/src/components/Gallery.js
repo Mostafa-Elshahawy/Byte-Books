@@ -2,7 +2,7 @@ import React ,{useState} from 'react';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 import Product from './Product';
-import {Dialog,DialogActions,DialogContent,DialogTitle,Button} from './@mui/material';
+import {Dialog,DialogActions,DialogContent,DialogTitle,Button} from '@mui/material';
 
 const Gallery = ({products}) => {
     const [page, setPage] = useState(1);

@@ -68,7 +68,7 @@ func (r *Repository) Login(c echo.Context) error {
 		return c.JSON(echo.ErrBadRequest.Code, "enter your full credentials")
 	}
 
-	id, _, err := r.DB.Authenticate(data["email"], data["password"])
+	_, _, err = r.DB.Authenticate(data["email"], data["password"])
 	if err != nil {
 		return c.JSON(echo.ErrBadRequest.Code, echo.Map{
 			"message": "wrong credentials or user not found",
@@ -80,7 +80,7 @@ func (r *Repository) Login(c echo.Context) error {
 		return c.JSON(echo.ErrInternalServerError.Code, "could not get session")
 	}
 
-	session.Values["user_id"] = id
+	session.Values["authenticated"] = true
 	err = sessions.Save(c.Request(), c.Response())
 	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{

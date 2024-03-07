@@ -8,6 +8,7 @@ import (
 	"github.com/ME/Byte-Books/internal/driver"
 	"github.com/ME/Byte-Books/internal/handlers"
 	"github.com/joho/godotenv"
+	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -34,6 +35,9 @@ func main() {
 	mux.Use(middleware.Logger())
 	mux.Use(middleware.Recover())
 	mux.Use(middleware.CORS())
+	mux.Use(session.MiddlewareWithConfig(session.Config{
+		Store: auth.Store,
+	}))
 	Routers(mux)
 	mux.Logger.Fatal(mux.Start(":8000"))
 }
