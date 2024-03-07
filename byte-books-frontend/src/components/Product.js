@@ -38,10 +38,10 @@ const theme = createTheme   ({
       },
     });
 
-    const Product= ({bookName,Author,imageSrc})=> {
+    const Product= ({bookName,Author,imageSrc,onClick})=> {
         return (
             <ThemeProvider theme={theme}>
-                <Card>
+                <Card onClick={onClick}>
                     <CardMedia content='img' src={imageSrc} />
                     <CardContent>
                         <Typography variant ='subtitle1'>{bookName}</Typography>
@@ -55,7 +55,7 @@ const theme = createTheme   ({
                         </div>
                         <Typography variant='h4'>$19.99</Typography>
                     </CardContent>
-                    <a href = '#'><ShoppingCartIcon className='cart' /></a>
+                    <a href = 'cart.html'><ShoppingCartIcon className='cart' /></a>
                 </Card>
             </ThemeProvider>
         );
