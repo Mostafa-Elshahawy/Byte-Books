@@ -33,7 +33,7 @@ const Gallery = ({products}) => {
             <Grid container spacing={4}>
                 {currentProducts.map((product,index)=>(
                     <Grid  item xs={12} sm={6} md={3} key={index}>
-                        <Product product={product} onClick={() => handleClickOpen(product)}/>
+                        <Product bookName={product.name} Author={product.author} imageSrc={product.image} onClick={() => handleClickOpen(product)}/>
                     </Grid>
                 ))}
             </Grid>
