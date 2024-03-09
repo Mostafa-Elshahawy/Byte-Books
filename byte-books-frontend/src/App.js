@@ -8,6 +8,7 @@ import Store from './pages/Store';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
 import Admin from './pages/Admin';
+import ProductDetailsPage from './pages/ProductDetailsPage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path='/Cart' component={Cart}/>
         <Route path='/Orders' component={Orders}/>
         <Route path='/Admin' component={Admin}/>
+        <Route path='/product/:ProductID' component={ProductDetailsPage}/>
       </Switch>
     </Router>
   );

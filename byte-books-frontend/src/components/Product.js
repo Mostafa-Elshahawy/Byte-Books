@@ -1,10 +1,12 @@
 import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { useHistory ,Link} from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import StarIcon from '@mui/icons-material/Star';
+import { Button } from '@mui/material';
+//import StarIcon from '@mui/icons-material/Star';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const theme = createTheme   ({
@@ -38,24 +40,30 @@ const theme = createTheme   ({
       },
     });
 
-    const Product= ({bookName,Author,imageSrc,onClick})=> {
+    const Product= ({bookName,Author,imageSrc,Price,ProductID})=> {
+        const history = useHistory();
+
+        const handleClick = ()=>{
+            history.push(`/product/${ProductID}`);
+        };
+        
         return (
             <ThemeProvider theme={theme}>
-                <Card onClick={onClick}>
-                    <CardMedia content='img' src={imageSrc} />
+                <Card onClick={handleClick}>
+                    <CardMedia component="img" src={imageSrc} />
                     <CardContent>
                         <Typography variant ='subtitle1'>{bookName}</Typography>
                         <Typography variant ='h5'>{Author}</Typography>
-                        <div className='starRating'>
+                        {/*<div className='starRating'>
                             <StarIcon />
                             <StarIcon />
                             <StarIcon />
                             <StarIcon />
                             <StarIcon />
-                        </div>
-                        <Typography variant='h4'>$19.99</Typography>
+                        </div>*/}
+                        <Typography variant='h4'>{Price}</Typography>
                     </CardContent>
-                    <a href = 'cart.html'><ShoppingCartIcon className='cart' /></a>
+                    <Button component={Link} to='../pages/Cart' color='inherit'><ShoppingCartIcon className='cart' /></Button>
                 </Card>
             </ThemeProvider>
         );

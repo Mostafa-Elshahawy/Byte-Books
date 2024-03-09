@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 import Product from './Product';
 import {Dialog,DialogActions,DialogContent,DialogTitle,Button} from '@mui/material';
+import axios from 'axios';
 
 const Gallery = ({products}) => {
     const [page, setPage] = useState(1);
@@ -28,12 +29,21 @@ const Gallery = ({products}) => {
         setOpen(false);
     }
 
+    const handleCartAddition = async (id) => {
+        try{
+            const response = await axios.post('localhost:8000/cart/product/:'+id);
+            console.log(response.data);
+        }catch(error){
+            console.log('error during adding a product',error);
+        }
+    }
+
     return (
         <div style={{margin:'10px'}}>
             <Grid container spacing={4}>
                 {currentProducts.map((product,index)=>(
                     <Grid  item xs={12} sm={6} md={3} key={index}>
-                        <Product bookName={product.name} Author={product.author} imageSrc={product.image} onClick={() => handleClickOpen(product)}/>
+                        <Product bookName={product.name} Author={product.author} imageSrc={product.image} price={product.price} onClick={() => handleClickOpen(product)}/>
                     </Grid>
                 ))}
             </Grid>
@@ -45,7 +55,7 @@ const Gallery = ({products}) => {
                 </DialogContent>
                 <DialogActions>
                     <Button color='secondary' onClick={handleClose}>Close</Button>
-                    <Button color='primary' >add to cart</Button>
+                    <Button color='primary' onClick={()=>handleCartAddition(selectedProduct?.id)}>add to cart</Button>
                 </DialogActions>
             </Dialog>
         </div>
