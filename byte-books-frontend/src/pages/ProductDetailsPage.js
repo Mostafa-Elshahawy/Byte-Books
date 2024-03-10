@@ -2,11 +2,11 @@ import React ,{useState,useEffect } from "react";
 import ProductDetails from "../components/ProductDetails";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import {userParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import axios from 'axios';
 
 const ProductDetailsPage = ()=>{
-    const {ProductID} = userParams();
+    const {ProductID} = useParams();
     const [product,setProduct] = useState(null); 
 
     useEffect(()=>{
