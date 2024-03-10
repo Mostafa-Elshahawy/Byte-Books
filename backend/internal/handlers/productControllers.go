@@ -113,3 +113,16 @@ func (r *Repository) UploadImage(c echo.Context) error {
 		"message": "image uploaded successfully",
 	})
 }
+
+func (r *Repository) GetProductById(c echo.Context) error {
+	var prod models.Product
+	prodId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(echo.ErrInternalServerError.Code, "could not get the product id")
+	}
+	prod, err = r.DB.GetProdByID(prodId)
+	if err != nil {
+		return c.JSON(echo.ErrNotFound.Code, "product not found")
+	}
+	return c.JSON(http.StatusOK, prod)
+}
