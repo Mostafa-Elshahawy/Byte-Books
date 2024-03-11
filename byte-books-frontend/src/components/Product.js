@@ -50,7 +50,7 @@ const theme = createTheme   ({
         return (
             <ThemeProvider theme={theme}>
                 <Card onClick={handleClick}>
-                    <CardMedia component="img" src={imageSrc} />
+                    <CardMedia component="img" src={`../images/${imageSrc}`} />
                     <CardContent>
                         <Typography variant ='subtitle1'>{bookName}</Typography>
                         <Typography variant ='h5'>{Author}</Typography>

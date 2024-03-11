@@ -109,7 +109,7 @@ func (r *Repository) UploadImage(c echo.Context) error {
 		return err
 	}
 	return c.JSON(http.StatusOK, echo.Map{
-		"image":   dstPath,
+		"image":   image.Filename,
 		"message": "image uploaded successfully",
 	})
 }

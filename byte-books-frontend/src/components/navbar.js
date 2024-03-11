@@ -33,7 +33,7 @@ const Navbar = () => {
         try{
             const response = await Axios.post('http://localhost:8000/logout');
             if (response.data.message === 'logged out'){
-                localStorage.setItem('loginStatus',false);
+                sessionStorage.setItem('loginStatus',false);
                 window.location.href='/main';
             }
         }catch(error){
@@ -41,7 +41,7 @@ const Navbar = () => {
         }
     }
 
-    const loginStatus = localStorage.getItem('loginStatus');
+    const loginStatus = sessionStorage.getItem('loginStatus');
     return (
         <ThemeProvider theme={theme}>
             <AppBar position='static' style={{width :'100%',marginBottom: '20px'}}>
@@ -49,13 +49,13 @@ const Navbar = () => {
                 <IconButton edge="start" color="inherit" aria-label="menu">
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" component={Link} to='/' style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
+                <Typography variant="h6" component={Link} to='/main' style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
                     ByteBooks
                 </Typography>
-                <Button component={Link} to='/pages/home.js' color='inherit' sx={styles.button}>
+                <Button component={Link} to='/home' color='inherit' sx={styles.button}>
                     Home
                 </Button>
-                <Button component={Link} to='/pages/store.js' color='inherit' sx={styles.button}>
+                <Button component={Link} to='/store' color='inherit' sx={styles.button}>
                     Store
                 </Button>
                 <Button component={Link} to="/contact" color="inherit" sx={styles.button}>
@@ -71,7 +71,7 @@ const Navbar = () => {
                     </IconButton>
                     </>
                 ):(
-                    <Button component={Link} to='/pages/signin' color='inherit' sx={styles.button}>
+                    <Button component={Link} to='/signin' color='inherit' sx={styles.button}>
                         Sign In
                     </Button>
                 )}
