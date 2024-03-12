@@ -6,25 +6,25 @@ import {useParams} from 'react-router-dom';
 import axios from 'axios';
 
 const ProductDetailsPage = ()=>{
-    const {ProductID} = useParams();
+    const {id} = useParams();
     const [product,setProduct] = useState(null); 
 
     useEffect(()=>{
         const fetchProduct = async ()=>{
             try{
-                const response = await axios.get(`http://localhost:8000/product/${ProductID}`);
+                const response = await axios.get(`http://localhost:8000/product/${id}`);
                 setProduct(response.data);
             }catch(error){
                 console.log('error during fetching product',error)
             }
         };
         fetchProduct();
-    },[ProductID])
+    },[id])
 
     return(
         <>
         <Navbar />
-        {product ? <ProductDetails product={product} /> : <p>Loading...</p>}
+        {product ? <ProductDetails product={product} /> : <p>Error Loading the product</p>}
         <Footer />
         </>
     );
