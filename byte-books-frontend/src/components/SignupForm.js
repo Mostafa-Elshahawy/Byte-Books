@@ -3,7 +3,7 @@ import {Button, Grid, TextField, Typography,Link , useTheme} from '@mui/material
 import {Link as RouterLink} from 'react-router-dom';
 import GoogleIcon from '@mui/icons-material/Google';
 import { ThemeProvider } from '@emotion/react'; 
-import manReadinImage from '../images/man-reading.png';
+
 
 const SignUpForm = ({title,onSubmit})=>{
     const theme = useTheme();
@@ -52,7 +52,7 @@ const SignUpForm = ({title,onSubmit})=>{
     return (
         <ThemeProvider theme={theme}>
             <form style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100%'}} onSubmit={handleSubmit}>
-                <img src={manReadinImage} style={{width:'50%'}} alt="man reading"/>
+                <img src={`${process.env.PUBLIC_URL}/images/man-reading.png`} style={{width:'50%'}} alt="man reading"/>
                 <Grid container direction="column" justify="center" alignItems="center" style={{borderLeft:'1px solid #ccc',width:'50%'}}>
                     <Typography variant="h2" style={SignUpLabel}>Sign Up</Typography>
                     <TextField required name="username" label="Username" variant='outlined' style={{ marginBottom: theme.spacing(2), width: '80%' }} value={formData.username} onChange={handleChange} />

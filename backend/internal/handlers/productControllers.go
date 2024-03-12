@@ -97,7 +97,7 @@ func (r *Repository) UploadImage(c echo.Context) error {
 		return err
 	}
 	defer src.Close()
-	dstPath := filepath.Join("./../byte-books-frontend/src/images", image.Filename)
+	dstPath := filepath.Join("./../byte-books-frontend/public/images", image.Filename)
 
 	dst, err := os.Create(dstPath)
 	if err != nil {

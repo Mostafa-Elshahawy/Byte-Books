@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import {Grid,Typography} from '@mui/material';
-import phoneContact from '../images/PhoneContact.png';
+
 
 const ContactUsPage = () => {
     return (
@@ -18,15 +18,15 @@ const ContactUsPage = () => {
                 </Grid>
                 <section style={{display:'flex',flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop:'20px', marginBottom:'20px'}}>
                     <div style={{display:'flex',flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin:'20px'}}>
-                        <img src={phoneContact} alt='contact by phone' style={{width:'200px'}} />
+                        <img src={`${process.env.PUBLIC_URL}/images/PhoneContact.png`} alt='contact by phone' style={{width:'200px'}} />
                         <p style={{textAlign:'center',fontWeight:'bold'}}>Call us on 123-456-7890</p>
                     </div>
                     <div style={{display:'flex',flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin:'20px'}}>
-                        <img src={phoneContact} alt='contact by phone' style={{width:'200px'}} />
+                        <img src={`${process.env.PUBLIC_URL}/images/PhoneContact.png`} alt='contact by phone' style={{width:'200px'}} />
                         <p style={{textAlign:'center',fontWeight:'bold'}}>Send us an E-mail on zwr@gmail.com</p>
                     </div>
                     <div style={{display:'flex',flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin:'20px'}}>
-                        <img src={phoneContact} alt='contact by phone' style={{width:'200px'}} />
+                        <img src={`${process.env.PUBLIC_URL}/images/PhoneContact.png`} alt='contact by phone' style={{width:'200px'}} />
                         <p style={{textAlign:'center',fontWeight:'bold'}}>Visit us on our branch at 123 Main St</p>
                     </div>
                 </section>

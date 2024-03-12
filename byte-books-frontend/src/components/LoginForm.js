@@ -3,7 +3,7 @@ import {Button, Typography, Link,TextField,Grid,useTheme} from '@mui/material';
 import {Link as RouterLink} from 'react-router-dom';
 import GoogleIcon from '@mui/icons-material/Google';
 import {ThemeProvider} from "@mui/material/styles";
-import manReadinImage from '../images/man-reading.png';
+
 
 const LoginForm = ({title,onSubmit}) => {
     const theme = useTheme();
@@ -73,7 +73,7 @@ const LoginForm = ({title,onSubmit}) => {
           </Button>
         </Grid>
         {/* Image */}
-        <img src={manReadinImage} alt="man reading" style={{ width: '50%' }} />
+        <img src={`${process.env.PUBLIC_URL}/images/man-reading.png`} alt="man reading" style={{ width: '50%' }} />
       </form>
     </ThemeProvider>
     );
