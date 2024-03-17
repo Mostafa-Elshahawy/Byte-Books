@@ -4,4 +4,8 @@ WORKDIR /app
 
 COPY . .
 
+ENV GOPATH=/app
+
 RUN go mod tidy
+
+RUN go run cmd/*.go
