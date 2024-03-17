@@ -15,6 +15,7 @@ const DialogBox = ({open,handleCloseDialog,handleSave})=> {
         try{
             const response = await axios.post('http://localhost:8000/admin/upload-image',file);
             setFormData({...formData,image:response.data.image});
+            alert('image uploaded successfully')
         }catch(error){
             console.log(error);
         }
@@ -47,11 +48,11 @@ const DialogBox = ({open,handleCloseDialog,handleSave})=> {
     return (
         <DialogContent open={open} onClose={handleCloseDialog} >
         <DialogContent>
-            <TextField required  id="name"  label="Name" type="text" fullWidth onChange={handleChange}/>
-            <TextField required  id='description'  label='Description' type='text' fullwidth onChange={handleChange}/>
-            <TextField required  id ='author' label='Author' type='text' fullwidth onChange={handleChange}/>
-            <TextField required  id='price' label='Price' type='number' fullwidth onChange={handleChange}/>
-            <TextField required  id='quantity'  label='Quantity' type='number' fullwidth onChange={handleChange}/>
+            <TextField required margin='dense' id="name"  label="Name" type="text" fullWidth onChange={handleChange}/>
+            <TextField required margin='dense'id='description'  label='Description' type='text' fullwidth onChange={handleChange}/>
+            <TextField required margin='dense'id ='author' label='Author' type='text' fullwidth onChange={handleChange}/>
+            <TextField required margin='dense'id='price' label='Price' type='number' fullwidth onChange={handleChange}/>
+            <TextField required margin='dense' id='quantity'  label='Quantity' type='number' fullwidth onChange={handleChange}/>
             <ImageUpload onUpload={handleImageUpload} onReset={handleImageReset}/>
         </DialogContent>
         <DialogActions style={{justifyContent:'space-between'}}>

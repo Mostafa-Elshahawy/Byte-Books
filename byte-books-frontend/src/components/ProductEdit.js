@@ -1,5 +1,5 @@
 // ProductEdit.js
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import DialogBox from './DialogBox';
 import axios from 'axios';
 

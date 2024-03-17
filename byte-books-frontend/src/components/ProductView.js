@@ -87,7 +87,7 @@ const ProductView = () => {
           ))}
         </TableBody>
       </Table>
-      <EditDialog open={isDialogOpen} handleClose={handleCloseDialog} product={editingProduct} handleSave={handleSaveProduct} handleEdit={handleEdit} />
+      <EditDialog open={isDialogOpen} handleClose={handleCloseDialog} Product={editingProduct} handleSave={handleSaveProduct} handleEdit={handleEdit} />
     </Paper>
  );
 };

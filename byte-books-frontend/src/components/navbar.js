@@ -52,13 +52,13 @@ const Navbar = () => {
                 <Typography variant="h6" component={Link} to='/main' style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
                     ByteBooks
                 </Typography>
-                <Button component={Link} to='/home' color='inherit' sx={styles.button}>
+                <Button component={Link} to='/main' color='inherit' sx={styles.button}>
                     Home
                 </Button>
                 <Button component={Link} to='/store' color='inherit' sx={styles.button}>
                     Store
                 </Button>
-                <Button component={Link} to="/contact" color="inherit" sx={styles.button}>
+                <Button component={Link} to="/contact-us" color="inherit" sx={styles.button}>
                 Contact Us
                 </Button>
                 {loginStatus ?(
@@ -71,7 +71,7 @@ const Navbar = () => {
                     </IconButton>
                     </>
                 ):(
-                    <Button component={Link} to='/signin' color='inherit' sx={styles.button}>
+                    <Button component={Link} to='/login' color='inherit' sx={styles.button}>
                         Sign In
                     </Button>
                 )}
