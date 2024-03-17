@@ -50,10 +50,10 @@ const theme = createTheme   ({
         return (
             <ThemeProvider theme={theme}>
                 <Card onClick={handleClick}>
-                    <CardMedia component="img" src={`${process.env.PUBLIC_URL}/images/${imageSrc}`} alt={`${bookName}`} style={{ maxWidth: 500, maxHeight: 700 }}/>
+                    <CardMedia component="img" src={`${process.env.PUBLIC_URL}/images/${imageSrc}`} alt={`${bookName}`} style={{ maxWidth: 300, maxHeight: 450 }}/>
                     <CardContent>
-                        <Typography variant ='subtitle1'>{bookName}</Typography>
-                        <Typography variant ='h5'>{Author}</Typography>
+                        <Typography variant ='h5'>{bookName}</Typography>
+                        <Typography variant ='subtitle1'>{Author}</Typography>
                         {/*<div className='starRating'>
                             <StarIcon />
                             <StarIcon />
@@ -61,7 +61,7 @@ const theme = createTheme   ({
                             <StarIcon />
                             <StarIcon />
                         </div>*/}
-                        <Typography variant='h4'>{Price}</Typography>
+                        <Typography variant='h6'>{Price}$</Typography>
                     </CardContent>
                     <Button component={Link} to='../pages/Cart' color='inherit'><ShoppingCartIcon className='cart' /></Button>
                 </Card>

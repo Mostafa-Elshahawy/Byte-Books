@@ -13,7 +13,7 @@ func Routers(mux *echo.Echo) {
 	mux.GET("product/:id", handlers.Repo.GetProductById)
 	mux.GET("/products/all", handlers.Repo.ShowAllProducts)
 	mux.POST("/products/create", handlers.Repo.CreateProduct)
-	mux.PATCH("/products/update/:id", handlers.Repo.UpdateItem, Auth)
+	mux.PATCH("/products/update/:id", handlers.Repo.UpdateItem)
 	mux.DELETE("/products/delete/:id", handlers.Repo.DeleteItem)
 	mux.GET("/user/cart", handlers.Repo.ShowCart, Auth)
 	mux.POST("/cart/product/:id", handlers.Repo.AddItemToCart, Auth)
