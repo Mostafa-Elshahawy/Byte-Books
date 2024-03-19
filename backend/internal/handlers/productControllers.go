@@ -51,7 +51,7 @@ func (r *Repository) UpdateItem(c echo.Context) error {
 		return c.JSON(echo.ErrInternalServerError.Code, "could not get item")
 	}
 
-	item, err := r.DB.UpdateProduct(&prod)
+	item, err := r.DB.UpdateProduct(itemID, &prod)
 	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
 			"error": err,

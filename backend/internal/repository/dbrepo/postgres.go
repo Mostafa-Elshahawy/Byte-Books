@@ -128,11 +128,10 @@ func (d *postgresDBRepo) InsertProduct(product *models.Product) error {
 	return nil
 }
 
-func (d *postgresDBRepo) UpdateProduct(product *models.Product) (*models.Product, error) {
+func (d *postgresDBRepo) UpdateProduct(id int, product *models.Product) (*models.Product, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-
-	stmt := `UPDATE products set name = $1, description =$2, image = $3, author = $4, price = $5, quantity =$6, updated_at = $7`
+	stmt := `UPDATE products SET name = $1, description =$2, image = $3, author = $4, price = $5, quantity =$6, updated_at = $7 WHERE id = $8`
 
 	_, err := d.DB.ExecContext(ctx, stmt,
 		product.Name,
@@ -142,13 +141,21 @@ func (d *postgresDBRepo) UpdateProduct(product *models.Product) (*models.Product
 		product.Price,
 		product.Quantity,
 		time.Now(),
+		product.ID,
 	)
 
 	if err != nil {
 		return product, err
 	}
 
-	return product, nil
+	updatedProduct := &models.Product{}
+	err = d.DB.QueryRow("SELECT * FROM products WHERE id = $1", id).Scan(&updatedProduct.ID, &updatedProduct.Name, &updatedProduct.Description, &updatedProduct.Image, &updatedProduct.Author, &updatedProduct.Price, &updatedProduct.Quantity, &updatedProduct.Created_at, &updatedProduct.Updated_at)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return updatedProduct, nil
 }
 
 func (d *postgresDBRepo) GetAllProducts() ([]models.Product, error) {
