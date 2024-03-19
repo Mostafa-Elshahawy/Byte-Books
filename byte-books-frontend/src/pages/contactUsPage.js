@@ -23,7 +23,7 @@ const ContactUsPage = () => {
                     </div>
                     <div style={{display:'flex',flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin:'20px'}}>
                         <img src={`${process.env.PUBLIC_URL}/images/PhoneContact.png`} alt='contact by phone' style={{width:'200px'}} />
-                        <p style={{textAlign:'center',fontWeight:'bold'}}>Send us an E-mail on zwr@gmail.com</p>
+                        <p style={{textAlign:'center',fontWeight:'bold'}}>Send us an E-mail on ByteBooks@gmail.com</p>
                     </div>
                     <div style={{display:'flex',flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin:'20px'}}>
                         <img src={`${process.env.PUBLIC_URL}/images/PhoneContact.png`} alt='contact by phone' style={{width:'200px'}} />

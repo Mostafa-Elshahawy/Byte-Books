@@ -18,8 +18,8 @@ const theme = createTheme   ({
     overrides: {
         MuiCard:{
             root:{
-                width:'calc(100% / 1.25)',
-                height:'250px',
+                width:'100',
+                height:'120px',
                 marign:'8px',
                 borderRadius:'8px',
                 boxShadow:'0px 4px 6px rgba(0, 0, 0, 0.)',
@@ -50,7 +50,7 @@ const theme = createTheme   ({
         return (
             <ThemeProvider theme={theme}>
                 <Card onClick={handleClick}>
-                    <CardMedia component="img" src={`${process.env.PUBLIC_URL}/images/${imageSrc}`} alt={`${bookName}`} style={{ maxWidth: 300, maxHeight: 450 }}/>
+                    <CardMedia component="img" src={`${process.env.PUBLIC_URL}/images/${imageSrc}`} alt={`${bookName}`} style={{ maxWidth: 250, maxHeight: 320 }}/>
                     <CardContent>
                         <Typography variant ='h5'>{bookName}</Typography>
                         <Typography variant ='subtitle1'>{Author}</Typography>

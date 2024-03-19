@@ -26,7 +26,7 @@ const Footer = () => {
                      <ul style={{listStyleType:'none',padding:'0'}}>
                         <li>123 Main St, City</li>
                         <li>Phone: 123-456-7890</li>
-                        <li>Email: example@example.com</li>
+                        <li>Email: ByteBooks@gmail.com</li>
                     </ul>
                 </Grid>
                 {/* Important Links Column */}

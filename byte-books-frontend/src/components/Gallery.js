@@ -39,8 +39,8 @@ const Gallery = ({products,pgaenationOn}) => {
     }
 
     return (
-        <div style={{margin:'10px'}}>
-            <Grid container spacing={4}>
+        <div style={{margin:'20px'}}>
+            <Grid container spacing={6}>
                 {currentProducts.map((product,index)=>(
                     <Grid  item xs={12} sm={6} md={3} key={index}>
                         <Product bookName={product.name} Author={product.author} imageSrc={product.image} Price={product.price} onClick={() => handleClickOpen(product)}/>
