@@ -25,7 +25,7 @@ const Main = ()=>{
         <>
         <Navbar />
         <Hero />
-        <Gallery products={products} />
+        <Gallery products={products} pgaenationOn={false}/>
         <Newsletter />
         <Footer />
         </>

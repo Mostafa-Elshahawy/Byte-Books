@@ -5,7 +5,7 @@ import Product from './Product';
 import {Dialog,DialogActions,DialogContent,DialogTitle,Button} from '@mui/material';
 import axios from 'axios';
 
-const Gallery = ({products}) => {
+const Gallery = ({products,pgaenationOn}) => {
     const [page, setPage] = useState(1);
     const [open,setOpen] = useState(false);
     const [selectedProduct,setSelectedProduct] = useState(null);
@@ -47,7 +47,7 @@ const Gallery = ({products}) => {
                     </Grid>
                 ))}
             </Grid>
-            <Pagination count={totalPages} page={page} onChange={handleChangePage} variant="outlined" shape="rounded" size='large' style={{ margintTop:'20px',justifyContent:'center'}} />
+            {pgaenationOn && <Pagination count={totalPages} page={page} onChange={handleChangePage} variant="outlined" shape="rounded" size='large' style={{ margintTop:'20px',justifyContent:'center'}} />}
             <Dialog open={open} onClose={handleClose} fullscreen>
                 <DialogTitle>{selectedProduct?.name}</DialogTitle>
                 <DialogContent>

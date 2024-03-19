@@ -18,6 +18,7 @@ const ProductView = () => {
     }
  };
 
+ 
  const handleDeleteProduct = async (id) => {
     try {
       const response = await axios.delete(`http://localhost:8000/products/delete/${id}`);
@@ -28,6 +29,7 @@ const ProductView = () => {
     }
  };
 
+ 
  const handleEditProduct = (product) => {
     setEditingProduct(product);
     setIsDialogOpen(true);
@@ -87,7 +89,9 @@ const ProductView = () => {
           ))}
         </TableBody>
       </Table>
-      <EditDialog open={isDialogOpen} handleClose={handleCloseDialog} Product={editingProduct} handleSave={handleSaveProduct} handleEdit={handleEdit} />
+      <EditDialog open={isDialogOpen} handleClose={handleCloseDialog} Product={editingProduct} 
+      handleSave={handleSaveProduct} handleEdit={handleEdit} 
+      />
     </Paper>
  );
 };

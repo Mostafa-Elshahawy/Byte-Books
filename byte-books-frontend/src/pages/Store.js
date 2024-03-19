@@ -22,7 +22,7 @@ const Store = () => {
     return (
         <div>
             <Navbar />
-            <Gallery products={products} />
+            <Gallery products={products} pgaenationOn={true} />
             <Footer />
         </div>
     );
