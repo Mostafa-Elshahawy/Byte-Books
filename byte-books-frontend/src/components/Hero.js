@@ -1,6 +1,6 @@
 import React from 'react';
-
 import {Typography,Button} from '@mui/material';
+import {Link} from 'react-router-dom';
 const Hero = ()=>{
 
     return (
@@ -11,9 +11,11 @@ const Hero = ()=>{
             <Typography variant='h5' gutterBottom style={{fontWeight:'normal',color:'#944e63',position: 'absolute', top: '70%', left: '40%', transform: 'translate(-50%, -50%)',backgroundColor:'#F8F4EC',padding:'10px'}}>
                 Browse the finest collection of bestsellers at lowest prices possible
             </Typography>
+            <Link to="/store" style={{ textDecoration: 'none', position: 'absolute', top: '70%', left: '65%', transform: 'translate(-50%, -50%)' }}>
             <Button variant='contained' color='primary' style={{position: 'absolute', top: '70%', left: '65%', transform: 'translate(-50%, -50%)',padding:'10px',fontWeight:'bold',color:'#F8F4EC'}} >
                 Shop Now
             </Button>
+            </Link>
         </section>
     )
 }
