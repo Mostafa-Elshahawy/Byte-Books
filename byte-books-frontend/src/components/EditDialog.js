@@ -1,7 +1,8 @@
 import React from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@mui/material';
+import ImageUpload from './ImageUpload';
 
-const EditDialog = ({ open, handleClose, Product, handleSave, handleEdit }) => {
+const EditDialog = ({ open, handleClose, Product, handleSave, handleEdit,handleImageUpload,handleImageReset }) => {
     const handleChange = (field, value) => {
         let parsedValue;
 
@@ -51,6 +52,7 @@ const EditDialog = ({ open, handleClose, Product, handleSave, handleEdit }) => {
                     value={Product?.quantity || ''}
                     onChange={(e) => handleChange('quantity', e.target.value)}
                 />
+                <ImageUpload onUpload={handleImageUpload} onReset={handleImageReset} />
             </DialogContent>
             <DialogActions>
                 <Button color='secondary' onClick={handleClose}>Cancel</Button>

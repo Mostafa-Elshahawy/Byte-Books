@@ -8,6 +8,7 @@ const ProductView = () => {
  const [products, setProducts] = useState([]);
  const [editingProduct, setEditingProduct] = useState(null);
  const [isDialogOpen, setIsDialogOpen] = useState(false);
+ const [uploadedImage,setUploadedImage] = useState(null);
 
  const fetchProducts = async () => {
     try {
@@ -18,7 +19,19 @@ const ProductView = () => {
     }
  };
 
- 
+ const handleImageUpload = async (file) => {
+   try{
+     const response = await axios.post('http://localhost:8000/admin/upload-image',file);
+     setUploadedImage(response.data.image);
+     alert('image uploaded successfully');
+   }catch(error){
+    console.error('error while uploading image',error);
+   }
+ }
+
+ const handleImageReset = () => {
+  setUploadedImage(null);
+ };
  const handleDeleteProduct = async (id) => {
     try {
       const response = await axios.delete(`http://localhost:8000/products/delete/${id}`);
@@ -41,6 +54,9 @@ const ProductView = () => {
  };
 
  const handleEdit = (updatedProduct) => {
+  if (uploadedImage) {
+    updatedProduct.image = uploadedImage;
+  }
     setEditingProduct(updatedProduct);
  };
 
@@ -50,6 +66,7 @@ const ProductView = () => {
       console.log(response.data);
       setIsDialogOpen(false);
       setEditingProduct(null);
+      setUploadedImage(null);
       fetchProducts(); // Refresh the product list after updating
     } catch (error) {
       console.error('Error during editing:', error);
@@ -91,6 +108,7 @@ const ProductView = () => {
       </Table>
       <EditDialog open={isDialogOpen} handleClose={handleCloseDialog} Product={editingProduct} 
       handleSave={handleSaveProduct} handleEdit={handleEdit} 
+      handleImageReset={handleImageReset} handleImageUpload={handleImageUpload}
       />
     </Paper>
  );
