@@ -22,8 +22,8 @@ const Product = ({ bookName, Author, imageSrc, Price, Description, onClick }) =>
                 <CardMedia
                     component="img"
                     height="200"
-                    image={imageSrc}
-                    alt={bookName}
+                    image={`${process.env.PUBLIC_URL}/images/${imageSrc}`}
+                    alt={`${bookName}`}
                 />
                 <CardContent style={{ position: 'absolute', bottom: 0, backgroundColor: 'rgba(255,255,255,0.8)', width: '100%', transition: 'all 0.3s', transform: isHovered ? 'translateY(0)' : 'translateY(100%)' }}>
                     <Typography gutterBottom variant="h5" component="div" style={{ fontWeight: 'bold' }}>

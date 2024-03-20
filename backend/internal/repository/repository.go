@@ -7,7 +7,7 @@ type DatabaseRepo interface {
 	Getuser(email string) (models.User, error)
 	Authenticate(email, password string) (uint, string, error)
 	InsertProduct(product *models.Product) error
-	UpdateProduct(id int, product *models.Product) (*models.Product, error)
+	UpdateProduct(id int, product *models.Product) error
 	GetAllProducts() ([]models.Product, error)
 	DeleteProduct(id int) error
 	GetProdByID(id int) (models.Product, error)

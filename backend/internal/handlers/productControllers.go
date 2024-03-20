@@ -46,21 +46,18 @@ func (r *Repository) UpdateItem(c echo.Context) error {
 		return c.JSON(echo.ErrBadRequest.Code, err)
 	}
 
-	prod, err := r.DB.GetProdByID(itemID)
-	if err != nil {
-		return c.JSON(echo.ErrInternalServerError.Code, "could not get item")
-	}
-
-	item, err := r.DB.UpdateProduct(itemID, &prod)
+	err := r.DB.UpdateProduct(itemID, &product)
 	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
 			"error": err,
 		})
 	}
+	prod, err := r.DB.GetProdByID(itemID)
+	if err != nil {
+		return c.JSON(echo.ErrInternalServerError.Code, "could not get item")
+	}
 
-	return c.JSON(http.StatusOK, echo.Map{
-		"message": item,
-	})
+	return c.JSON(http.StatusOK, prod)
 }
 
 func (r *Repository) ShowAllProducts(c echo.Context) error {

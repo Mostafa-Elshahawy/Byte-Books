@@ -47,7 +47,7 @@ const Gallery = ({ products, pagenationOn }) => {
                     </Grid>
                 ))}
             </Grid>
-            {pagenationOn && <Pagination count={totalPages} page={page} onChange={handleChangePage} variant="outlined" shape="rounded" size='large' style={{ margin: 'auto', marginTop: '20px', justifyContent: 'center' }} />}
+            {true && <Pagination count={totalPages} page={page} onChange={handleChangePage} variant="outlined" shape="rounded" size='large' style={{ margin: 'auto', marginTop: '20px', justifyContent: 'center' }} />}
             <Dialog open={open} onClose={handleClose} fullscreen>
                 <DialogTitle>{selectedProduct?.name}</DialogTitle>
                 <DialogContent>

@@ -13,10 +13,6 @@ func Auth(next echo.HandlerFunc) echo.HandlerFunc {
 		if err != nil || session.Values["authenticated"] != true {
 			return c.JSON(http.StatusUnauthorized, "unautherized")
 		}
-		c.Set("session", session)
-		c.Response().Before(func() {
-			session.Save(c.Request(), c.Response())
-		})
 		return next(c)
 	}
 }
