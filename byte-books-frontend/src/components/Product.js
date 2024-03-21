@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 
-const Product = ({ bookName, Author, imageSrc, Price, Description, onClick }) => {
+const Product = ({ id, bookName, Author, imageSrc, Price, Description }) => {
+    const history = useHistory();
     const [isHovered, setIsHovered] = useState(false);
 
     const handleMouseEnter = () => {
@@ -12,18 +14,23 @@ const Product = ({ bookName, Author, imageSrc, Price, Description, onClick }) =>
         setIsHovered(false);
     }
 
+    const handleClick = () => {
+        history.push(`/product/${id}`);
+    }
+
     return (
         <Card 
             style={{ position: 'relative', overflow: 'hidden', borderRadius: '10px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            <CardActionArea onClick={onClick}>
+            <CardActionArea onClick={handleClick}>
                 <CardMedia
                     component="img"
-                    height="200"
+                    height="450" 
                     image={`${process.env.PUBLIC_URL}/images/${imageSrc}`}
                     alt={`${bookName}`}
+                    style={{ width: '100%', objectFit: 'contain' }} 
                 />
                 <CardContent style={{ position: 'absolute', bottom: 0, backgroundColor: 'rgba(255,255,255,0.8)', width: '100%', transition: 'all 0.3s', transform: isHovered ? 'translateY(0)' : 'translateY(100%)' }}>
                     <Typography gutterBottom variant="h5" component="div" style={{ fontWeight: 'bold' }}>
