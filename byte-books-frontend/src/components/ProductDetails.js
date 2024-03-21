@@ -21,7 +21,7 @@ const ProductDetails = ({ product }) => {
         <CardMedia
           component="img"
           sx={{ width: 200, height: 300 }}
-          image={product.image}
+          image={`${process.env.PUBLIC_URL}/images/${product.image}`}
           title={product.name}
         />
         <div sx={{ display: 'flex', flexDirection: 'column', marginLeft: 2 }}>
