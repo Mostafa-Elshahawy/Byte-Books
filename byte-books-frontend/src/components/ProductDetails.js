@@ -27,7 +27,7 @@ const ProductDetails = ({ product }) => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" justifyContent="space-between" height="100vh">
+    <Box display="flex" flexDirection="row" justifyContent="space-between" height="700px">
       <Box boxShadow={3} border={1} borderRadius={5} p={2} mb={2}>
         <PreviewImage imageSrc={product.image} />
       </Box>
