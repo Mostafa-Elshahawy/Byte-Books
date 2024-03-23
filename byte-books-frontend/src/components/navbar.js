@@ -1,6 +1,5 @@
 import React from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Button,createTheme,ThemeProvider} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import {Link} from 'react-router-dom';
 import Axios from 'axios';
@@ -47,7 +46,7 @@ const Navbar = () => {
             <AppBar position='static' style={{width :'100%',marginBottom: '20px'}}>
                 <Toolbar>
                 <IconButton edge="start" color="inherit" aria-label="menu">
-                    <MenuIcon />
+                    <img src={`${process.env.PUBLIC_URL}/images/logo.png`} alt="logo" style={{width:'100px'}}/>
                 </IconButton>
                 <Typography variant="h6" component={Link} to='/main' style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
                     ByteBooks

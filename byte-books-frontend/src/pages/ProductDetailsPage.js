@@ -4,6 +4,8 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
+import BooksLikethis from "../components/BooksLikethis";
+import Reviews from "../components/Reviews";
 
 const ProductDetailsPage = ()=>{
     const {id} = useParams();
@@ -25,6 +27,8 @@ const ProductDetailsPage = ()=>{
         <>
         <Navbar />
         {product ? <ProductDetails product={product} /> : <p>Error Loading the product</p>}
+        <Reviews />
+        <BooksLikethis />
         <Footer />
         </>
     );

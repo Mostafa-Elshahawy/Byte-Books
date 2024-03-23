@@ -10,10 +10,10 @@ const LoginPage = () => {
         try {
             const response = await axios.post('http://localhost:8000/login',formData);
             if (response.data.message === "logged in successfully"){
-                localStorage.setItem('loginStatus',true);
+                sessionStorage.setItem('loginStatus',true);
               window.location.href = "/main";
             }else if (response.data.message === "logged in as admin"){
-                localStorage.setItem('loginStatus',true);
+                sessionStorage.setItem('loginStatus',true);
                 window.location.href = "/admin";
             }
         }catch (error) {
