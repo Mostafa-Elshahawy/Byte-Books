@@ -23,7 +23,7 @@ const increaseQunatity = () => {
     }
 };
   return (
-    <Box display="flex" flexDirection='column' justifyContent='space-between' height='100vh'> 
+    <Box display="flex" flexDirection='row' justifyContent='space-between' height='100vh'> 
       <PreviewImage imageSrc={product.image} />
       <div>
         <h1>{product.title}</h1>
