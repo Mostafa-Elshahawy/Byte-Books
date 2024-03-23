@@ -46,7 +46,7 @@ const Navbar = () => {
             <AppBar position='static' style={{width :'100%',marginBottom: '20px'}}>
                 <Toolbar>
                 <IconButton edge="start" color="inherit" aria-label="menu">
-                    <img src={`${process.env.PUBLIC_URL}/images/logo.png`} alt="logo" style={{width:'100px'}}/>
+                    <img src={`${process.env.PUBLIC_URL}/images/logo.png`} alt="logo" style={{width:'50px'}}/>
                 </IconButton>
                 <Typography variant="h6" component={Link} to='/main' style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
                     ByteBooks
