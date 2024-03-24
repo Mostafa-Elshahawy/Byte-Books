@@ -8,7 +8,7 @@ const LoginPage = () => {
 
     const handleLogin = async (formData)=>{
         try {
-            const response = await axios.post('http://localhost:8000/login',formData);
+            const response = await axios.post('http://localhost:8000/login',formData,{withCredentials:true});
             if (response.data.message === "logged in successfully"){
                 sessionStorage.setItem('loginStatus',true);
               window.location.href = "/main";
