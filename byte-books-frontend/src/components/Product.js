@@ -38,11 +38,11 @@ const Product = ({ id, bookName, Author, imageSrc, Price, Description }) => {
                 />
                 <CardContent style={{ 
                     position: 'absolute', 
-                    top: 0, 
+                    top: 350, 
                     backgroundColor: 'rgba(255,255,255,0.8)', 
                     width: '100%', 
                     transition: 'all 0.3s', 
-                    transform: isHovered ? 'translateY(0)' : 'translateY(100%)' 
+                    transform: isHovered ? 'translateY(0)' : 'translateY(50%)' 
                     }}>
                     <Typography gutterBottom variant="h5" component="div" style={{ fontWeight: 'bold' ,textAlign:'center'}}>
                         {bookName}

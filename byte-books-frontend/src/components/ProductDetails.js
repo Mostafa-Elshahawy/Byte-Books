@@ -31,9 +31,9 @@ const ProductDetails = ({ product }) => {
       <Box borderRadius={5} p={2} mb={2}>
         <PreviewImage imageSrc={product.image} />
       </Box>
-      <Box  borderRadius={5} p={2} mb={2}>
+      <Box  borderRadius={5} p={2} mb={2} style={{width:'750px'}}>
         <div>
-          <h1 style={{fontWeight: 'bold', fontSize: '30px',marginBottom: '10px'}}>{product.title}</h1>
+          <h1 style={{fontWeight: 'bold', fontSize: '40px',marginBottom: '10px'}}>{product.name}</h1>
           <h3 style={{fontWeight: 'bold', fontSize: '20px',marginBottom: '10px'}}>by: {product.author}</h3>
           <h3 style={{fontWeight: 'bold', fontSize: '25px',marginBottom: '10px'}}>{product.price} $</h3>
           <p style={{marginBottom: '10px', fontSize: '17px'}}>{product.description}</p>
