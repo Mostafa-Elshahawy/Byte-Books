@@ -5,13 +5,16 @@ import { useHistory } from 'react-router-dom';
 const Product = ({ id, bookName, Author, imageSrc, Price, Description }) => {
     const history = useHistory();
     const [isHovered, setIsHovered] = useState(false);
+    const [translationDistance, setTranslationDistance] = useState(0);
 
     const handleMouseEnter = () => {
         setIsHovered(true);
+        setTranslationDistance(-Description.length * 2); 
     }
 
     const handleMouseLeave = () => {
         setIsHovered(false);
+        setTranslationDistance(0);
     }
 
     const handleClick = () => {
@@ -38,22 +41,22 @@ const Product = ({ id, bookName, Author, imageSrc, Price, Description }) => {
                 />
                 <CardContent style={{ 
                     position: 'absolute', 
-                    top: 350, 
+                    bottom: 0, 
                     backgroundColor: 'rgba(255,255,255,0.8)', 
                     width: '100%', 
-                    transition: 'all 0.3s', 
-                    transform: isHovered ? 'translateY(0)' : 'translateY(50%)' 
+                    transition: 'transform 0.3s',
+                    transform: `translateY(${isHovered ? translationDistance : 0}px)` 
                     }}>
                     <Typography gutterBottom variant="h5" component="div" style={{ fontWeight: 'bold' ,textAlign:'center'}}>
                         {bookName}
                     </Typography>
                     {!isHovered && (<>
                         <Typography variant="body2" color="textSecondary" style={{ marginTop: '4px' ,textAlign:'center'}}>
-                        by {Author}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" style={{ marginTop: '8px' ,textAlign:'center'}}>
-                        Price: {Price}
-                    </Typography>
+                            by {Author}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" style={{ marginTop: '8px' ,textAlign:'center'}}>
+                            Price: {Price}
+                        </Typography>
                     </>
                     )}
                     {isHovered && (
