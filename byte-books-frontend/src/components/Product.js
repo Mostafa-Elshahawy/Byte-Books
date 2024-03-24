@@ -9,7 +9,7 @@ const Product = ({ id, bookName, Author, imageSrc, Price, Description }) => {
 
     const handleMouseEnter = () => {
         setIsHovered(true);
-        setTranslationDistance(-Description.length * 2); 
+        setTranslationDistance(0);
     }
 
     const handleMouseLeave = () => {
@@ -51,10 +51,10 @@ const Product = ({ id, bookName, Author, imageSrc, Price, Description }) => {
                         {bookName}
                     </Typography>
                     {!isHovered && (<>
-                        <Typography variant="body2" color="textSecondary" style={{ marginTop: '4px' ,textAlign:'center'}}>
+                        <Typography variant="body2" color="textSecondary" style={{ marginTop: '4px' ,textAlign:'center', fontWeight: 'bold'}}>
                             by {Author}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary" style={{ marginTop: '8px' ,textAlign:'center'}}>
+                        <Typography variant="body2" color="textSecondary" style={{ marginTop: '8px' ,textAlign:'center', fontWeight: 'bold'}}>
                             Price: {Price}
                         </Typography>
                     </>

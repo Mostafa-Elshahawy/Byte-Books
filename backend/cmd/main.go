@@ -34,7 +34,11 @@ func main() {
 	mux := echo.New()
 	mux.Use(middleware.Logger())
 	mux.Use(middleware.Recover())
-	mux.Use(middleware.CORS())
+	mux.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowMethods:     []string{echo.GET, echo.PUT, echo.POST, echo.DELETE, echo.PATCH, echo.PUT},
+		AllowCredentials: true,
+	}))
 	mux.Use(session.MiddlewareWithConfig(session.Config{
 		Store: auth.Store,
 	}))
