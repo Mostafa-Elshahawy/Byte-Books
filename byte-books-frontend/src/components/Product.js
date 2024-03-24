@@ -20,7 +20,11 @@ const Product = ({ id, bookName, Author, imageSrc, Price, Description }) => {
 
     return (
         <Card 
-            style={{ position: 'relative', overflow: 'hidden', borderRadius: '10px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}
+            style={{ 
+                position: 'relative', 
+                overflow: 'hidden', 
+                borderRadius: '10px', 
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
@@ -32,7 +36,14 @@ const Product = ({ id, bookName, Author, imageSrc, Price, Description }) => {
                     alt={`${bookName}`}
                     style={{ width: '100%', objectFit: 'contain' }} 
                 />
-                <CardContent style={{ position: 'absolute', bottom: 0, backgroundColor: 'rgba(255,255,255,0.8)', width: '100%', transition: 'all 0.3s', transform: isHovered ? 'translateY(0)' : 'translateY(100%)' }}>
+                <CardContent style={{ 
+                    position: 'absolute', 
+                    top: 0, 
+                    backgroundColor: 'rgba(255,255,255,0.8)', 
+                    width: '100%', 
+                    transition: 'all 0.3s', 
+                    transform: isHovered ? 'translateY(0)' : 'translateY(100%)' 
+                    }}>
                     <Typography gutterBottom variant="h5" component="div" style={{ fontWeight: 'bold' ,textAlign:'center'}}>
                         {bookName}
                     </Typography>

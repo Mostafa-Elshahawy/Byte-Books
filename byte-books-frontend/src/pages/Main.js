@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import Newsletter from '../components/Newsletter';
 import Gallery from '../components/Gallery';
 import axios from 'axios';
+import {Typography} from '@mui/material';
 const Main = ()=>{
     const [products,setProducts] = useState([]);
     const fetchProducts = async ()=>{
@@ -25,6 +26,7 @@ const Main = ()=>{
         <>
         <Navbar />
         <Hero />
+        <Typography variant="h4" style={{margin:'20px',textAlign:'center'}}>Trending Now</Typography>
         <Gallery products={products} pgaenationOn={false}/>
         <Newsletter />
         <Footer />

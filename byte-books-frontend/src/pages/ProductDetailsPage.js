@@ -27,7 +27,9 @@ const ProductDetailsPage = ()=>{
         <>
         <Navbar />
         {product ? <ProductDetails product={product} /> : <p>Error Loading the product</p>}
-        <Reviews style={{margin:'20px'}} />
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+            <Reviews style={{margin:'20px'}} />
+        </div>
         <BooksLikethis style={{margin:'20px'}} />
         <Footer />
         </>

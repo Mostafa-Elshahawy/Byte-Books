@@ -62,7 +62,7 @@ const ProductView = () => {
 
  const handleSaveProduct = async () => {
     try {
-      const response = await axios.patch(`http://localhost:8000/products/update/${editingProduct.id}`, editingProduct);
+      const response = await axios.patch(`http://localhost:8000/products/update/${editingProduct.id}`, editingProduct, { withCredentials: true });
       console.log(response.data);
       setIsDialogOpen(false);
       setEditingProduct(null);

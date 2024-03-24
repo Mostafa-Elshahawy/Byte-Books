@@ -16,7 +16,7 @@ const ProductEdit = () => {
   const handleSave = async (formData)=>{
 
         try{
-          const response = await axios.post('http://localhost:8000/products/create',formData);
+          const response = await axios.post('http://localhost:8000/products/create',formData,{withCredentials:true});
           console.log(response.data);
         }
         catch(error){

@@ -13,7 +13,7 @@ const DialogBox = ({open,handleCloseDialog,handleSave})=> {
     });
     const handleImageUpload = async (file) => {
         try{
-            const response = await axios.post('http://localhost:8000/admin/upload-image',file);
+            const response = await axios.post('http://localhost:8000/admin/upload-image',file,{withCredentials:true});
             setFormData({...formData,image:response.data.image});
             alert('image uploaded successfully')
         }catch(error){

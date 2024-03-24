@@ -6,11 +6,10 @@ const EditDialog = ({ open, handleClose, Product, handleSave, handleEdit,handleI
     const handleChange = (field, value) => {
         let parsedValue;
 
-        // Check if the field is 'price' or 'quantity' and parse accordingly
         if (field === 'price') {
             parsedValue = parseFloat(value);
         } else if (field === 'quantity') {
-            parsedValue = parseInt(value, 10); // The second argument, 10, specifies the radix (base) for the conversion
+            parsedValue = parseInt(value, 10); 
         } else {
             parsedValue = value;
         }

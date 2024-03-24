@@ -28,22 +28,25 @@ const ProductDetails = ({ product }) => {
 
   return (
     <Box display="flex" flexDirection="row" justifyContent="space-between" height="700px">
-      <Box boxShadow={3} border={1} borderRadius={5} p={2} mb={2}>
+      <Box borderRadius={5} p={2} mb={2}>
         <PreviewImage imageSrc={product.image} />
       </Box>
-      <Box boxShadow={3} border={1} borderRadius={5} p={2} mb={2}>
+      <Box  borderRadius={5} p={2} mb={2}>
         <div>
-          <h1>{product.title}</h1>
-          <p>{product.description}</p>
-          <h3>{product.price}</h3>
-          <p>book genre</p>
+          <h1 style={{fontWeight: 'bold', fontSize: '30px',marginBottom: '10px'}}>{product.title}</h1>
+          <h3 style={{fontWeight: 'bold', fontSize: '20px',marginBottom: '10px'}}>by: {product.author}</h3>
+          <h3 style={{fontWeight: 'bold', fontSize: '25px',marginBottom: '10px'}}>{product.price} $</h3>
+          <p style={{marginBottom: '10px', fontSize: '17px'}}>{product.description}</p>
+          <h5>book genre</h5>
         </div>
       </Box>
-      <Box display="flex" justifyContent="space-between" alignItems="center" boxShadow={3} border={1} borderRadius={5} p={2}>
-        <Button onClick={decreaseQuantity} variant="outlined">-</Button>
-        <span style={{ margin: '0 10px' }}>{quantity}</span>
-        <Button onClick={increaseQuantity} variant="outlined">+</Button>
-        <Button onClick={handleCartAddition} variant="contained" color="primary">Add to cart</Button>
+      <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" borderRadius={5} p={2}>
+        <div>
+          <Button onClick={decreaseQuantity} variant="outlined">-</Button>
+          <span style={{ margin: '10px' }}>{quantity}</span>
+          <Button onClick={increaseQuantity} variant="outlined">+</Button>
+        </div>
+        <Button onClick={handleCartAddition} variant="contained" color="primary" style={{ margin: '10px' }}>Add to cart</Button>
       </Box>
     </Box>
   );
