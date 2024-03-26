@@ -22,8 +22,8 @@ const ImageUpload = ({onUpload,onReset}) => {
     return(
         <div>
             <input type='file' accept='image/*' onChange={handleImageChange} />
-            <Button color='secondary' onClick={handleUpload}>Upload</Button>
-            <Button color='secondary' onClick={onReset}>Reset</Button>
+            <Button type='button' color='secondary' onClick={handleUpload}>Upload</Button>
+            <Button type='button' color='secondary' onClick={onReset}>Reset</Button>
         </div>
     );
 };

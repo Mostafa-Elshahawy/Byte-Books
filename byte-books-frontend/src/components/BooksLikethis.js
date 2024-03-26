@@ -8,7 +8,7 @@ const BooksLikethis = () => {
     const fetchProducts = async ()=>{
         try{
             const response = await axios.get('http://localhost:8000/products/all');
-            const first12 = response.data.slice(0,4);
+            const first12 = response.data.slice(12,16);
             setProducts(first12);
         }catch(error){
             console.log(error);

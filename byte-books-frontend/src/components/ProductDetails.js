@@ -27,7 +27,7 @@ const ProductDetails = ({ product }) => {
   };
 
   return (
-    <Box display="flex" flexDirection="row" justifyContent="space-between" height="700px">
+    <Box display="flex" flexDirection="row" justifyContent="space-between" height="700px" mt={4} mr={4} ml={4}>
       <Box borderRadius={5} p={1} mb={2}>
         <PreviewImage imageSrc={product.image} />
       </Box>
@@ -39,8 +39,6 @@ const ProductDetails = ({ product }) => {
           <p style={{marginBottom: '10px', fontSize: '17px'}}>{product.description}</p>
           <h5>book genre</h5>
         </div>
-      </Box>
-      <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" borderRadius={5} p={2} m={3}>
         <div>
           <Button onClick={decreaseQuantity} style={{ margin: '10px' }} variant="outlined">-</Button>
           <span style={{ margin: '10px' }}>{quantity}</span>
