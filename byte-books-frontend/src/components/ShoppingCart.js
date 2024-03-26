@@ -37,7 +37,7 @@ const ShoppingCart = () => {
       setCartItems(response.data);
       let total = 0;
       response.data.forEach(item => {
-        total += item.price * item.quantity;
+        total += (item.price || 0) * (item.quantity || 0);
       });
       setTotalAmount(total);
     } catch (error) {
@@ -90,7 +90,7 @@ const ShoppingCart = () => {
                   <img src={`${process.env.PUBLIC_URL}/images/${item.image}`} alt={item.name} style={{ maxWidth: 100, maxHeight: 150 }} />
                 </StyledImageCell>
                 <TableCell>{item.name}</TableCell>
-                <TableCell>${item.price.toFixed(2)}</TableCell>
+                <TableCell>${(item.price || 0).toFixed(2)}</TableCell>
                 <TableCell>{item.quantity}</TableCell>
                 <TableCell>
                   <Button onClick={() => handleDeleteItem(item.id)}>
@@ -103,7 +103,7 @@ const ShoppingCart = () => {
         </StyledTable>
       </StyledTableContainer>
       <Typography variant="subtitle2" align="right" gutterBottom>
-        Total: ${totalAmount.toFixed(2)}
+        Total: ${(totalAmount || 0).toFixed(2)}
       </Typography>
       <Button variant="contained" color="primary" onClick={handleCheckOut} fullWidth>
         Checkout
