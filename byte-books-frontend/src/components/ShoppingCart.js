@@ -37,7 +37,7 @@ const ShoppingCart = () => {
       setCartItems(response.data);
       let total = 0;
       response.data.forEach(item => {
-        total += (item.Product.price || 0) * (item.quantity || 0);
+        total += (item.Product[0].price || 0) * (item.quantity || 0);
       });
       setTotalAmount(total);
     } catch (error) {
@@ -68,7 +68,7 @@ const ShoppingCart = () => {
   };
 
   return (
-    <div>
+    <div style={{display:'flex',flexDirection: 'row', justifyContent: 'center', alignItems: 'center', margin:'100px'}}>
       <Typography variant="h6" gutterBottom>
         Shopping Cart
       </Typography>
@@ -87,10 +87,10 @@ const ShoppingCart = () => {
             {cartItems.map((item) => (
               <TableRow key={item.id}>
                 <StyledImageCell>
-                  <img src={`${process.env.PUBLIC_URL}/images/${item.Product.image}`} alt={item.name} style={{ maxWidth: 100, maxHeight: 150 }} />
+                  <img src={`${process.env.PUBLIC_URL}/images/${item.Product[0].image}`} alt={item.name} style={{ maxWidth: 100, maxHeight: 150 }} />
                 </StyledImageCell>
-                <TableCell>{item.name}</TableCell>
-                <TableCell>${(item.Product.price || 0).toFixed(2)}</TableCell>
+                <TableCell>{item.Product[0].name}</TableCell>
+                <TableCell>${(item.Product[0].price || 0).toFixed(2)}</TableCell>
                 <TableCell>{item.quantity}</TableCell>
                 <TableCell>
                   <Button onClick={() => handleDeleteItem(item.id)}>
@@ -102,12 +102,15 @@ const ShoppingCart = () => {
           </TableBody>
         </StyledTable>
       </StyledTableContainer>
-      <Typography variant="subtitle2" align="right" gutterBottom>
+      <div>
+         <Typography variant="h1" align="center" gutterBottom>
         Total: ${(totalAmount || 0).toFixed(2)}
       </Typography>
-      <Button variant="contained" color="primary" onClick={handleCheckOut} fullWidth>
+      <Button variant="contained" color="primary" onClick={handleCheckOut} style={{width:'200px'}}>
         Checkout
       </Button>
+      </div>
+     
     </div>
   );
 };

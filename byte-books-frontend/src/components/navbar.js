@@ -65,6 +65,7 @@ const styles = {
 const Navbar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem('loginStatus'));
     const [searchQuery,setSearchQuery] = useState('');
+    const isAdmin = sessionStorage.getItem('isAdmin');
     const handleLogout = async () => {
         try {
             const response = await Axios.post('http://localhost:8000/logout');
@@ -120,17 +121,25 @@ const Navbar = () => {
                     </Button>
                     
                     {isLoggedIn ? (
-                        <>
-                            <IconButton component={Link} to="/cart" color="inherit" sx={styles.button}>
-                                <ShoppingCartIcon />
-                            </IconButton>
+                        !isAdmin ? (
+                            <>
                             <Button component={Link} to="/orders" color="inherit" sx={styles.button}>
                                 Orders
                             </Button>
+                            <IconButton component={Link} to="/cart" color="inherit" sx={styles.button}>
+                                <ShoppingCartIcon />
+                            </IconButton>
                             <IconButton color="inherit" onClick={handleLogout} sx={styles.button}>
                                 <ExitToAppIcon />
                             </IconButton>
                         </>
+                        ):(
+                        <> 
+                            <IconButton color="inherit" onClick={handleLogout} sx={styles.button}>
+                                <ExitToAppIcon />
+                            </IconButton>
+                        </>
+                        )
                     ) : (
                         <Button component={Link} to='/login' color='inherit' sx={styles.button}>
                             Sign In

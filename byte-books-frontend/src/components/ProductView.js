@@ -22,8 +22,7 @@ const ProductView = () => {
  const handleImageUpload = async (file) => {
    try{
      const response = await axios.post('http://localhost:8000/admin/upload-image',file);
-     setUploadedImage(response.data.image);
-     alert('image uploaded successfully');
+     return response.data.image;
    }catch(error){
     console.error('error while uploading image',error);
    }
