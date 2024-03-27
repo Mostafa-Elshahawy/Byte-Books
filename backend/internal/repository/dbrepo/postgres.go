@@ -215,16 +215,15 @@ func (d *postgresDBRepo) GetUserCart(userID interface{}) ([]models.Cart, error) 
 	defer cancel()
 
 	stmt := `SELECT c.id, c.user_id, c.product_id, c.quantity, c.created_at, c.updated_at,
-	u.id, u.username, u.email, u.password, u.phone, u.address, u.is_admin, u.created_at, u.updated_at,
-	p.id, p.name, p.description, p.image, p.author, p.price, p.quantity, p.created_at, p.updated_at
-	FROM cart c
-	JOIN users u ON c.user_id = u.id
-	JOIN products p ON c.product_id = p.id
-	WHERE c.user_id = $1`
+		   p.id, p.name, p.description, p.image, p.author, p.price, p.quantity as product_quantity, p.created_at as product_created_at, p.updated_at as product_updated_at
+		   FROM cart c
+		   JOIN products p ON c.product_id = p.id
+		   WHERE c.user_id = $1`
 
 	rows, err := d.DB.QueryContext(ctx, stmt, userID)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Query failed: %v\n", err)
+		return nil, err
 	}
 	defer rows.Close()
 
@@ -232,19 +231,17 @@ func (d *postgresDBRepo) GetUserCart(userID interface{}) ([]models.Cart, error) 
 
 	for rows.Next() {
 		var cart models.Cart
-		var user models.User
 		var product models.Product
 
 		err := rows.Scan(
 			&cart.ID, &cart.UserID, &cart.ProductID, &cart.Quantity, &cart.Created_at, &cart.Updated_at,
-			&user.ID, &user.Username, &user.Email, &user.Password, &user.Phone, &user.Address, &user.IsAdmin, &user.Created_at, &user.Updated_at,
 			&product.ID, &product.Name, &product.Description, &product.Image, &product.Author, &product.Price, &product.Quantity, &product.Created_at, &product.Updated_at,
 		)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error scanning row: %v\n", err)
+			return nil, err
 		}
 
-		cart.User = user
 		cart.Product = append(cart.Product, product)
 		userCart = append(userCart, cart)
 	}
