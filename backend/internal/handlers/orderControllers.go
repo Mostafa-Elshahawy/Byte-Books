@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"bytes"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -19,8 +18,8 @@ func (r *Repository) Checkout(c echo.Context) error {
 		return c.JSON(echo.ErrInternalServerError.Code, "could not get session")
 	}
 	userID := session.Values["user_id"]
-	userEmail := fmt.Sprint(session.Values["user_email"])
-	userName := fmt.Sprint(session.Values["username"])
+	// userEmail := fmt.Sprint(session.Values["user_email"])
+	// userName := fmt.Sprint(session.Values["username"])
 
 	// Retrieve items from the user's cart
 	userCart, err := r.DB.GetUserCart(userID)
@@ -62,17 +61,17 @@ func (r *Repository) Checkout(c echo.Context) error {
 	}
 
 	// clear the user's cart after the order is placed
-	err = r.DB.ClearUserCart(userID)
-	if err != nil {
-		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
-			"error": "could not clear user cart",
-		})
-	}
+	// err = r.DB.ClearUserCart(userID)
+	// if err != nil {
+	// 	return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
+	// 		"error": "could not clear user cart",
+	// 	})
+	// }
 
-	err = SendOrderEmail("emailTemplate.html", userEmail, userName)
-	if err != nil {
-		return c.JSON(echo.ErrInternalServerError.Code, "could not send email")
-	}
+	// err = SendOrderEmail("emailTemplate.html", userEmail, userName)
+	// if err != nil {
+	// 	return c.JSON(echo.ErrInternalServerError.Code, "could not send email")
+	// }
 
 	return c.JSON(http.StatusOK, echo.Map{
 		"message": "order placed successfully",

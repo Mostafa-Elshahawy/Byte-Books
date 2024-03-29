@@ -18,7 +18,7 @@ const StyledTableHead = styled(TableHead)({
 });
 
 const StyledTableCell = styled(TableCell)({
-  color: '#fff',
+  color: '#000',
   fontWeight: 'bold',
 });
 
@@ -69,9 +69,6 @@ const ShoppingCart = () => {
 
   return (
     <div style={{display:'flex',flexDirection: 'row', justifyContent: 'center', alignItems: 'center', margin:'100px'}}>
-      <Typography variant="h6" gutterBottom>
-        Shopping Cart
-      </Typography>
       <StyledTableContainer component={Paper}>
         <StyledTable>
           <StyledTableHead>
@@ -103,7 +100,7 @@ const ShoppingCart = () => {
         </StyledTable>
       </StyledTableContainer>
       <div>
-         <Typography variant="h1" align="center" gutterBottom>
+         <Typography variant="h3" align="center" gutterBottom>
         Total: ${(totalAmount || 0).toFixed(2)}
       </Typography>
       <Button variant="contained" color="primary" onClick={handleCheckOut} style={{width:'200px'}}>

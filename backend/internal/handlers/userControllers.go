@@ -81,6 +81,8 @@ func (r *Repository) Login(c echo.Context) error {
 
 	session.Values["authenticated"] = true
 	session.Values["user_id"] = id
+	session.Values["user_email"] = data["email"]
+	session.Values["username"] = data["username"]
 	err = sessions.Save(c.Request(), c.Response())
 	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
