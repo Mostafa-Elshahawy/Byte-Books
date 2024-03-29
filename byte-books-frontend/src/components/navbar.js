@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useHistory } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Button, createTheme, ThemeProvider, InputBase} from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -38,12 +38,13 @@ const styles = {
         position: 'relative',
         borderRadius: '8px',
         backgroundColor: '#ffffff',
-        marginLeft: 'auto', // Pushes the search bar to the middle
-        width: 'auto', // Adjust width as needed
+        flexGrow: 1,
+        width: 'auto', 
         '&:hover': {
             backgroundColor: '#f0f0f0',
         },
         padding: '5px 10px',
+        paddingLeft: '50px',
     },
     searchIcon: {
         padding: '0 8px',
@@ -65,13 +66,15 @@ const styles = {
 const Navbar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem('loginStatus'));
     const [searchQuery,setSearchQuery] = useState('');
-    const isAdmin = sessionStorage.getItem('isAdmin');
+    const [isAdmin, setIsAdmin] = useState(!!sessionStorage.getItem('isAdmin'));
+    const history = useHistory();
     const handleLogout = async () => {
         try {
             const response = await Axios.post('http://localhost:8000/logout');
             if (response.data.message === 'logged out') {
                 sessionStorage.removeItem('loginStatus');
                 setIsLoggedIn(false);
+                setIsAdmin(false);
             }
         } catch (error) {
             console.log('error during logout', error.response.data);
@@ -85,7 +88,10 @@ const Navbar = () => {
     const handleSearchSubmit = (e) =>{
         if (e.key === 'Enter') {
             e.preventDefault();
-    }
+            if (searchQuery.trim() !== '') {
+                history.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+            }
+        }
     };
 
     return (
