@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Typography, styled } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Snackbar from '@mui/material/Snackbar';
 
 const StyledTableContainer = styled(TableContainer)({
   maxWidth: 800,
@@ -30,6 +31,8 @@ const StyledImageCell = styled(TableCell)({
 const ShoppingCart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const fetchCartItems = async () => {
     try {
@@ -60,8 +63,13 @@ const ShoppingCart = () => {
 
   const handleCheckOut = async () => {
     try {
-      await axios.post('http://localhost:8000/user/orders/checkout', {}, { withCredentials: true });
-      setCartItems([]);
+      const response = await axios.post('http://localhost:8000/user/orders/checkout', {}, { withCredentials: true });
+      if(response.data.message === 'order placed successfully'){
+        setCartItems([]);
+        setSnackbarMessage('Order placed successfully');
+        setSnackbarOpen(true);
+      }
+      
     } catch (error) {
       console.error('Error checking out:', error);
     }
@@ -107,7 +115,7 @@ const ShoppingCart = () => {
         Checkout
       </Button>
       </div>
-     
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)} message={snackbarMessage}/>
     </div>
   );
 };

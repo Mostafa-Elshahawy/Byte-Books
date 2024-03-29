@@ -61,12 +61,13 @@ const ProductView = () => {
 
  const handleSaveProduct = async () => {
     try {
-      const response = await axios.patch(`http://localhost:8000/products/update/${editingProduct.id}`, editingProduct, { withCredentials: true });
+      const updatedProduct = {...editingProduct, image: uploadedImage};
+      const response = await axios.patch(`http://localhost:8000/products/update/${editingProduct.id}`, updatedProduct, { withCredentials: true });
       console.log(response.data);
       setIsDialogOpen(false);
       setEditingProduct(null);
       setUploadedImage(null);
-      fetchProducts(); // Refresh the product list after updating
+      fetchProducts(); 
     } catch (error) {
       console.error('Error during editing:', error);
     }
