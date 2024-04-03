@@ -19,15 +19,17 @@ const EditDialog = ({ open, handleClose, Product, handleSave, handleEdit,handleI
     };
 
     const handleImageUploaded = (formData) => {
-        handleImageUpload(formData).then((imagePath) => {
-            setUploadedImage(imagePath);
+        handleImageUpload(formData).then((response) => {
+            if (response && response.imageName) {
+                setUploadedImage(response.imageName);
+            }
         });
     };
 
     return (
-        <Dialog open={open} onClose={handleClose} style={{width: '500px'}} >
+        <Dialog open={open} onClose={handleClose} style={{width: '900px'}} >
             <DialogTitle>Edit Product</DialogTitle>
-            <DialogContent style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+            <DialogContent >
                 <TextField
                     margin='dense'
                     label='name'
