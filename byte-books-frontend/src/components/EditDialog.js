@@ -25,9 +25,9 @@ const EditDialog = ({ open, handleClose, Product, handleSave, handleEdit,handleI
     };
 
     return (
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open} onClose={handleClose} style={{width: '500px'}} >
             <DialogTitle>Edit Product</DialogTitle>
-            <DialogContent>
+            <DialogContent style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
                 <TextField
                     margin='dense'
                     label='name'

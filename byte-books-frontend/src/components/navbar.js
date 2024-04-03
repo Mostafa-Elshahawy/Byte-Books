@@ -1,4 +1,4 @@
-import React, { useState,useHistory } from 'react';
+import React, { useState } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Button, createTheme, ThemeProvider, InputBase} from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -67,7 +67,7 @@ const Navbar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem('loginStatus'));
     const [searchQuery,setSearchQuery] = useState('');
     const [isAdmin, setIsAdmin] = useState(!!sessionStorage.getItem('isAdmin'));
-    const history = useHistory();
+    //const history = useHistory();
     const handleLogout = async () => {
         try {
             const response = await Axios.post('http://localhost:8000/logout');
@@ -86,12 +86,12 @@ const Navbar = () => {
     };
 
     const handleSearchSubmit = (e) =>{
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            if (searchQuery.trim() !== '') {
-                history.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-            }
-        }
+        // if (e.key === 'Enter') {
+        //     e.preventDefault();
+        //     if (searchQuery.trim() !== '') {
+        //         history.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+        //     }
+        // }
     };
 
     return (

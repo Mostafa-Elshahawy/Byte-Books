@@ -37,8 +37,8 @@ const PastOrders = () => {
             {orders.map((order) => (
               <TableRow key={order.id}>
                 <TableCell>{order.id}</TableCell>
-                <TableCell>{order.date}</TableCell>
-                <TableCell>${order.totalAmount.toFixed(2)}</TableCell>
+                <TableCell>{order.created_at}</TableCell>
+                <TableCell>${order.total_price.toFixed(2)}</TableCell>
                 <TableCell>{order.status}</TableCell>
               </TableRow>
             ))}
