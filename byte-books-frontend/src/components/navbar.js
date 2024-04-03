@@ -73,6 +73,7 @@ const Navbar = () => {
             const response = await Axios.post('http://localhost:8000/logout');
             if (response.data.message === 'logged out') {
                 sessionStorage.removeItem('loginStatus');
+                sessionStorage.removeItem('isAdmin');
                 setIsLoggedIn(false);
                 setIsAdmin(false);
             }
