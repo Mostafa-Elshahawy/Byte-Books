@@ -76,6 +76,7 @@ const Navbar = () => {
                 sessionStorage.removeItem('isAdmin');
                 setIsLoggedIn(false);
                 setIsAdmin(false);
+                window.location.href = '/login';
             }
         } catch (error) {
             console.log('error during logout', error.response.data);
@@ -127,14 +128,13 @@ const Navbar = () => {
                         Contact Us
                     </Button>
                     
-                    {isLoggedIn ? (
-                        isAdmin ? (
+                    {isLoggedIn && isAdmin ? (
                             <>
                             <IconButton color="inherit" onClick={handleLogout} sx={styles.button}>
                                 <ExitToAppIcon />
                             </IconButton>
                         </>
-                        ):(
+                        ): isLoggedIn && !isAdmin ? (
                         <> 
                             <Button component={Link} to="/orders" color="inherit" sx={styles.button}>
                                 Orders
@@ -147,7 +147,7 @@ const Navbar = () => {
                             </IconButton>
                         </>
                         )
-                    ) : (
+                    :(
                         <Button component={Link} to='/login' color='inherit' sx={styles.button}>
                             Sign In
                         </Button>

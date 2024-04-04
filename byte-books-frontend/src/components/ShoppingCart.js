@@ -54,8 +54,9 @@ const ShoppingCart = () => {
 
   const handleDeleteItem = async (itemId) => {
     try {
-      await axios.delete(`http://localhost:8000/user/cart/product/${itemId}`, { withCredentials: true });
+      const response =await axios.delete(`http://localhost:8000/user/cart/product/${itemId}`, { withCredentials: true });
       setCartItems(cartItems.filter(item => item.id !== itemId));
+      console.log(response.data);
     } catch (error) {
       console.error('Error deleting item from cart:', error);
     }

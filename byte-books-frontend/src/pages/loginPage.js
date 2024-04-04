@@ -12,7 +12,7 @@ const LoginPage = () => {
             if (response.data.message === "logged in successfully"){
                 sessionStorage.setItem('loginStatus',true);
                 sessionStorage.setItem('isAdmin',false);
-              window.location.href = "/main";
+                window.location.href = "/main";
             }else if (response.data.message === "logged in as admin"){
                 sessionStorage.setItem('loginStatus',true);
                 sessionStorage.setItem('isAdmin',true);
