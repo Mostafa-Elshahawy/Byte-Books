@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, TableHead, TableBody, TableRow, TableCell, Paper, IconButton } from '@mui/material';
+import { Table, TableHead, TableBody, TableRow, TableCell, Paper, IconButton,Snackbar } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import EditDialog from './EditDialog';
 import axios from 'axios';
@@ -9,6 +9,7 @@ const ProductView = () => {
  const [editingProduct, setEditingProduct] = useState(null);
  const [isDialogOpen, setIsDialogOpen] = useState(false);
  const [uploadedImage,setUploadedImage] = useState(null);
+ const [snackBarOpen, setSnackBarOpen] = useState(false);
 
  const fetchProducts = async () => {
     try {
@@ -22,7 +23,8 @@ const ProductView = () => {
  const handleImageUpload = async (file) => {
    try{
      const response = await axios.post('http://localhost:8000/admin/upload-image',file);
-     return response.data.image;
+     setUploadedImage(response.data.image);
+     setSnackBarOpen(true);
    }catch(error){
     console.error('error while uploading image',error);
    }
@@ -52,11 +54,8 @@ const ProductView = () => {
     setEditingProduct(null);
  };
 
- const handleEdit = (updatedProduct) => {
-  if (uploadedImage) {
-    updatedProduct.image = uploadedImage;
-  }
-    setEditingProduct(updatedProduct);
+ const handleEdit = (updatedProduct, uploadedImage) => {
+  setEditingProduct({...updatedProduct, image: uploadedImage});
  };
 
  const handleSaveProduct = async () => {
@@ -110,6 +109,7 @@ const ProductView = () => {
       handleSave={handleSaveProduct} handleEdit={handleEdit} 
       handleImageReset={handleImageReset} handleImageUpload={handleImageUpload}
       />
+      <Snackbar open={snackBarOpen} autoHideDuration={6000} onClose={() => setSnackBarOpen(false)}  message="Image uploaded successfully" />
     </Paper>
  );
 };
