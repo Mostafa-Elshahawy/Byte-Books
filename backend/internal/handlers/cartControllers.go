@@ -39,7 +39,6 @@ func (r *Repository) RemoveFromCart(c echo.Context) error {
 	}
 	userID := session.Values["user_id"]
 	productID, _ := strconv.Atoi(c.Param("id"))
-
 	err = r.DB.DeleteFromCart(userID, productID)
 	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{

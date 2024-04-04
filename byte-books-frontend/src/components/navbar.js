@@ -128,7 +128,7 @@ const Navbar = () => {
                     </Button>
                     
                     {isLoggedIn ? (
-                        isAdmin ? (
+                        !isAdmin ? (
                             <>
                             <IconButton color="inherit" onClick={handleLogout} sx={styles.button}>
                                 <ExitToAppIcon />
