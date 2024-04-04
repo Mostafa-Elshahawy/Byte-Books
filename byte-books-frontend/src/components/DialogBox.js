@@ -47,12 +47,12 @@ const DialogBox = ({open,handleCloseDialog,handleSave})=> {
 
     return (
         <DialogContent open={open} onClose={handleCloseDialog} >
-        <DialogContent style={{width:'900px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-            <TextField required margin='dense'  id="name"           label="Name"        type="text"    onChange={handleChange}/>
-            <TextField required margin='dense'  id='description'    label='Description' type='text'    onChange={handleChange}/>
-            <TextField required margin='dense'  id ='author'        label='Author'      type='text'    onChange={handleChange}/>
-            <TextField required margin='dense'  id='price'          label='Price'       type='number'  onChange={handleChange}/>
-            <TextField required margin='dense'  id='quantity'       label='Quantity'    type='number'  onChange={handleChange}/>
+        <DialogContent >
+            <TextField required fullWidth margin='dense'  id="name"           label="Name"        type="text"    onChange={handleChange}/>
+            <TextField required fullWidth margin='dense'  id='description'    label='Description' type='text'    onChange={handleChange}/>
+            <TextField required fullWidth margin='dense'  id ='author'        label='Author'      type='text'    onChange={handleChange}/>
+            <TextField required fullWidth margin='dense'  id='price'          label='Price'       type='number'  onChange={handleChange}/>
+            <TextField required fullWidth margin='dense'  id='quantity'       label='Quantity'    type='number'  onChange={handleChange}/>
             <ImageUpload onUpload={handleImageUpload} onReset={handleImageReset}/>
         </DialogContent>
         <DialogActions style={{justifyContent:'space-between'}}>

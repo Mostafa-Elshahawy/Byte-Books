@@ -20,7 +20,7 @@ const EditDialog = ({ open, handleClose, Product, handleSave, handleEdit,handleI
 
 
     return (
-        <Dialog open={open} onClose={handleClose} style={{width: '900px'}} >
+        <Dialog open={open} onClose={handleClose}  >
             <DialogTitle>Edit Product</DialogTitle>
             <DialogContent >
                 <TextField
