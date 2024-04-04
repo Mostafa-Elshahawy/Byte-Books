@@ -45,6 +45,13 @@ const LoginForm = ({title,onSubmit}) => {
             onSubmit(formData);
         }
     };
+
+    const googleSignIn = () => {
+        var clientId = 'YourClientId';
+        var redirectUrl = encodeURIComponent('http://localhost:3000');
+        var url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email`;
+        window.location.href = url;
+    };
     return (
         <ThemeProvider theme={theme}>
       <form style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }} onSubmit={handleSubmit}>
@@ -68,7 +75,7 @@ const LoginForm = ({title,onSubmit}) => {
           </Button>
 
           {/* Sign In with Google button */}
-          <Button startIcon={<GoogleIcon />} style={googleButton}>
+          <Button startIcon={<GoogleIcon />} style={googleButton} onClick={googleSignIn}>
             Sign In with Google
           </Button>
         </Grid>
