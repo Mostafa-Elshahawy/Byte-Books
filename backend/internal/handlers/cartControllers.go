@@ -45,7 +45,7 @@ func (r *Repository) RemoveFromCart(c echo.Context) error {
 			"error": "something went wrong when removing item from cart",
 		})
 	}
-	return c.JSON(http.StatusOK, "item removed from cart")
+	return c.JSON(http.StatusNoContent, "item removed from cart")
 }
 
 func (r *Repository) ShowCart(c echo.Context) error {
