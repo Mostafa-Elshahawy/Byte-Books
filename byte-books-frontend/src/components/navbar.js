@@ -128,7 +128,12 @@ const Navbar = () => {
                         Contact Us
                     </Button>
                     
+<<<<<<< HEAD
                     {isLoggedIn && isAdmin ? (
+=======
+                    {isLoggedIn ? (
+                        !isAdmin ? (
+>>>>>>> 12c199449f425ca545d0e9603c2c859fe70cb08f
                             <>
                             <IconButton color="inherit" onClick={handleLogout} sx={styles.button}>
                                 <ExitToAppIcon />
