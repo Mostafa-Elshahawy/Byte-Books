@@ -57,8 +57,7 @@ type Order struct {
 	Status     string    `json:"status"`
 	Created_at time.Time `json:"created_at"`
 	Updated_at time.Time `json:"updated_at"`
-	User       User
-	Product    []Product
+	Product    []Product `json:"product"`
 }
 
 type OrderItem struct {
@@ -66,6 +65,6 @@ type OrderItem struct {
 	OrderID   uint    `json:"order_id"`
 	Price     float64 `json:"price"`
 	Quantity  int     `json:"quantity"`
-	Product   Product
-	Order     Order
+	Product   Product `json:"product"`
+	Order     Order   `json:"order"`
 }

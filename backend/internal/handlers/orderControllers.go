@@ -2,24 +2,28 @@ package handlers
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
+	"path/filepath"
 
 	"github.com/ME/Byte-Books/internal/auth"
 	"github.com/ME/Byte-Books/internal/models"
 	"github.com/labstack/echo/v4"
+	"github.com/stripe/stripe-go/v72"
+	"github.com/stripe/stripe-go/v72/checkout/session"
 	"gopkg.in/gomail.v2"
 )
 
 func (r *Repository) Checkout(c echo.Context) error {
-	session, err := auth.Store.Get(c.Request(), "session_id")
+	UserSession, err := auth.Store.Get(c.Request(), "session_id")
 	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, "could not get session")
 	}
-	userID := session.Values["user_id"]
-	// userEmail := fmt.Sprint(session.Values["user_email"])
-	// userName := fmt.Sprint(session.Values["username"])
+	userID := UserSession.Values["user_id"]
+	userEmail := fmt.Sprint(UserSession.Values["user_email"])
+	userName := fmt.Sprint(UserSession.Values["username"])
 
 	// Retrieve items from the user's cart
 	userCart, err := r.DB.GetUserCart(userID)
@@ -57,8 +61,43 @@ func (r *Repository) Checkout(c echo.Context) error {
 	// Add items to the order
 	orderDetails, err := r.DB.AddItemsToOrder(order_id, orderItems)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to add items to order"})
+		return c.JSON(http.StatusInternalServerError, echo.Map{
+			"error": err,
+		})
 	}
+
+	// payment using stribe
+	stripe.Key = "sk_test_51P1KYRLmniszVk6wK1M1Lw7VGfn20apTKu63do3TNGqUL0nNSPCf94rifth6FzSKp0oaHeph923OkusuDllLHciC00ucDNUT4S"
+	params := &stripe.CheckoutSessionParams{
+		PaymentMethodTypes: stripe.StringSlice([]string{
+			"card",
+		}),
+		LineItems: []*stripe.CheckoutSessionLineItemParams{
+			{
+				PriceData: &stripe.CheckoutSessionLineItemPriceDataParams{
+					Currency: stripe.String("usd"),
+					ProductData: &stripe.CheckoutSessionLineItemPriceDataProductDataParams{
+						Name: stripe.String("product"),
+					},
+					UnitAmount: stripe.Int64(int64(2000)),
+				},
+				Quantity: stripe.Int64(1),
+			},
+		},
+		Mode:       stripe.String(string(stripe.CheckoutSessionModePayment)),
+		SuccessURL: stripe.String("http://localhost:3000/main"),
+		CancelURL:  stripe.String("http://localhost:3000/login"),
+	}
+
+	StripeSession, err := session.New(params)
+	if err != nil {
+		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
+			"error": err,
+		})
+	}
+
+	// Redirect the customer to the Checkout Session URL
+	http.Redirect(c.Response().Writer, c.Request(), StripeSession.URL, http.StatusFound)
 
 	// clear the user's cart after the order is placed
 	// err = r.DB.ClearUserCart(userID)
@@ -68,10 +107,10 @@ func (r *Repository) Checkout(c echo.Context) error {
 	// 	})
 	// }
 
-	// err = SendOrderEmail("emailTemplate.html", userEmail, userName)
-	// if err != nil {
-	// 	return c.JSON(echo.ErrInternalServerError.Code, "could not send email")
-	// }
+	err = SendOrderEmail(userEmail, userName)
+	if err != nil {
+		return c.JSON(echo.ErrInternalServerError.Code, "could not send email")
+	}
 
 	return c.JSON(http.StatusOK, echo.Map{
 		"message": "order placed successfully",
@@ -97,8 +136,9 @@ func (r *Repository) GetUserOrders(c echo.Context) error {
 	})
 }
 
-func SendOrderEmail(templatePath string, userEmail string, username string) error {
+func SendOrderEmail(userEmail string, username string) error {
 	var emailBody bytes.Buffer
+	templatePath := filepath.Join("./../byte-books-frontend/public", "emailTemplate.html")
 	t, err := template.ParseFiles(templatePath)
 	if err != nil {
 		log.Println(err)

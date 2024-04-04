@@ -37,11 +37,12 @@ func main() {
 	mux.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins:     []string{"http://localhost:3000"},
 		AllowMethods:     []string{echo.GET, echo.PUT, echo.POST, echo.DELETE, echo.PATCH, echo.PUT},
+		AllowHeaders:     []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 		AllowCredentials: true,
 	}))
 	mux.Use(session.MiddlewareWithConfig(session.Config{
 		Store: auth.Store,
 	}))
 	Routers(mux)
-	mux.Logger.Fatal(mux.Start(":8000"))
+	log.Fatal(mux.Start(":8000"))
 }

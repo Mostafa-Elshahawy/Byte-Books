@@ -47,7 +47,7 @@ const DialogBox = ({open,handleCloseDialog,handleSave})=> {
 
     return (
         <DialogContent open={open} onClose={handleCloseDialog} >
-        <DialogContent style={{width:'900px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+        <DialogContent >
             <TextField required margin='dense'  id="name"           label="Name"        type="text"    onChange={handleChange}/>
             <TextField required margin='dense'  id='description'    label='Description' type='text'    onChange={handleChange}/>
             <TextField required margin='dense'  id ='author'        label='Author'      type='text'    onChange={handleChange}/>

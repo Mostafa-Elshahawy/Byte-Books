@@ -148,9 +148,6 @@ func (d *postgresDBRepo) UpdateProduct(id int, product *models.Product) error {
 		return err
 	}
 
-	// updatedProduct := &models.Product{}
-	// err = d.DB.QueryRow("SELECT * FROM products WHERE id = $1", id).Scan(&updatedProduct.ID, &updatedProduct.Name, &updatedProduct.Description, &updatedProduct.Image, &updatedProduct.Author, &updatedProduct.Price, &updatedProduct.Quantity, &updatedProduct.Created_at, &updatedProduct.Updated_at)
-
 	return nil
 }
 
@@ -285,7 +282,7 @@ func (d *postgresDBRepo) CreateOrder(userID interface{}, total_price float64) (u
 
 	query := `
 		INSERT INTO orders (user_id, total_price, status, created_at, updated_at)
-		VALUES ($1, $2, 'Pending', $3, $4)
+		VALUES ($1, $2, 'On the way', $3, $4)
 		RETURNING id
 	`
 
@@ -365,8 +362,7 @@ func (d *postgresDBRepo) ClearUserCart(userID interface{}) error {
 	defer cancel()
 
 	query := `
-		DELETE FROM cart
-		WHERE user_id = $1
+		DELETE FROM cart where user_id = $1
 	`
 
 	_, err := d.DB.ExecContext(ctx, query, userID)
