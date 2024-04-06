@@ -22,10 +22,19 @@ const LoginPage = () => {
             console.error('error during login',error.response.data);
         }
     };
+
+    const googleSignIn = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/auth/google/callback');
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error during Google sign-in:', error);
+        }
+    };
     return (
         <div>
         <Navbar />
-        <LoginForm title="Login" onSubmit={handleLogin} />
+        <LoginForm title="Login" onSubmit={handleLogin} googleSignIn={googleSignIn}/>
       </div>
     );
 };

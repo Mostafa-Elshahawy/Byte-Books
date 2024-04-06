@@ -5,7 +5,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import {ThemeProvider} from "@mui/material/styles";
 
 
-const LoginForm = ({title,onSubmit}) => {
+const LoginForm = ({title,onSubmit,googleSignIn}) => {
     const theme = useTheme();
 
     const [formData,setFormData] = useState({
@@ -46,12 +46,12 @@ const LoginForm = ({title,onSubmit}) => {
         }
     };
 
-    const googleSignIn = () => {
-        var clientId = process.env.REACT_APP_CLIENT_ID;
-        var redirectUrl = encodeURIComponent('http://localhost:3000/auth/google/callback');
-        var url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email`;
-        window.location.href = url;
-    };
+    // const googleSignIn = () => {
+    //     var clientId = process.env.REACT_APP_CLIENT_ID;
+    //     var redirectUrl = encodeURIComponent('http://localhost:3000/auth/google/callback');
+    //     var url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email`;
+    //     window.location.href = url;
+    // };
     return (
         <ThemeProvider theme={theme}>
       <form style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }} onSubmit={handleSubmit}>
