@@ -29,7 +29,7 @@ func GoogleAuth() {
 
 	gothic.Store = Store
 	goth.UseProviders(
-		google.New(googleClientID, googleClientSecret, "http://localhost:8000/auth/google/callback"),
+		google.New(googleClientID, googleClientSecret, "http://localhost:3000"),
 	)
 }
 
@@ -37,7 +37,7 @@ func GetAuthCallback(c echo.Context) error {
 	user, err := gothic.CompleteUserAuth(c.Response().Writer, c.Request())
 	if err != nil {
 		return err
-
 	}
-	return c.JSON(http.StatusOK, user)
+	http.Redirect(c.Response().Writer, c.Request(), "http://localhost:3000/main", http.StatusFound)
+	return c.JSON(http.StatusFound, user)
 }

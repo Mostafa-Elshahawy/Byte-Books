@@ -6,13 +6,14 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 
 	"github.com/ME/Byte-Books/internal/auth"
 	"github.com/ME/Byte-Books/internal/models"
 	"github.com/labstack/echo/v4"
 	"github.com/stripe/stripe-go/v72"
-	"github.com/stripe/stripe-go/v72/checkout/session"
+	"github.com/stripe/stripe-go/v72/paymentintent"
 	"gopkg.in/gomail.v2"
 )
 
@@ -67,37 +68,27 @@ func (r *Repository) Checkout(c echo.Context) error {
 	}
 
 	// payment using stribe
-	stripe.Key = "sk_test_51P1KYRLmniszVk6wK1M1Lw7VGfn20apTKu63do3TNGqUL0nNSPCf94rifth6FzSKp0oaHeph923OkusuDllLHciC00ucDNUT4S"
-	params := &stripe.CheckoutSessionParams{
-		PaymentMethodTypes: stripe.StringSlice([]string{
-			"card",
-		}),
-		LineItems: []*stripe.CheckoutSessionLineItemParams{
-			{
-				PriceData: &stripe.CheckoutSessionLineItemPriceDataParams{
-					Currency: stripe.String("usd"),
-					ProductData: &stripe.CheckoutSessionLineItemPriceDataProductDataParams{
-						Name: stripe.String("product"),
-					},
-					UnitAmount: stripe.Int64(int64(2000)),
-				},
-				Quantity: stripe.Int64(1),
-			},
+	stripe.Key = os.Getenv("STRIPE_KEY")
+	params := &stripe.PaymentIntentParams{
+		Amount:   stripe.Int64(int64(totalPrice)),
+		Currency: stripe.String("USD"),
+		AutomaticPaymentMethods: &stripe.PaymentIntentAutomaticPaymentMethodsParams{
+			Enabled: stripe.Bool(true),
 		},
-		Mode:       stripe.String(string(stripe.CheckoutSessionModePayment)),
-		SuccessURL: stripe.String("http://localhost:3000/main"),
-		CancelURL:  stripe.String("http://localhost:3000/login"),
 	}
 
-	StripeSession, err := session.New(params)
+	pi, err := paymentintent.New(params)
 	if err != nil {
-		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
-			"error": err,
-		})
+		if stripeErr, ok := err.(*stripe.Error); ok {
+			fmt.Printf("Other Stripe error occurred: %v\n", stripeErr.Error())
+			return c.JSON(400, stripeErr.Error())
+		} else {
+			fmt.Printf("Other error occurred: %v\n", err.Error())
+			return c.JSON(500, "Unknown server error")
+		}
 	}
 
-	// Redirect the customer to the Checkout Session URL
-	http.Redirect(c.Response().Writer, c.Request(), StripeSession.URL, http.StatusFound)
+	fmt.Println(pi)
 
 	// clear the user's cart after the order is placed
 	// err = r.DB.ClearUserCart(userID)

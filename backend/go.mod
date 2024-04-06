@@ -18,6 +18,8 @@ require (
 	cloud.google.com/go v0.67.0 // indirect
 	github.com/andybalholm/brotli v1.0.0 // indirect
 	github.com/fasthttp/session/v2 v2.2.1 // indirect
+	github.com/gofiber/fiber v1.13.3 // indirect
+	github.com/gofiber/utils v0.0.9 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/gorilla/context v1.1.1 // indirect
@@ -26,7 +28,6 @@ require (
 	github.com/gorilla/securecookie v1.1.2 // indirect
 	github.com/klauspost/compress v1.10.7 // indirect
 	github.com/philhofer/fwd v1.0.0 // indirect
-	github.com/rs/cors v1.10.1 // indirect
 	github.com/savsgio/dictpool v0.0.0-20200608150529-6a3c1a8f6ab2 // indirect
 	github.com/savsgio/gotils v0.0.0-20200616100644-13ff1fd2c28c // indirect
 	github.com/tinylib/msgp v1.1.2 // indirect
@@ -41,6 +42,7 @@ require (
 
 require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2
+	github.com/gofiber/session v1.2.5
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
