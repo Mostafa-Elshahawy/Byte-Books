@@ -90,17 +90,17 @@ func (r *Repository) Checkout(c echo.Context) error {
 
 	fmt.Println(pi)
 
-	// clear the user's cart after the order is placed
-	// err = r.DB.ClearUserCart(userID)
-	// if err != nil {
-	// 	return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
-	// 		"error": "could not clear user cart",
-	// 	})
-	// }
-
 	err = SendOrderEmail(userEmail, userName)
 	if err != nil {
 		return c.JSON(echo.ErrInternalServerError.Code, "could not send email")
+	}
+
+	//clear the user's cart after the order is placed
+	err = r.DB.ClearUserCart(userID)
+	if err != nil {
+		return c.JSON(echo.ErrInternalServerError.Code, echo.Map{
+			"error": "could not clear user cart",
+		})
 	}
 
 	return c.JSON(http.StatusOK, echo.Map{

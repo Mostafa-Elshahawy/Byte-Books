@@ -398,3 +398,17 @@ func (d *postgresDBRepo) GetOrders(user_id interface{}) ([]models.Order, error) 
 	}
 	return orders, nil
 }
+
+func (d *postgresDBRepo) CreateUserInDatabase(userInfo map[string]interface{}) error {
+
+	email := userInfo["email"].(string)
+	username := userInfo["username"].(string)
+
+	query := `INSERT INTO users (email, username) VALUES ($1, $2)`
+	_, err := d.DB.Exec(query, email, username)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

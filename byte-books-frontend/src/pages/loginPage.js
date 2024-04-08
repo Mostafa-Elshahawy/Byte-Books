@@ -24,13 +24,32 @@ const LoginPage = () => {
     };
 
     const googleSignIn = async () => {
+      window.location.href = 'http://localhost:8000/auth/google';
+    };
+
+    const handleUserAuthentication = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/auth/google/callback');
-            console.log(response.data);
+            // Make a request to your backend to complete user authentication
+            const response = await fetch('http://localhost:8000/auth/google/callback');
+            if (response.data.message === "user logged in using google account"){
+                sessionStorage.setItem('loginStatus',true);
+                sessionStorage.setItem('isAdmin',false);
+                window.location.href = 'http://localhost:3000/main'
+            } else {
+                // Handle authentication failure or error
+                console.error('User authentication failed');
+            }
         } catch (error) {
-            console.error('Error during Google sign-in:', error);
+            console.error('Error during user authentication:', error);
         }
     };
+
+    // Check if the current URL contains the callback path from Google OAuth
+    React.useEffect(() => {
+        if (window.location.pathname === '/auth/google/callback') {
+            handleUserAuthentication();
+        }
+    }, []); // Empty dependency array to run this effect only once
     return (
         <div>
         <Navbar />

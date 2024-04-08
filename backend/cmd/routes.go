@@ -20,7 +20,7 @@ func Routers(mux *echo.Echo) {
 	mux.DELETE("/user/cart/product/:id", handlers.Repo.RemoveFromCart, Auth)
 	mux.POST("/user/orders/checkout", handlers.Repo.Checkout, Auth)
 	mux.GET("/user/orders", handlers.Repo.GetUserOrders, Auth)
-	mux.GET("/auth/google/callback", auth.GetAuthCallback)
 	mux.POST("/admin/upload-image", handlers.Repo.UploadImage)
-
+	mux.GET("/auth/google", auth.RedirectToGoogle)
+	mux.GET("/auth/google/callback", handlers.Repo.HandleGoogleCallback)
 }

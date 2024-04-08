@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/ME/Byte-Books/internal/auth"
@@ -111,5 +112,39 @@ func (r *Repository) Logout(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, echo.Map{
 		"message": "logged out",
+	})
+}
+
+func (r *Repository) HandleGoogleCallback(c echo.Context) error {
+	state := c.QueryParam("state")
+	if state != auth.OauthState {
+		return echo.NewHTTPError(http.StatusBadRequest, "Invalid OAuth state")
+	}
+
+	code := c.QueryParam("code")
+	token, err := auth.OauthConfig.Exchange(context.Background(), code)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Failed to exchange token")
+	}
+
+	session, err := auth.Store.Get(c.Request(), "session_id")
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Failed to get session")
+	}
+
+	session.Values["session_id"] = token.AccessToken
+	session.Save(c.Request(), c.Response().Writer)
+
+	// userInfo, err := auth.GetUserInfo(token.AccessToken)
+	// if err != nil {
+	// 	return echo.NewHTTPError(http.StatusInternalServerError, "Failed to fetch user information")
+	// }
+	// err = r.DB.CreateUserInDatabase(userInfo)
+	// if err != nil {
+	// 	return echo.NewHTTPError(http.StatusInternalServerError, "Failed to create user in database")
+	// }
+
+	return c.JSON(http.StatusOK, echo.Map{
+		"message": "user logged in using google account",
 	})
 }

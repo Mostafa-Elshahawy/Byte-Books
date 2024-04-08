@@ -19,4 +19,5 @@ type DatabaseRepo interface {
 	ClearUserCart(userID interface{}) error
 	GetOrderByID(userID interface{}) (models.Order, error)
 	GetOrders(user_id interface{}) ([]models.Order, error)
+	CreateUserInDatabase(userInfo map[string]interface{}) error
 }
