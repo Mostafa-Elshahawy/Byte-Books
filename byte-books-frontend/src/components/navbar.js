@@ -66,16 +66,13 @@ const styles = {
 const Navbar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem('loginStatus'));
     const [searchQuery,setSearchQuery] = useState('');
-    const [isAdmin, setIsAdmin] = useState(!!sessionStorage.getItem('isAdmin'));
     //const history = useHistory();
     const handleLogout = async () => {
         try {
             const response = await Axios.post('http://localhost:8000/logout');
             if (response.data.message === 'logged out') {
                 sessionStorage.removeItem('loginStatus');
-                sessionStorage.removeItem('isAdmin');
-                setIsLoggedIn(false);
-                setIsAdmin(false);
+                setIsLoggedIn(2);
                 window.location.href = '/login';
             }
         } catch (error) {
@@ -128,13 +125,13 @@ const Navbar = () => {
                         Contact Us
                     </Button>
                     
-                    {isLoggedIn && isAdmin ? (
-                            <>
-                            <IconButton color="inherit" onClick={handleLogout} sx={styles.button}>
-                                <ExitToAppIcon />
-                            </IconButton>
-                        </>
-                        ): isLoggedIn && !isAdmin ? (
+                    {isLoggedIn === 0 && (
+                        <IconButton color="inherit" onClick={handleLogout} sx={styles.button}>
+                            <ExitToAppIcon />
+                        </IconButton>
+                    )}
+
+                    {isLoggedIn === 1 && (
                         <> 
                             <Button component={Link} to="/orders" color="inherit" sx={styles.button}>
                                 Orders
@@ -146,16 +143,17 @@ const Navbar = () => {
                                 <ExitToAppIcon />
                             </IconButton>
                         </>
-                        )
-                    :(
+                    )}
+
+                    {isLoggedIn === 2 && (
                         <Button component={Link} to='/login' color='inherit' sx={styles.button}>
                             Sign In
                         </Button>
                     )}
-                </Toolbar>
-            </AppBar>
-        </ThemeProvider>
-    );
-};
+                                    </Toolbar>
+                                </AppBar>
+                            </ThemeProvider>
+                        );
+                    };
 
 export default Navbar;

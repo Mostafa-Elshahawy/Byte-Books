@@ -10,12 +10,10 @@ const LoginPage = () => {
         try {
             const response = await axios.post('http://localhost:8000/login',formData,{withCredentials:true});
             if (response.data.message === "logged in successfully"){
-                sessionStorage.setItem('loginStatus',true);
-                sessionStorage.setItem('isAdmin',false);
+                sessionStorage.setItem('loginStatus',1);
                 window.location.href = "/main";
             }else if (response.data.message === "logged in as admin"){
-                sessionStorage.setItem('loginStatus',true);
-                sessionStorage.setItem('isAdmin',true);
+                sessionStorage.setItem('loginStatus',0);
                 window.location.href = "/admin";
             }
         }catch (error) {
@@ -29,24 +27,29 @@ const LoginPage = () => {
 
     const handleUserAuthentication = async () => {
         try {
-            // Make a request to your backend to complete user authentication
-            const response = await fetch('http://localhost:8000/auth/google/callback');
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            if(code){
+            const response = await fetch(`http://localhost:8000/auth/google/callback?code=${code}`);
             if (response.data.message === "user logged in using google account"){
-                sessionStorage.setItem('loginStatus',true);
-                sessionStorage.setItem('isAdmin',false);
+                sessionStorage.setItem('loginStatus',1);
                 window.location.href = 'http://localhost:3000/main'
             } else {
                 // Handle authentication failure or error
                 console.error('User authentication failed');
+            }}else{
+                console.error('code not found in query paremeters');
             }
-        } catch (error) {
+        }catch (error) {
             console.error('Error during user authentication:', error);
         }
+
     };
 
     // Check if the current URL contains the callback path from Google OAuth
     React.useEffect(() => {
-        if (window.location.pathname === '/auth/google/callback') {
+        const url = new URL(window.location.href);
+        if (url.pathname === '/auth/google/callback' && url.search === '') {
             handleUserAuthentication();
         }
     }, []); // Empty dependency array to run this effect only once
