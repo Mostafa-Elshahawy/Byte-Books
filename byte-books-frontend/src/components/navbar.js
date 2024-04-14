@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Button, createTheme, ThemeProvider, InputBase} from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, Button, createTheme, ThemeProvider} from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 
@@ -65,8 +64,7 @@ const styles = {
 
 const Navbar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem('loginStatus'));
-    const [searchQuery,setSearchQuery] = useState('');
-    //const history = useHistory();
+    console.log(isLoggedIn);
     const handleLogout = async () => {
         try {
             const response = await Axios.post('http://localhost:8000/logout');
@@ -80,18 +78,6 @@ const Navbar = () => {
         }
     };
 
-    const handleSearchQuery =(e) =>{
-        setSearchQuery(e.target.value);
-    };
-
-    const handleSearchSubmit = (e) =>{
-        // if (e.key === 'Enter') {
-        //     e.preventDefault();
-        //     if (searchQuery.trim() !== '') {
-        //         history.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-        //     }
-        // }
-    };
 
     return (
         <ThemeProvider theme={theme}>
@@ -103,18 +89,6 @@ const Navbar = () => {
                     <Typography variant="h6" component={Link} to='/main' style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
                         ByteBooks
                     </Typography>
-                    <div style={styles.search}>
-                        <div style={styles.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search..."
-                            style={styles.inputInput}
-                            value={searchQuery}
-                            onChange={handleSearchQuery}
-                           onKeyDown={handleSearchSubmit}
-                        />
-                    </div>
                     <Button component={Link} to='/main' color='inherit' sx={styles.button}>
                         Home
                     </Button>
@@ -145,7 +119,7 @@ const Navbar = () => {
                         </>
                     )}
 
-                    {isLoggedIn === 2 && (
+                    {isLoggedIn !== 2 && isLoggedIn !== 1 && (
                         <Button component={Link} to='/login' color='inherit' sx={styles.button}>
                             Sign In
                         </Button>

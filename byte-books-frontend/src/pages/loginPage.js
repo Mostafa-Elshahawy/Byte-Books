@@ -46,13 +46,18 @@ const LoginPage = () => {
 
     };
 
-    // Check if the current URL contains the callback path from Google OAuth
+
     React.useEffect(() => {
         const url = new URL(window.location.href);
-        if (url.pathname === '/auth/google/callback' && url.search === '') {
-            handleUserAuthentication();
+        if (url.pathname === '/auth/google/callback') {
+            const code = url.searchParams.get('code');
+            if (code) {
+                handleUserAuthentication();
+            } else {
+                console.error('Code not found in query parameters');
+            }
         }
-    }, []); // Empty dependency array to run this effect only once
+    }, []); 
     return (
         <div>
         <Navbar />
