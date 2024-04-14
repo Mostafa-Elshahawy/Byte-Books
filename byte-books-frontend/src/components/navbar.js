@@ -63,14 +63,22 @@ const styles = {
 };
 
 const Navbar = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem('loginStatus'));
-    console.log(isLoggedIn);
+    const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem('loginStatus'));
+    const [userType, setUserType] = useState('');
+    if (isLoggedIn === 0) {
+        setUserType('admin');
+    }else if(isLoggedIn === 1){
+        setUserType('user');
+    }else{
+        setUserType('guest');
+    }
     const handleLogout = async () => {
         try {
             const response = await Axios.post('http://localhost:8000/logout');
             if (response.data.message === 'logged out') {
                 sessionStorage.removeItem('loginStatus');
                 setIsLoggedIn(2);
+                setUserType('guest');
                 window.location.href = '/login';
             }
         } catch (error) {
@@ -99,13 +107,13 @@ const Navbar = () => {
                         Contact Us
                     </Button>
                     
-                    {isLoggedIn === 0 && (
+                    {userType === 'admin' && (
                         <IconButton color="inherit" onClick={handleLogout} sx={styles.button}>
                             <ExitToAppIcon />
                         </IconButton>
                     )}
 
-                    {isLoggedIn === 1 && (
+                    {userType === 'user' && (
                         <> 
                             <Button component={Link} to="/orders" color="inherit" sx={styles.button}>
                                 Orders
@@ -119,7 +127,7 @@ const Navbar = () => {
                         </>
                     )}
 
-                    {isLoggedIn !== 2 && isLoggedIn !== 1 && (
+                    {userType === 'guest' && (
                         <Button component={Link} to='/login' color='inherit' sx={styles.button}>
                             Sign In
                         </Button>
