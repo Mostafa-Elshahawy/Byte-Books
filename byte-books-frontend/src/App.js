@@ -9,6 +9,7 @@ import Cart from './pages/Cart';
 import Orders from './pages/Orders';
 import Admin from './pages/Admin';
 import ProductDetailsPage from './pages/ProductDetailsPage';
+import GoogleAuthCallback from './components/GoogleAuthCallback';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/Orders' component={Orders}/>
         <Route path='/Admin' component={Admin}/>
         <Route path='/product/:id' component={ProductDetailsPage}/>
+        <Route path='/auth/google/callback' component={GoogleAuthCallback}/>
       </Switch>
     </Router>
   );
