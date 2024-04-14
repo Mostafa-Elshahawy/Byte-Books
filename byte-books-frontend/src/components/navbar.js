@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Button, createTheme, ThemeProvider} from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { AppBar, Toolbar, IconButton, Typography, Button, createTheme, ThemeProvider } from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from 'react-router-dom';
@@ -38,7 +38,7 @@ const styles = {
         borderRadius: '8px',
         backgroundColor: '#ffffff',
         flexGrow: 1,
-        width: 'auto', 
+        width: 'auto',
         '&:hover': {
             backgroundColor: '#f0f0f0',
         },
@@ -63,29 +63,36 @@ const styles = {
 };
 
 const Navbar = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem('loginStatus'));
-    const [userType, setUserType] = useState('');
-    if (isLoggedIn === 0) {
-        setUserType('admin');
-    }else if(isLoggedIn === 1){
-        setUserType('user');
-    }else{
-        setUserType('guest');
-    }
+    const [isLoggedIn, setIsLoggedIn] = useState(2); // Initialize with a default value
+    const [userType, setUserType] = useState('guest'); // Initialize with a default value
+
+    useEffect(() => {
+        const loginStatus = sessionStorage.getItem('loginStatus');
+        setIsLoggedIn(loginStatus ? parseInt(loginStatus, 10) : 2); // Parse loginStatus as integer
+    }, []); // Fetch once when component mounts
+
+    useEffect(() => {
+        if (isLoggedIn === 0) {
+            setUserType('admin');
+        } else if (isLoggedIn === 1) {
+            setUserType('user');
+        } else {
+            setUserType('guest');
+        }
+    }, [isLoggedIn]); // Update userType when isLoggedIn changes
+
     const handleLogout = async () => {
         try {
             const response = await Axios.post('http://localhost:8000/logout');
             if (response.data.message === 'logged out') {
                 sessionStorage.removeItem('loginStatus');
                 setIsLoggedIn(2);
-                setUserType('guest');
                 window.location.href = '/login';
             }
         } catch (error) {
             console.log('error during logout', error.response.data);
         }
     };
-
 
     return (
         <ThemeProvider theme={theme}>
@@ -106,7 +113,7 @@ const Navbar = () => {
                     <Button component={Link} to="/contact-us" color="inherit" sx={styles.button}>
                         Contact Us
                     </Button>
-                    
+
                     {userType === 'admin' && (
                         <IconButton color="inherit" onClick={handleLogout} sx={styles.button}>
                             <ExitToAppIcon />
@@ -114,7 +121,7 @@ const Navbar = () => {
                     )}
 
                     {userType === 'user' && (
-                        <> 
+                        <>
                             <Button component={Link} to="/orders" color="inherit" sx={styles.button}>
                                 Orders
                             </Button>
@@ -132,10 +139,10 @@ const Navbar = () => {
                             Sign In
                         </Button>
                     )}
-                                    </Toolbar>
-                                </AppBar>
-                            </ThemeProvider>
-                        );
-                    };
+                </Toolbar>
+            </AppBar>
+        </ThemeProvider>
+    );
+};
 
 export default Navbar;

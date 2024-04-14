@@ -135,16 +135,14 @@ func (r *Repository) HandleGoogleCallback(c echo.Context) error {
 	session.Values["session_id"] = token.AccessToken
 	session.Save(c.Request(), c.Response().Writer)
 
-	// userInfo, err := auth.GetUserInfo(token.AccessToken)
-	// if err != nil {
-	// 	return echo.NewHTTPError(http.StatusInternalServerError, "Failed to fetch user information")
-	// }
-	// err = r.DB.CreateUserInDatabase(userInfo)
-	// if err != nil {
-	// 	return echo.NewHTTPError(http.StatusInternalServerError, "Failed to create user in database")
-	// }
+	userInfo, err := auth.GetUserInfo(token.AccessToken)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Failed to fetch user information")
+	}
+	err = r.DB.CreateUserInDatabase(userInfo)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Failed to create user in database")
+	}
 
-	return c.JSON(http.StatusOK, echo.Map{
-		"message": "user logged in using google account",
-	})
+	return c.Redirect(302, "http://localhost:3000/main")
 }
